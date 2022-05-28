@@ -72,14 +72,11 @@ Calorie-Tracker is a web application designed to support students’ dietary goa
   <li> Food reviews/rating feature </li>
 </ui>
 
-
-
-
-
-
-
-
-
+<h2>Prototypes: </h2>
+<img src="https://github.com/corbynkwan/calorie-tracker/blob/main/Paper%20Prototype%201%20.png" alt="Paper Prototype 1" width="800"/>
+<img src="https://github.com/corbynkwan/calorie-tracker/blob/main/UI%20Prototype%201%20.png" alt="UI Prototype 2" width="800"/>
+<img src="https://github.com/corbynkwan/calorie-tracker/blob/main/UI%20Prototype%202.png" alt="UI Prototype 3" width="800"/>
+<img src="https://github.com/corbynkwan/calorie-tracker/blob/main/UI%20Prototype%203.png" alt="UI Prototype 4" width="800"/>
 
 
 
