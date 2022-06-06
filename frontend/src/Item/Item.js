@@ -1,51 +1,64 @@
-import {Box, Button, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
+import {Button, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
+import {Img} from "../Restaurant/Restaurant";
 
 export default function ItemSelectionComponent() {
    return(
-       <Grid container direction={"column"}>
-           <Grid container direction={"row"}>
-               <Grid item xs={3} spacing={1}> <ItemCard></ItemCard></Grid>
-               <Grid item xs={3} spacing={1}> <ItemCard></ItemCard></Grid>
-               <Grid item xs={3} spacing={1}> <ItemCard></ItemCard></Grid>
-               <Grid item xs={3} spacing={1}> <ItemCard></ItemCard></Grid>
-           </Grid>
-           <Grid container direction={"row"}>
-               <Grid item xs={3} spacing={1}> <ItemCard></ItemCard></Grid>
-               <Grid item xs={3} spacing={1}> <ItemCard></ItemCard></Grid>
-               <Grid item xs={3} spacing={1}> <ItemCard></ItemCard></Grid>
-               <Grid item xs={3} spacing={1}> <ItemCard></ItemCard></Grid>
-           </Grid>
-       </Grid>
+       <Container maxWidth={"md"}>
+           <Paper>
+               <Grid container spacing={2}>
+                   <Grid item>
+                       <Container disableGutters  sx={{ width: 128, height: 128}}>
+                           <Img alt="complex" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/VAN_CAT.png/220px-VAN_CAT.png" />
+                       </Container>
+                   </Grid>
+                   <Grid item xs={2} sm container>
+                       <Grid item xs container direction="column" spacing={2}>
+                           <Grid item xs>
+                               <Typography gutterBottom variant="subtitle1" component="div">
+                                   Cat Restaurant
+                               </Typography>
+                               <Typography variant="body2" gutterBottom>
+                                   address..
+                               </Typography>
+                               <Typography variant="body2" >
+                                   Description&map...
+                               </Typography>
+                           </Grid>
+                       </Grid>
+                   </Grid>
+               </Grid>
 
+           <Grid container  spacing={2}>
+               <Grid container item  spacing={2}>
+                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
+                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
+                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
+                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
+               </Grid>
+               <Grid container item  spacing={2}>
+                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
+                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
+                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
+                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
+               </Grid>
+           </Grid>
+           </Paper
+              >
+       </Container>
    )
 }
 
 function ItemCard(){
-    const Img = styled('img')({
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-    });
 
     return (
-            <Paper
-                sx={{
-                    p: 2,
-                    margin: 'auto',
-                    maxWidth: 500,
-                    flexGrow: 1,
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-                }}
-            >
-                <Grid item direction={"column"}>
+            <Paper>
+                <Grid container direction={"column"}>
                     <Grid item>
-                        <Container disableGutters  sx={{ width: 128, height: 128}}>
-                            <Img alt="complex" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/VAN_CAT.png/220px-VAN_CAT.png" />
+                        <Container disableGutters>
+                            <Img alt="complex" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Cat_and_Cat_Foods.jpg/580px-Cat_and_Cat_Foods.jpg" />
                         </Container>
-                    </Grid>
-                        <Grid item xs container direction="column" spacing={2}>
+                    </Grid >
+                        <Grid container item xs={12} container direction="column" spacing={2} alignItems="center">
                             <Grid item xs>
                                 <Typography gutterBottom variant="subtitle1" component="div">
                                     Cat Food
@@ -59,8 +72,8 @@ function ItemCard(){
                             </Grid>
                             <Grid item>
                                 <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                                    <Button>
-                                        Add Item
+                                    <Button >
+                                        Add this item
                                     </Button>
                                 </Typography>
                             </Grid>

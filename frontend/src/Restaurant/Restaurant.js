@@ -1,13 +1,13 @@
 import {Box, Button, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
-
+const Img = styled('img')({
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100%',
+});
 
 export default function RestaurantCard(){
-    const Img = styled('img')({
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-    });
+
 
     return (
         <Container maxWidth={"md"}>
@@ -55,3 +55,4 @@ export default function RestaurantCard(){
         </Container>
     );
 }
+export{Img}
