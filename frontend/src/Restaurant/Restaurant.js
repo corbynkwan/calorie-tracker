@@ -10,7 +10,7 @@ export default function RestaurantCard(){
 
 
     return (
-        <Container maxWidth={"md"}>
+        <Container maxWidth={"sm"}>
             <Paper
                 sx={{
                     p: 2,
