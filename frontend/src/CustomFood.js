@@ -120,9 +120,10 @@ export default function CustomFood(){
                 }}
                 variant="filled"
               />
+              
             </Grid>
-        </Grid>
-        <Button  variant = "contained" color="primary"> ADD FOOD </Button> 
+            <Button  variant = "contained" color="primary"> ADD FOOD </Button>
+        </Grid> 
       </Paper>
     </>
   )

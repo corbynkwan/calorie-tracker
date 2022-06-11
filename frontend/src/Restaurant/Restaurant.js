@@ -8,6 +8,12 @@ const Img = styled('img')({
 
 export default function RestaurantCard(){
 
+    const openPopUp = () => {
+        window.scrollTo({ top: 0, left: 0});
+        document.querySelector('.item-selection-popout').style.display = 'unset';
+        document.querySelector('.popout-wrapper').style.display = 'flex';
+        document.querySelector('body').style.overflowY = 'hidden';
+    }
 
     return (
         <Container maxWidth={"sm"}>
@@ -42,8 +48,8 @@ export default function RestaurantCard(){
                             </Grid>
                             <Grid item>
                                 <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                                    <Button>
-                                        Add Item
+                                    <Button onClick={openPopUp}>
+                                        See Menu
                                     </Button>
                                 </Typography>
                             </Grid>

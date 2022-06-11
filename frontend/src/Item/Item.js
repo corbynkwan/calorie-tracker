@@ -2,6 +2,7 @@ import {Button, Container, Grid, Paper, styled, Typography} from "@material-ui/c
 import {Img} from "../Restaurant/Restaurant";
 
 export default function ItemSelectionComponent() {
+
    return(
        <Container maxWidth={"md"}>
            <Paper>
@@ -48,7 +49,7 @@ export default function ItemSelectionComponent() {
    )
 }
 
-function ItemCard(){
+function ItemCard(props){
 
     return (
             <Paper>
@@ -58,7 +59,7 @@ function ItemCard(){
                             <Img alt="complex" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Cat_and_Cat_Foods.jpg/580px-Cat_and_Cat_Foods.jpg" />
                         </Container>
                     </Grid >
-                        <Grid container item xs={12} container direction="column" spacing={2} alignItems="center">
+                        <Grid container item xs={12} direction="column" spacing={2} alignItems="center">
                             <Grid item xs>
                                 <Typography gutterBottom variant="subtitle1" component="div">
                                     Cat Food
