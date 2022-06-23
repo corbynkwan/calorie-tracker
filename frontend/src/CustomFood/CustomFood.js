@@ -1,7 +1,5 @@
 import * as React from 'react';
 import {Paper, Button, Grid, TextField,InputAdornment} from '@mui/material';
-
-
 export default function CustomFood(){
   
   return (
@@ -20,9 +18,9 @@ export default function CustomFood(){
           xs={12} spacing={3}
           >
             <Grid item>
-              <div><strong>Add Your Custom Food: </strong></div>
+             
           </Grid>   
-          <Grid item>
+          <Grid item>nut
               <div>Nutrition Facts</div>
           </Grid>   
          <hr></hr>
@@ -53,8 +51,7 @@ export default function CustomFood(){
             </Grid>
             <Grid item>
               <TextField
-                id="Carbs"
-                label="Total Carbs"
+                
                 type="number"
                 InputLabelProps={{
                   shrink: true,
@@ -125,6 +122,6 @@ export default function CustomFood(){
             <Button  variant = "contained" color="primary"> ADD FOOD </Button>
         </Grid> 
       </Paper>
-    </>
+    </> 
   )
 }

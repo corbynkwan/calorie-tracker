@@ -8,7 +8,7 @@ import Summary from './Summary/Summary';
 import Recommended from './Recommended/Recommended';
 import BrowseRestros from './BrowseRestros/BrowseRestros';
 import Footer from './Footer';
-import CustomFood from './CustomFood';
+import CustomFood from './CustomFood/CustomFood';
 import InputForm from './InputForm';
 
 
@@ -29,7 +29,7 @@ function App() {
       <Recommended/>
       <BrowseRestros/>
       <Footer/>
-      
+    
 
       <section className='popout-wrapper'>
         <div className='btn-close'><Button variant="outlined" onClick={closePopUp}>Close</Button></div>
