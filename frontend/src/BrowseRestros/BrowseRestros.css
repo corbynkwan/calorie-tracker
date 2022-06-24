@@ -1,0 +1,11 @@
+.BrowseRestros {
+    width: calc(100% - 100px);
+    text-align: left;
+    padding-left: 26px;
+    padding-right: 50px;
+}
+
+.items-inline{
+    padding: 0;
+    display: flex;
+}
