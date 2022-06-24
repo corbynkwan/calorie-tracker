@@ -1,24 +1,50 @@
 import logo from './logo.svg';
 import './App.css';
+import RestaurantCard from "./Restaurant/Restaurant";
+import {Button, ButtonBase, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
+import ItemSelectionComponent, {ItemCard} from "./Item/Item";
+import Header from './Header';
+import Summary from './Summary/Summary';
+import Recommended from './Recommended/Recommended';
+import BrowseRestros from './BrowseRestros/BrowseRestros';
+import Footer from './Footer';
+import CustomFood from './CustomFood';
+import InputForm from './InputForm';
+
 
 function App() {
+
+  const closePopUp = () => {
+    document.querySelector('.add-intake-popout').style.display = 'none';
+    document.querySelector('.food-diary-popout').style.display = 'none';
+    document.querySelector('.item-selection-popout').style.display = 'none';
+    document.querySelector('.popout-wrapper').style.display = 'none';
+    document.querySelector('body').style.overflowY = 'unset';
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+      <Summary/>
+      <Recommended/>
+      <BrowseRestros/>
+      <Footer/>
+      
+
+      <section className='popout-wrapper'>
+        <div className='btn-close'><Button variant="outlined" onClick={closePopUp}>Close</Button></div>
+        <div className='add-intake-popout'>
+          <CustomFood/>
+        </div>
+        <div className='food-diary-popout'>
+          <InputForm/>
+        </div>
+        <div className='item-selection-popout'>
+          <ItemSelectionComponent/>
+        </div>
+      </section>
     </div>
+
   );
 }
 
