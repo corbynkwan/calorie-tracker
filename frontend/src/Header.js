@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Food Log'];
+const pages = ['Food Log', 'Browse Restaurants', ];
 const settings = ['Profile', 'Logout'];
 
 const Header = () => {
@@ -34,13 +34,6 @@ const Header = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const openPopUp = () => {
-    window.scrollTo({ top: 0, left: 0});
-    document.querySelector('.food-diary-popout').style.display = 'unset';
-    document.querySelector('.popout-wrapper').style.display = 'flex';
-    document.querySelector('body').style.overflowY = 'hidden';
-}
 
   return (
     <AppBar position="static">
@@ -95,8 +88,8 @@ const Header = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page}>
-                  <Typography onClick={openPopUp} textAlign="center">{page}</Typography>
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -124,7 +117,7 @@ const Header = () => {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={openPopUp}
+                onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
