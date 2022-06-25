@@ -1,7 +1,7 @@
 import {Button, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
 import {Img} from "../Restaurant/Restaurant";
 
-export default function ItemSelectionComponent() {
+export default function Foods() {
 
    return(
        <Container maxWidth={"md"}>
@@ -31,16 +31,16 @@ export default function ItemSelectionComponent() {
 
            <Grid container  spacing={2}>
                <Grid container item  spacing={2}>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
                </Grid>
                <Grid container item  spacing={2}>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
                </Grid>
            </Grid>
            </Paper
@@ -49,7 +49,7 @@ export default function ItemSelectionComponent() {
    )
 }
 
-function ItemCard(props){
+function Food(props){
 
     return (
             <Paper>
@@ -86,4 +86,4 @@ function ItemCard(props){
 
 }
 
-export {ItemCard,ItemSelectionComponent};
+export {Food,Foods};

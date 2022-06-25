@@ -1,5 +1,5 @@
 import { Button, Grid} from '@mui/material';
-import ItemSelectionComponent, { ItemCard } from '../Item/Item';
+import ItemSelectionComponent, { ItemCard } from '../Foods/Foods';
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { getRestaurants } from './restaurantsSlice';
@@ -9,19 +9,23 @@ export default function Restaurants() {
     useEffect(() => {
         dispatch(getRestaurants())
     }, [dispatch]); 
-    const user = useSelector(state => state.restaurants);
+    const restaurants = useSelector(state => state.restaurants);
+    const renderRestaurants = () => {
+        let res = [];
+        for (let i = 0; i < restaurants.length; i++) {
+          res.push(
+            <Grid item xs={5} ><RestaurantCard restaurant={restaurants[i]}></RestaurantCard></Grid>
+          );
+        }
+        return res;
+    }
     return (
         <section className="Restaurants">
             <h2>Restaurants @ UBC</h2>
 
             <div className='items-inline'>
                <Grid container item spacing={2}>
-                   <Grid item xs={5} > <RestaurantCard></RestaurantCard></Grid>
-                   <Grid item xs={5} > <RestaurantCard></RestaurantCard></Grid>
-                   <Grid item xs={5} > <RestaurantCard></RestaurantCard></Grid>
-                   <Grid item xs={5} > <RestaurantCard></RestaurantCard></Grid>
-                   <Grid item xs={5} > <RestaurantCard></RestaurantCard></Grid>
-                   <Grid item xs={5} > <RestaurantCard></RestaurantCard></Grid>
+                   {renderRestaurants()}
                </Grid>
             </div>
         </section>

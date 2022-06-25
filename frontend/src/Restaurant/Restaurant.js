@@ -6,7 +6,7 @@ const Img = styled('img')({
     maxHeight: '100%',
 });
 
-export default function RestaurantCard(){
+export default function RestaurantCard(props){
 
     const openPopUp = () => {
         window.scrollTo({ top: 0, left: 0});
@@ -14,7 +14,7 @@ export default function RestaurantCard(){
         document.querySelector('.popout-wrapper').style.display = 'flex';
         document.querySelector('body').style.overflowY = 'hidden';
     }
-
+    const {name,address} = props.restaurant
     return (
         <Container maxWidth={"sm"}>
             <Paper
@@ -37,10 +37,10 @@ export default function RestaurantCard(){
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
                                 <Typography gutterBottom variant="subtitle1" component="div">
-                                    Cat Restaurant
+                                    {name}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    address..
+                                    {address}
                                 </Typography>
                                 <Typography variant="body2" >
                                     Description&map...

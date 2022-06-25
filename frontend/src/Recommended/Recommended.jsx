@@ -1,5 +1,5 @@
 import { Button, Grid} from '@mui/material';
-import ItemSelectionComponent, { ItemCard } from '../Item/Item';
+import ItemSelectionComponent, { Food } from '../Foods/Foods';
 import './Recommended.css';
 
 export default function Recommended() {
@@ -10,10 +10,10 @@ export default function Recommended() {
 
             <div className='items-inline'>
                <Grid container item spacing={2}>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
-                   <Grid item xs={3} > <ItemCard></ItemCard></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
+                   <Grid item xs={3} > <Food></Food></Grid>
                </Grid>
             </div>
         </section>

@@ -4,6 +4,34 @@ import axios from 'axios'
 const ROUTE = `${BACKEND_URI}/restaurants`;
 
 export const getRestaurants = createAsyncThunk('restaurants/getRestaurants', async (restaurantId,filters) => {
+  //Dummy data since backend isn't working
+  const restaurants = [{
+    name: "pizza hut",
+    address: "pizza street", 
+  },
+  {
+    name: "burger hut",
+    address: "burger street",
+  },
+  {
+    name: "taco hut",
+    address: "taco street",
+  },
+  {
+    name: "something hut",
+    address: "something street",
+  },
+  {
+    name: "mr peanut hut",
+    address: "mr peanut street",
+  },
+  {
+    name: "count chocula hut",
+    address: "count chocula street",
+  }
+  ]
+
+  /* ADD back once backend is working
   const params = {};
   if(restaurantId !== undefined) {
     params.restaurantId = restaurantId;
@@ -13,6 +41,8 @@ export const getRestaurants = createAsyncThunk('restaurants/getRestaurants', asy
   }
   const response = await axios.get(ROUTE, params);
   return response.data;
+  */
+  return restaurants;
 });
 
 export const getNearbyRestaurants = createAsyncThunk('restaurants/getNearbyRestaurants', async (lat,long,maxDistance) => {

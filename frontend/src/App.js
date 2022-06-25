@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import RestaurantCard from "./Restaurant/Restaurant";
 import {Button, ButtonBase, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
-import ItemSelectionComponent, {ItemCard} from "./Item/Item";
+import ItemSelectionComponent, {ItemCard} from "./Foods/Foods";
 import Header from './Header';
 import Summary from './Summary/Summary';
 import Recommended from './Recommended/Recommended';
