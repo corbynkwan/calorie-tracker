@@ -1,5 +1,5 @@
 import { Button, Grid} from '@mui/material';
-import ItemSelectionComponent, { Food } from '../Foods/Foods';
+import ItemSelectionComponent, { Food } from '../Foods/Food';
 import './Recommended.css';
 
 export default function Recommended() {
