@@ -3,26 +3,78 @@ import {BACKEND_URI} from '../config'
 import axios from 'axios'
 const ROUTE = `${BACKEND_URI}/foods`;
 
-export const getFoods = createAsyncThunk('foods/getFoods', async (restaurantId,foodId,filters) => {
+export const getAllFoods = createAsyncThunk('foods/getAllFoods', async () => {
+  const foods = [
+    {
+      name: "pizza",
+      calories: 1000,
+      filters: []
+    },
+    {
+      name: "burger",
+      calories: 1000,
+      filters: []
+    },
+    {
+      name: "taco",
+      calories: 1000,
+      filters: []
+    },
+    {
+      name: "something",
+      calories: 1000,
+      filters: []
+    }
+
+  ]
+  return foods;
+  /* ADD back once backend is working 
+  const response = await axios.get(ROUTE);
+  return response.data;
+  */
+});
+
+export const getRestaurantFoods = createAsyncThunk('foods/getRestaurantFoods', async (restaurantId) => {
+  const foods = [
+    {
+      name: "pizza 1",
+      calories: 1000,
+      filters: []
+    },
+    {
+      name: "pizza 2",
+      calories: 1000,
+      filters: []
+    },
+    {
+      name: "pizza 3",
+      calories: 1000,
+      filters: []
+    },
+    {
+      name: "pizza 4",
+      calories: 1000,
+      filters: []
+    }
+
+  ]
+  return foods;
+  /* ADD back once backend is working 
   const params = {};
   if(restaurantId !== undefined) {
     params.restaurantId = restaurantId;
   }
-  if(foodId !== undefined) {
-    params.foodId = restaurantId;
-  }
-  if(filters !== undefined) {
-    params.filters = filters;
-  }
   const response = await axios.get(ROUTE, params);
   return response.data;
+  */
 });
-
-
 
 const foodsSlice = createSlice({
     name: 'foods',
-    initialState: [],
+    initialState: {
+      allFoods: [],
+      restaurantFoods:[]
+    },
     reducers: {
       example_reducer: (state,action) => {        
         state = action.payload
@@ -31,9 +83,15 @@ const foodsSlice = createSlice({
     },
     extraReducers(builder) {
       builder
-        .addCase(getFoods.fulfilled, (state, action) => {
-          console.log('getFoods.fulfilled',action.payload)
-          return action.payload;
+        .addCase(getAllFoods.fulfilled, (state, action) => {
+          console.log('getAllFoods.fulfilled',action.payload)
+          state.allFoods = action.payload;
+          return state;
+        })
+        .addCase(getRestaurantFoods.fulfilled, (state, action) => {
+          console.log('getRestaurantFoods.fulfilled',action.payload)
+          state.restaurantFoods = action.payload;
+          return state;
         })
     }
 })

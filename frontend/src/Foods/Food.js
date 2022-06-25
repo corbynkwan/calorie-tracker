@@ -2,6 +2,7 @@ import {Button, Container, Grid, Paper, styled, Typography} from "@material-ui/c
 import {Img} from "../Restaurant/Restaurant";
 
 export function Food(props){
+    const {name,calories} = props.food
     return (
             <Paper>
                 <Grid container direction={"column"}>
@@ -13,10 +14,10 @@ export function Food(props){
                         <Grid container item xs={12} direction="column" spacing={2} alignItems="center">
                             <Grid item xs>
                                 <Typography gutterBottom variant="subtitle1" component="div">
-                                    Cat Food
+                                   {name}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                   1000 Cal
+                                   {calories}
                                 </Typography>
                                 <Typography variant="body2" >
                                     My fat cat love it.

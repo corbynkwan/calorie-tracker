@@ -1,8 +1,25 @@
 import {Button, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
 import {Img} from "../Restaurant/Restaurant";
 import {Food} from "./Food"
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { getRestaurantFoods } from '../Foods/foodsSlice';
+/* */
 export default function Foods() {
-
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getRestaurantFoods())
+    }, [dispatch]); 
+    const foods = useSelector(state => state.foods.restaurantFoods);
+    const renderFoods = () => {
+        let res = [];
+        for (let i = 0; i < foods.length; i++) {
+          res.push(
+            <Grid item xs={3}> <Food food={foods[i]}></Food></Grid>
+          );
+        }
+        return res;
+    }
    return(
        <Container maxWidth={"md"}>
            <Paper>
@@ -31,16 +48,10 @@ export default function Foods() {
 
            <Grid container  spacing={2}>
                <Grid container item  spacing={2}>
-                   <Grid item xs={3} > <Food></Food></Grid>
-                   <Grid item xs={3} > <Food></Food></Grid>
-                   <Grid item xs={3} > <Food></Food></Grid>
-                   <Grid item xs={3} > <Food></Food></Grid>
+                   {renderFoods()}
                </Grid>
                <Grid container item  spacing={2}>
-                   <Grid item xs={3} > <Food></Food></Grid>
-                   <Grid item xs={3} > <Food></Food></Grid>
-                   <Grid item xs={3} > <Food></Food></Grid>
-                   <Grid item xs={3} > <Food></Food></Grid>
+                   {renderFoods()}
                </Grid>
            </Grid>
            </Paper>
