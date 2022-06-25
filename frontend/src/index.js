@@ -7,10 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import FoodDiary from "./FoodDiary/FoodDiary";
 import CustomFoodPage from "./CustomFood/CustomFoodPage";
 import { Provider } from "react-redux";
-import { configureStore } from '@reduxjs/toolkit';
-import reducer from './reducers/reducer';
-
-const store = configureStore({reducer: reducer});
+import store from './store';
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
