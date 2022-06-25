@@ -14,7 +14,7 @@ export default function RestaurantCard(props){
         document.querySelector('.popout-wrapper').style.display = 'flex';
         document.querySelector('body').style.overflowY = 'hidden';
     }
-    const {name,address} = props.restaurant
+    const {name,address,thumbnail,desc} = props.restaurant
     return (
         <Container maxWidth={"sm"}>
             <Paper
@@ -29,8 +29,17 @@ export default function RestaurantCard(props){
             >
                 <Grid container spacing={2}>
                     <Grid item>
-                        <Container disableGutters  sx={{ width: 128, height: 128}}>
-                            <Img alt="complex" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/VAN_CAT.png/220px-VAN_CAT.png" />
+                        <Container disableGutters  sx={{ width: 150, height: 128}}>
+                            <div alt="complex" style={
+                                {
+                                    backgroundImage: `url(${thumbnail})`,
+                                    backgroundSize: 'contain',
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundPosition: "center center",
+                                    width: 150,
+                                    height: 128
+                                }
+                            }></div>
                         </Container>
                     </Grid>
                     <Grid item xs={2} sm container>
@@ -43,7 +52,7 @@ export default function RestaurantCard(props){
                                     {address}
                                 </Typography>
                                 <Typography variant="body2" >
-                                    Description&map...
+                                    {desc}
                                 </Typography>
                             </Grid>
                             <Grid item>

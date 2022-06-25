@@ -2,13 +2,22 @@ import {Button, Container, Grid, Paper, styled, Typography} from "@material-ui/c
 import {Img} from "../Restaurant/Restaurant";
 
 export function Food(props){
-    const {name,calories} = props.food
+    const {name,calories,thumbnail,from} = props.food
     return (
             <Paper>
                 <Grid container direction={"column"}>
                     <Grid item>
                         <Container disableGutters>
-                            <Img alt="complex" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Cat_and_Cat_Foods.jpg/580px-Cat_and_Cat_Foods.jpg" />
+                        <div alt="complex" style={
+                            {
+                                backgroundImage: `url(${thumbnail})`,
+                                backgroundSize: 'cover',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundPosition: "center center",
+                                width: '100%',
+                                height: 200
+                            }
+                        }></div>
                         </Container>
                     </Grid >
                         <Grid container item xs={12} direction="column" spacing={2} alignItems="center">
@@ -20,7 +29,7 @@ export function Food(props){
                                    {calories}
                                 </Typography>
                                 <Typography variant="body2" >
-                                    My fat cat love it.
+                                    {from}
                                 </Typography>
                             </Grid>
                             <Grid item>

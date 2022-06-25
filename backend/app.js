@@ -33,6 +33,42 @@ app.get('/test', async(req, res) => {
 
 })
 
+app.get('/User', async(req, res) => {
+
+    const retrivedData = await test.getAll();
+    res.statusCode = retrivedData.code;
+
+    res.json(retrivedData);
+
+})
+
+app.get('/UserLog/:uid', async(req, res) => {
+
+    const retrivedData = await test.getAll();
+    res.statusCode = retrivedData.code;
+
+    res.json(retrivedData);
+
+})
+
+app.post('/UserLog/:uid', async(req, res) => {
+
+    const retrivedData = await test.getAll();
+    res.statusCode = retrivedData.code;
+
+    res.json(retrivedData);
+
+})
+
+app.put('/UserLog/:uid/lid', async(req, res) => {
+
+    const retrivedData = await test.getAll();
+    res.statusCode = retrivedData.code;
+
+    res.json(retrivedData);
+
+})
+
 app.post('/test', async(req, res) => {
     
     const response = await test.add(req.body);

@@ -4,7 +4,17 @@ import TableCell from "@mui/material/TableCell";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Edit from "@mui/icons-material/Edit";
-const ReadOnlyRow = ({ row, handleEditClick }) => {
+
+import { useSelector, useDispatch } from 'react-redux'
+import { deleteUserLog } from '../globalSlices/userSlice';
+
+const ReadOnlyRow = ({ row, handleEditClick}) => {
+  const dispatch = useDispatch();
+
+  const handleDeleteClick = () => {
+    dispatch(deleteUserLog(row.id));
+  }
+
   return (
     <>
       <TableRow>
@@ -17,7 +27,7 @@ const ReadOnlyRow = ({ row, handleEditClick }) => {
           <EditIcon  color="action" fontSize="medium" onClick={(event) => handleEditClick(event, row)}/>
         </TableCell>
         <TableCell align="center">
-          <DeleteIcon  color="action" fontSize="medium"/>
+          <DeleteIcon  color="action" fontSize="medium" onClick={handleDeleteClick}/>
         </TableCell>
       </TableRow>
     </>

@@ -17,8 +17,24 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import Header from "../Header";
 import Footer from "../Footer";
 import FoodTable from "./FoodTable";
+import { useEffect } from 'react'
 import { Link } from "react-router-dom";
+
+import { useSelector, useDispatch } from 'react-redux'
+import { getUser } from '../globalSlices/userSlice';
+
+
 export default function FoodDiary() {
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+      dispatch(getUser())
+  }, [dispatch]);
+
+  let user = useSelector(state => state.user);
+
+  console.log(user);
+
   const [value, setValue] = React.useState(new Date("04/10/2022 12:00:00"));
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -103,7 +119,7 @@ export default function FoodDiary() {
             </ButtonGroup>
           </Grid>
           <Grid item>
-            <FoodTable />
+            <FoodTable user={user} />
           </Grid>
         </Grid>
       </Paper>

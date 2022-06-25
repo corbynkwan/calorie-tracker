@@ -8,19 +8,23 @@ import FoodDiary from "./FoodDiary/FoodDiary";
 import CustomFoodPage from "./CustomFood/CustomFoodPage";
 import { Provider } from "react-redux";
 import store from './store';
+import { createBrowserHistory } from "history";
+
+
+const history = createBrowserHistory();
+import { FronteggProvider } from '@frontegg/react';
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter history={history}>
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="foodDiary" element={<FoodDiary />} />
           <Route path="customFoodPage" element={<CustomFoodPage />} />
         </Routes>
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>
+    </BrowserRouter>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

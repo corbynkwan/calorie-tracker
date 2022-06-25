@@ -11,8 +11,21 @@ import Footer from './Footer';
 import CustomFood from './CustomFood/CustomFood';
 import InputForm from './InputForm';
 
+import { ContextHolder } from '@frontegg/rest-api';
+import { useAuth, useLoginWithRedirect } from "@frontegg/react";
+import { useEffect } from 'react';
+
 
 function App() {
+
+  // const { user, isAuthenticated } = useAuth();
+  // const loginWithRedirect = useLoginWithRedirect();
+
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     loginWithRedirect();
+  //   }
+  // }, [isAuthenticated, loginWithRedirect]);
 
   const closePopUp = () => {
     document.querySelector('.add-intake-popout').style.display = 'none';
