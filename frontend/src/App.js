@@ -2,13 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import RestaurantCard from "./Restaurant/Restaurant";
 import {Button, ButtonBase, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
-import ItemSelectionComponent, {ItemCard} from "./Item/Item";
+import ItemSelectionComponent, {ItemCard} from "./Foods/Foods";
 import Header from './Header';
 import Summary from './Summary/Summary';
 import Recommended from './Recommended/Recommended';
-import BrowseRestros from './BrowseRestros/BrowseRestros';
+import Restaurants from './Restaurants/Restaurants';
 import Footer from './Footer';
-import CustomFood from './CustomFood';
+import CustomFood from './CustomFood/CustomFood';
 import InputForm from './InputForm';
 
 
@@ -27,9 +27,9 @@ function App() {
       <Header/>
       <Summary/>
       <Recommended/>
-      <BrowseRestros/>
+      <Restaurants/>
       <Footer/>
-      
+    
 
       <section className='popout-wrapper'>
         <div className='btn-close'><Button variant="outlined" onClick={closePopUp}>Close</Button></div>

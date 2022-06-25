@@ -1,7 +1,15 @@
 import './Summary.css';
 import { Button } from '@mui/material';
-export default function Summary() {
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { getUser } from '../globalSlices/userSlice'
 
+export default function Summary() {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getUser())
+    }, [dispatch]); //if dispatch is called anywhere in the app, this will run
+    const user = useSelector(state => state.user);
     const openPopUp = () => {
         window.scrollTo({ top: 0, left: 0});
         document.querySelector('.add-intake-popout').style.display = 'unset';
@@ -13,7 +21,7 @@ export default function Summary() {
         <section className="Summary">
 
             <div className="greeting">
-                <h1><small>Good afternoon,</small> Human Being!</h1>
+                <h1><small>Good afternoon,</small> {user.name}</h1>
             </div>
 
             <div className="time-remaining">
@@ -22,7 +30,7 @@ export default function Summary() {
 
             <div className="right-intake-status">
                 <h3>Your Intake</h3>
-                <p>1500 calories remaining</p>
+                <p>{user.todaysCalories} calories remaining</p>
                 <div className="progress-bar-underlay"></div>
                 <div className="progress-bar-overlay"></div>
 
