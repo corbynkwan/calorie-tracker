@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './globalSlices/userSlice'
-import restaurantsReducer from './Restaurant/restaurantsSlice'
+import restaurantsReducer from './Restaurants/restaurantsSlice'
 import foodsReducer from './Item/foodsSlice'
 export default configureStore({
   reducer: {

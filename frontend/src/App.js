@@ -6,7 +6,7 @@ import ItemSelectionComponent, {ItemCard} from "./Item/Item";
 import Header from './Header';
 import Summary from './Summary/Summary';
 import Recommended from './Recommended/Recommended';
-import BrowseRestros from './BrowseRestros/BrowseRestros';
+import Restaurants from './Restaurants/Restaurants';
 import Footer from './Footer';
 import CustomFood from './CustomFood/CustomFood';
 import InputForm from './InputForm';
@@ -27,7 +27,7 @@ function App() {
       <Header/>
       <Summary/>
       <Recommended/>
-      <BrowseRestros/>
+      <Restaurants/>
       <Footer/>
     
 

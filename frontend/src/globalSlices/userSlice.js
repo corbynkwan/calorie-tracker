@@ -3,8 +3,19 @@ import {BACKEND_URI} from '../config'
 import axios from 'axios'
 const ROUTE = `${BACKEND_URI}/users`;
 export const getUser = createAsyncThunk('user/getUser', async (userId) => {
+  //DUMMY DATA until backend is ready
+  const user = {
+	name: "Joey Sandles",
+	weight: 120,
+	height: 150,
+	expectedCalories: 2000,
+	todaysCalories: 1500,
+  }
+  /* UNCOMMENT after adding backend  
   const response = await axios.get(ROUTE,userId);
   return response.data;
+  */
+ return user;
 });
 export const putUser = createAsyncThunk('user/putUser', async (user) => {
   const response = await axios.put(ROUTE,user);
