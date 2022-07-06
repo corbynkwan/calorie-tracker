@@ -52,6 +52,24 @@ db.Test = mongoose.model("Test", testSchema);
     TODO: Add Schemas & Models for all data types here.
 */
 
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    foodLog: {
+        type: Array,
+        required: false
+    }
+});
+
+db.User = mongoose.model("User", userSchema);
+
 // Export
 
 module.exports = db;

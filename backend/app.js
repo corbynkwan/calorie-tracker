@@ -1,83 +1,142 @@
 /*
-    Entrypoint - Backend
+    *Entrypoint - Backend
 */
 
 const express = require('express');
 const db = require('./db/db.config');
+const jwt = require('express-jwt').expressjwt;
+const jwks = require('jwks-rsa');
+const axios = require('axios');
 
+require('dotenv').config();
 const app = express();
 
-// Importing Services
+// *Importing Services
 
 const test = require('./services/test');
+const user = require('./services/user');
 
-// Middleware
+// *Middleware
 
-app.use(express.json());
-
+/* Allow CORS */
 app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Headers', 'accept, authorization, content-type, x-requested-with');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Origin', '*');
 
     next();
 });
 
 
-app.get('/test', async(req, res) => {
+/* JWT Verification */
 
-    const retrivedData = await test.getAll();
-    res.statusCode = retrivedData.code;
+const jwtCheck = jwt({
+    secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: process.env.AUTH_JWKSURI
+  }),
+  audience: process.env.AUTH_AUDIENCE,
+  issuer: process.env.AUTH_ISSUER,
+  algorithms: [process.env.AUTH_ALGO]
+});
+app.use(jwtCheck);
 
-    res.json(retrivedData);
+/* Attaching user details to incoming request object */
 
-})
+const userGateway = async(req, res, next) => {
+    let methods = ['GET', 'POST', 'PUT', 'DELETE'];
 
-app.get('/User', async(req, res) => {
+    if (methods.includes(req.method)) {
+        const token = req.headers.authorization.split(' ')[1];
+        const resp = await axios.get(`${process.env.AUTH_ISSUER}userInfo`,
+        {
+            headers: {
+                "authorization": `Bearer ${token}`
+            }
+        }
+        );
 
-    const retrivedData = await test.getAll();
-    res.statusCode = retrivedData.code;
-
-    res.json(retrivedData);
-
-})
-
-app.get('/UserLog/:uid', async(req, res) => {
-
-    const retrivedData = await test.getAll();
-    res.statusCode = retrivedData.code;
-
-    res.json(retrivedData);
-
-})
-
-app.post('/UserLog/:uid', async(req, res) => {
-
-    const retrivedData = await test.getAll();
-    res.statusCode = retrivedData.code;
-
-    res.json(retrivedData);
-
-})
-
-app.put('/UserLog/:uid/lid', async(req, res) => {
-
-    const retrivedData = await test.getAll();
-    res.statusCode = retrivedData.code;
-
-    res.json(retrivedData);
-
-})
-
-app.post('/test', async(req, res) => {
+        const userDetails = resp.data;
+        req.userDetails = userDetails;
+    }
     
-    const response = await test.add(req.body);
-    res.statusCode = response.code;
-    res.json(response);
+    next();
+}
+app.use(userGateway);
 
-})
+/* Parse any req body to JSON */
+app.use(express.json());
 
-const port = 6000 || process.env.port;
+// *Application Routes
+
+/* Get FoodLog for existing user */
+app.get('/User/FoodLogs/', async(req, res) => {
+    try {
+        const retrivedData = await user.foodLog.get(req.userDetails);
+        res.statusCode = retrivedData.code;
+
+        res.json(retrivedData);
+    } catch (error) {
+        res.statusCode = 500;
+        res.json({});
+    }
+
+});
+
+/* Add to FoodLog of currently LoggedIn user */
+app.post('/User/FoodLog/', async(req, res) => {
+
+    try {
+
+        const retrivedData = await user.foodLog.add(req.userDetails, req.body.newRow);
+        res.statusCode = retrivedData.code;
+        res.json(retrivedData);
+
+    } catch (error) {
+
+        res.statusCode = 500;
+        res.json({});
+    }
+
+});
+
+/* Creates new entry from exisitng entry in FoodLog of LoggedIn user */
+app.put('/User/FoodLog/', async(req, res) => {
+
+    try {
+
+        const retrivedData = await user.foodLog.modify(req.userDetails, req.body.updatedRow);
+        res.statusCode = retrivedData.code;
+        res.json(retrivedData);
+
+    } catch (error) {
+
+        res.statusCode = 500;
+        res.json({});
+    }
+
+});
+
+/* Deletes an exisitng entry in FoodLog of LoggedIn user */
+app.delete('/User/FoodLog/:logId', async(req, res) => {
+
+    try {
+        const retrivedData = await user.foodLog.delete(req.userDetails, req.params.logId);
+        res.statusCode = retrivedData.code;
+
+        res.json(retrivedData);
+    } catch (error) {
+        res.statusCode = 500;
+        res.json({});
+    }
+
+});
+
+// *Initialize Server
+
+const port = 5001 || process.env.port;
 app.listen(port, async() => {
     
     try {
@@ -95,4 +154,4 @@ app.listen(port, async() => {
     }
 
     
-})
+});
