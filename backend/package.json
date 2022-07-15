@@ -1,0 +1,20 @@
+{
+  "name": "calorie-tracker-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dhruv Malik, Zehao Lu, Amy Lee, Corbyn Kwan",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-jwt": "^7.7.5",
+    "jwks-rsa": "^2.1.4",
+    "mongoose": "^6.4.0",
+    "nodemon": "^2.0.19"
+  }
+}
