@@ -70,6 +70,7 @@ Calorie-Tracker is a web application designed to support students’ dietary goa
   <li> Background location tracking, and push notificaitons for recommendations. </li>
   <li> Machine learning for food recommendations </li>
   <li> Food reviews/rating feature </li>
+  <li> Crawler(s) to fetch resturant data</li>
 </ui>
 
 <h2>Prototypes: </h2>

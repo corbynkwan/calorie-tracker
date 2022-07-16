@@ -1,0 +1,36 @@
+
+.popout-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .add-intake-popout, .food-diary-popout {
+    height: 900px;
+    width: 635px;
+    position: relative;
+    display: none;
+    top: 150px;
+  
+  }
+  
+  .item-selection-popout {
+    display: none;
+    position: relative;
+    top: 150px;
+  }
+  
+  .btn-close {
+    color: white !important;
+    border-color: white !important;
+    position: absolute;
+    top: 5px;
+    right: 25px;
+  }
