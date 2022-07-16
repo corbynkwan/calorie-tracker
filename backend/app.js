@@ -192,14 +192,6 @@ app.get('/nearby/',async (req,res)=>{
     res.json(retrievedData);
 })
 
-
-
-app.post('/test', async(req, res) => {
-    
-    const response = await test.add(req.body);
-    res.statusCode = response.code;
-    res.json(response);
-
 /* Deletes an exisitng entry in FoodLog of LoggedIn user */
 app.delete('/User/FoodLog/:logId', async(req, res) => {
 
