@@ -66,8 +66,8 @@ item.getByEateryId = async(eateryId) => {
 
         try {
 
-            const foundEatery = await db.item.find({restaurantId:new ObjectId(eateryId)});
-            resolve({code: 201, result: foundEatery});
+            const foundItems = await db.item.find({restaurantId:new ObjectId(eateryId)});
+            resolve({code: 200, result: foundItems});
 
         } catch (e) {
 
@@ -92,9 +92,47 @@ item.getAll = async() => {
 
         }
 
-
-
     })
 }
+
+item.getByFilters = async(rawFilters) => {
+
+    return new Promise(async(resolve,reject) => {
+
+        try{
+
+            let filters = rawFilters.split(",");
+            const foundItems = await db.item.find({filters:{$all:filters}});
+            resolve({code: 200, results: foundItems});
+
+        } catch (e) {
+
+            reject({code: 406, error: e});
+
+        }
+
+    })
+
+}
+
+item.getByEateryIdAndFilters = async(eateryId, rawFilters) => {
+
+    return new Promise(async(resolve,reject) => {
+
+        try{
+            let filters = rawFilters.split(",");
+            const foundItems = await db.item.find({restaurantId:new ObjectId(eateryId), filters:{$all:filters}});
+            resolve({code: 200, results: foundItems});
+
+        } catch (e) {
+
+            reject({code: 406, error: e});
+
+        }
+
+    })
+
+}
+
 
 module.exports = item;

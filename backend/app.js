@@ -12,7 +12,7 @@ const mongoose = require("mongoose");
 const test = require('./services/test');
 const eatery = require("./services/eatery");
 const nearby = require("./services/nearby");
-const item = require("./services/food");
+const item = require("./services/item");
 
 // Middleware
 
@@ -72,36 +72,65 @@ app.put('/UserLog/:uid/lid', async(req, res) => {
 
 })
 
+// query parameter:
+// empty
+// id
+// isOpen(TF)
+// filters(every filter is split by , )
+// isOpen + filters
 app.get('/eatery',async (req, res) => {
-    if (req.query.id === undefined && req.query.isOpen === undefined) {
+    if (req.query.id === undefined && req.query.isOpen === undefined && req.query.filters === undefined) {
         let retrievedData = await eatery.getAll();
         res.statusCode=retrievedData.code;
         res.json(retrievedData);
-    }else if(req.query.id!==undefined){
+    }else if(req.query.id !== undefined && req.query.isOpen === undefined && req.query.filters === undefined){
         let retrievedData = await eatery.getByID(req.query.id);
         res.statusCode=retrievedData.code;
         res.json(retrievedData);
-    }else if(req.query.isOpen!==undefined){
+    }else if(req.query.id === undefined && req.query.isOpen !== undefined && req.query.filters === undefined){
         let retrievedData = await eatery.getAllByOpen(req.query.isOpen);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id === undefined && req.query.isOpen === undefined && req.query.filters !== undefined){
+        let retrievedData = await eatery.getByFilters(req.query.filters);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id === undefined && req.query.isOpen !== undefined && req.query.filters !== undefined){
+        let retrievedData = await eatery.getByOpenAndFilters(req.query.isOpen, req.query.filters);
         res.statusCode=retrievedData.code;
         res.json(retrievedData);
     }
 })
 
+// query parameter:
+// empty
+// id
+// eateryId
+// filters(every filter is split by , )
+// eateryId+filters
 app.get('/items',async (req, res) => {
-    if (req.query.eateryId === undefined && req.query.id === undefined) {
+    if (req.query.eateryId === undefined && req.query.id === undefined && req.query.filters === undefined) {
         let retrievedData = await item.getAll();
         res.statusCode=retrievedData.code;
         res.json(retrievedData);
-    }else if(req.query.id!==undefined && req.query.eateryId===undefined){
+    }else if(req.query.id!==undefined && req.query.eateryId===undefined && req.query.filters === undefined){
         let retrievedData = await item.getByID(req.query.id);
         res.statusCode=retrievedData.code;
         res.json(retrievedData);
-    }else if(req.query.id===undefined&&req.query.eateryId!==undefined){
+    }else if(req.query.id===undefined && req.query.eateryId !== undefined && req.query.filters === undefined){
         let retrievedData = await item.getByEateryId(req.query.eateryId);
         res.statusCode=retrievedData.code;
         res.json(retrievedData);
+    }else if(req.query.id === undefined && req.query.eateryId === undefined && req.query.filters !== undefined){
+        let retrievedData = await item.getByFilters(req.query.filters);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id === undefined && req.query.eateryId !== undefined && req.query.filters !== undefined){
+        let retrievedData = await item.getByEateryIdAndFilters(req.query.eateryId, req.query.filters);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
     }
+
 })
 
 app.get('/nearby/',async (req,res)=>{

@@ -94,6 +94,62 @@ eatery.getAllByOpen = async(isOpen) => {
     })
 }
 
+eatery.getByFilters = async(rawFilters) => {
+
+    return new Promise(async(resolve,reject) => {
+
+        try{
+
+            let filters = rawFilters.split(",");
+            const foundRestaurants = await db.restaurants.find({filters:{$all:filters}});
+            resolve({code: 200, results: foundRestaurants});
+
+        } catch (e) {
+
+            reject({code: 406, error: e});
+
+        }
+
+    })
+
+}
+
+eatery.getByOpenAndFilters = async(isOpen, rawFilters) => {
+
+    return new Promise(async(resolve,reject) => {
+
+        try{
+
+            let filters = rawFilters.split(",");
+            const foundRestaurants = await db.restaurants.find({filters:{$all:filters}});
+
+            let ret = {};
+
+            if(isOpen === "true"){
+                for (let i in foundRestaurants){
+                    if(checkAuditTime(foundRestaurants[i].startTime,foundRestaurants[i].endTime)){
+                        ret.push(foundRestaurants[i]);
+                    }
+                }
+            }else{
+                for (let i in foundRestaurants){
+                    if(!checkAuditTime(foundRestaurants[i].startTime,foundRestaurants[i].endTime)){
+                        ret.push(foundRestaurants[i]);
+                    }
+                }
+            }
+            resolve({code: 200, results: ret});
+
+        } catch (e) {
+
+            reject({code: 406, error: e});
+
+        }
+
+    })
+
+}
+
 function checkAuditTime(beginTime, endTime) {
 
     var nowDate = new Date();
