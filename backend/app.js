@@ -6,10 +6,13 @@ const express = require('express');
 const db = require('./db/db.config');
 
 const app = express();
-
+const mongoose = require("mongoose");
 // Importing Services
 
 const test = require('./services/test');
+const eatery = require("./services/eatery");
+const nearby = require("./services/nearby");
+const item = require("./services/food");
 
 // Middleware
 
@@ -26,48 +29,88 @@ app.use(function (req, res, next) {
 
 app.get('/test', async(req, res) => {
 
-    const retrivedData = await test.getAll();
-    res.statusCode = retrivedData.code;
+    const retrievedData = await test.getAll();
+    res.statusCode = retrievedData.code;
 
-    res.json(retrivedData);
+    res.json(retrievedData);
 
 })
 
 app.get('/User', async(req, res) => {
 
-    const retrivedData = await test.getAll();
-    res.statusCode = retrivedData.code;
+    const retrievedData = await test.getAll();
+    res.statusCode = retrievedData.code;
 
-    res.json(retrivedData);
+    res.json(retrievedData);
 
 })
 
 app.get('/UserLog/:uid', async(req, res) => {
 
-    const retrivedData = await test.getAll();
-    res.statusCode = retrivedData.code;
+    const retrievedData = await test.getAll();
+    res.statusCode = retrievedData.code;
 
-    res.json(retrivedData);
+    res.json(retrievedData);
 
 })
 
 app.post('/UserLog/:uid', async(req, res) => {
 
-    const retrivedData = await test.getAll();
-    res.statusCode = retrivedData.code;
+    const retrievedData = await test.getAll();
+    res.statusCode = retrievedData.code;
 
-    res.json(retrivedData);
+    res.json(retrievedData);
 
 })
 
 app.put('/UserLog/:uid/lid', async(req, res) => {
 
-    const retrivedData = await test.getAll();
-    res.statusCode = retrivedData.code;
+    const retrievedData = await test.getAll();
+    res.statusCode = retrievedData.code;
 
-    res.json(retrivedData);
+    res.json(retrievedData);
 
 })
+
+app.get('/eatery',async (req, res) => {
+    if (req.query.id === undefined && req.query.isOpen === undefined) {
+        let retrievedData = await eatery.getAll();
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id!==undefined){
+        let retrievedData = await eatery.getByID(req.query.id);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.isOpen!==undefined){
+        let retrievedData = await eatery.getAllByOpen(req.query.isOpen);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }
+})
+
+app.get('/items',async (req, res) => {
+    if (req.query.eateryId === undefined && req.query.id === undefined) {
+        let retrievedData = await item.getAll();
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id!==undefined && req.query.eateryId===undefined){
+        let retrievedData = await item.getByID(req.query.id);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id===undefined&&req.query.eateryId!==undefined){
+        let retrievedData = await item.getByEateryId(req.query.eateryId);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }
+})
+
+app.get('/nearby/',async (req,res)=>{
+    let retrievedData = await nearby.getRestaurantsWithinDist(req.query.lat,req.query.lon,req.query.maxDist);
+    res.statusCode=retrievedData.code;
+    res.json(retrievedData);
+})
+
+
 
 app.post('/test', async(req, res) => {
     
