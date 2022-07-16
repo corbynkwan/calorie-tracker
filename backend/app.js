@@ -11,8 +11,12 @@ const axios = require('axios');
 require('dotenv').config();
 const app = express();
 
-// *Importing Services
+const mongoose = require("mongoose");
+// Importing Services
 
+const eatery = require("./services/eatery");
+const nearby = require("./services/nearby");
+const item = require("./services/item");
 const test = require('./services/test');
 const user = require('./services/user');
 
@@ -69,6 +73,7 @@ app.use(userGateway);
 /* Parse any req body to JSON */
 app.use(express.json());
 
+
 // *Application Routes
 
 /* Get FoodLog for existing user */
@@ -76,7 +81,6 @@ app.get('/User/FoodLogs/', async(req, res) => {
     try {
         const retrivedData = await user.foodLog.get(req.userDetails);
         res.statusCode = retrivedData.code;
-
         res.json(retrivedData);
     } catch (error) {
         res.statusCode = 500;
@@ -84,23 +88,25 @@ app.get('/User/FoodLogs/', async(req, res) => {
     }
 
 });
+
 
 /* Add to FoodLog of currently LoggedIn user */
 app.post('/User/FoodLog/', async(req, res) => {
 
     try {
-
+    
         const retrivedData = await user.foodLog.add(req.userDetails, req.body.newRow);
         res.statusCode = retrivedData.code;
         res.json(retrivedData);
 
     } catch (error) {
-
+    
         res.statusCode = 500;
         res.json({});
     }
 
 });
+
 
 /* Creates new entry from exisitng entry in FoodLog of LoggedIn user */
 app.put('/User/FoodLog/', async(req, res) => {
@@ -119,6 +125,73 @@ app.put('/User/FoodLog/', async(req, res) => {
 
 });
 
+// query parameter:
+// empty
+// id
+// isOpen(TF)
+// filters(every filter is split by , )
+// isOpen + filters
+app.get('/eatery',async (req, res) => {
+    if (req.query.id === undefined && req.query.isOpen === undefined && req.query.filters === undefined) {
+        let retrievedData = await eatery.getAll();
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id !== undefined && req.query.isOpen === undefined && req.query.filters === undefined){
+        let retrievedData = await eatery.getByID(req.query.id);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id === undefined && req.query.isOpen !== undefined && req.query.filters === undefined){
+        let retrievedData = await eatery.getAllByOpen(req.query.isOpen);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id === undefined && req.query.isOpen === undefined && req.query.filters !== undefined){
+        let retrievedData = await eatery.getByFilters(req.query.filters);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id === undefined && req.query.isOpen !== undefined && req.query.filters !== undefined){
+        let retrievedData = await eatery.getByOpenAndFilters(req.query.isOpen, req.query.filters);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }
+})
+
+// query parameter:
+// empty
+// id
+// eateryId
+// filters(every filter is split by , )
+// eateryId+filters
+app.get('/items',async (req, res) => {
+    if (req.query.eateryId === undefined && req.query.id === undefined && req.query.filters === undefined) {
+        let retrievedData = await item.getAll();
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id!==undefined && req.query.eateryId===undefined && req.query.filters === undefined){
+        let retrievedData = await item.getByID(req.query.id);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id===undefined && req.query.eateryId !== undefined && req.query.filters === undefined){
+        let retrievedData = await item.getByEateryId(req.query.eateryId);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id === undefined && req.query.eateryId === undefined && req.query.filters !== undefined){
+        let retrievedData = await item.getByFilters(req.query.filters);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }else if(req.query.id === undefined && req.query.eateryId !== undefined && req.query.filters !== undefined){
+        let retrievedData = await item.getByEateryIdAndFilters(req.query.eateryId, req.query.filters);
+        res.statusCode=retrievedData.code;
+        res.json(retrievedData);
+    }
+
+})
+
+app.get('/nearby/',async (req,res)=>{
+    let retrievedData = await nearby.getRestaurantsWithinDist(req.query.lat,req.query.lon,req.query.maxDist);
+    res.statusCode=retrievedData.code;
+    res.json(retrievedData);
+})
+
 /* Deletes an exisitng entry in FoodLog of LoggedIn user */
 app.delete('/User/FoodLog/:logId', async(req, res) => {
 
@@ -133,6 +206,7 @@ app.delete('/User/FoodLog/:logId', async(req, res) => {
     }
 
 });
+
 
 // *Initialize Server
 

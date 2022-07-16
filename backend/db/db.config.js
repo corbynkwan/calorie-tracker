@@ -15,7 +15,7 @@ db.connect = async() => {
 
         try {
 
-            await mongoose.connect(process.env.MONGODB_SRV);
+                await mongoose.connect(process.env.MONGODB_SRV);
             resolve();
 
 
