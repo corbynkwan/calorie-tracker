@@ -19,7 +19,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
 import FoodDiary from './pages/FoodDiary/FoodDiary';
-
+import AddFood from './pages/AddFood/AddFood';
 import CustomFoodPage from './pages/CustomFood/CustomFoodPage';
 
 /* redux related */ 
@@ -67,12 +67,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Home user={userData}/>} />
           <Route path="diary" element={<FoodDiary user={userData}/>} />
-          <Route path="diary/add" element={<CustomFoodPage />} />
+          <Route path="diary/add" element={<AddFood />} />
         </Routes>
       <Footer/>
     </div>
 
   );
 }
-
+// TODO add this later
+//<Route path="diary/add" element={<CustomFoodPage />} />
 export default App;

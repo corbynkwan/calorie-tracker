@@ -14,7 +14,7 @@ db.connect = async() => {
     return new Promise(async(resolve, reject) => {
 
         try {
-
+            console.log('[info] Connecting to MongoDB Instance...', process.env.MONGODB_SRV);
             await mongoose.connect(process.env.MONGODB_SRV);
             resolve();
 
