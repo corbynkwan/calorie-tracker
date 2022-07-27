@@ -23,7 +23,7 @@ const user = require('./services/user');
 // *Middleware
 
 /* Allow CORS */
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -207,6 +207,22 @@ app.delete('/User/FoodLog/:logId', async(req, res) => {
 
 });
 
+
+app.post("/Reminders/Subscribe", (req, res) => {
+    // Get pushSubscription object
+    const subscription = req.body;
+  
+    // Send 201 - resource created
+    res.status(201).json({});
+  
+    // Create payload
+    const payload = JSON.stringify({ title: "When do you usualy eat?" });
+  
+    // Pass object into sendNotification
+   // webpush
+     // .sendNotification(subscription, payload)
+      //.catch(err => console.error(err));
+  });
 
 // *Initialize Server
 
