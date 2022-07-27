@@ -1,10 +1,15 @@
 const db = require('../db/db.config');
 const mongoose = require("mongoose");
 let ObjectId = require('mongoose').Types.ObjectId;
+const crawler = require('../crawler/crawler');
 
 const restaurantSchema = {
     _id: ObjectId,
     name: {
+        type: String,
+        required: true
+    },
+    restaurant_id:{
         type: String,
         required: true
     },
@@ -28,10 +33,16 @@ const restaurantSchema = {
         type: String,
         required: true
     },
+    menu_ids: {
+        type: Object,
+        of: String,
+        required: true
+    },
     filters: {
         type: Array,
         required: false
     }
+
 };
 
 db.restaurants=mongoose.model('restaurants',restaurantSchema);
@@ -149,6 +160,28 @@ eatery.getByOpenAndFilters = async(isOpen, rawFilters) => {
     })
 
 }
+
+eatery.updateRestaurants = async() => {
+        let eateries = await crawler.restaurants();
+        for(let i in eateries){
+            let menuIds = [];
+            let menuObj ={}
+            for(let menuId in eateries[i].menus){
+                menuObj[menuId.toString()] = eateries[i].menus[menuId];
+            }
+             await db.restaurants.findOneAndUpdate({restaurant_id:eateries[i].id},{
+                name:eateries[i].name,
+                geolocation:eateries[i].geolocation,
+                address:eateries[i].address,
+                logo:eateries[i].logo,
+                startTime:eateries[i].startTime.substring(0,5),
+                endTime:eateries[i].endTime.substring(0,5),
+                 menu_ids: menuObj
+            },{upsert:true});
+            return eateries;
+        }
+}
+
 
 function checkAuditTime(beginTime, endTime) {
 

@@ -19,6 +19,16 @@ const nearby = require("./services/nearby");
 const item = require("./services/item");
 const test = require('./services/test');
 const user = require('./services/user');
+const crawler = require('./crawler/crawler');
+
+
+testCrawlerFunction();
+
+async function testCrawlerFunction(){
+    let restaurantsData = await eatery.updateRestaurants();
+    item.updateAllItems(restaurantsData);
+}
+
 
 // *Middleware
 
@@ -207,6 +217,14 @@ app.delete('/User/FoodLog/:logId', async(req, res) => {
 
 });
 
+app.post('/test/Update',async()=>{
+    try{
+        let restaurantsData = crawler.restaurants();
+        await eatery.updateRestaurants(restaurantsData);
+    }catch (e) {
+        
+    }
+})
 
 // *Initialize Server
 

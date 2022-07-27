@@ -5,9 +5,14 @@
 const db = require('../db/db.config');
 const mongoose = require("mongoose");
 const ObjectId = require('mongoose').Types.ObjectId;
+const crawler = require('../crawler/crawler')
 const itemSchema = {
     _id: {
         type: ObjectId,
+        required: false
+    },
+    item_id: {
+        type: String,
         required: false
     },
     name: {
@@ -19,7 +24,7 @@ const itemSchema = {
         required: false
     },
     restaurantId: {
-        type: ObjectId,
+        type: String,
         required: true
     },
     protein: {
@@ -134,5 +139,11 @@ item.getByEateryIdAndFilters = async(eateryId, rawFilters) => {
 
 }
 
-
+item.updateAllItems = async function(RestaurantsData){
+    let itemsData = await crawler.getAllItems(RestaurantsData);
+    for(let i in itemsData){
+        await db.item.findOneAndUpdate({item_id:itemsData[i].item_id},itemsData[i],{upsert:true});
+    }
+    console.log("complete");
+}
 module.exports = item;
