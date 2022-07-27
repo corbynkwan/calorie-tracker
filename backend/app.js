@@ -17,7 +17,6 @@ const mongoose = require("mongoose");
 const eatery = require("./services/eatery");
 const nearby = require("./services/nearby");
 const item = require("./services/item");
-const test = require('./services/test');
 const user = require('./services/user');
 
 // *Middleware
