@@ -6,7 +6,7 @@ Calorie-Tracker is a web application designed to support students’ dietary goa
 
 <h3>Who is it for: </h3>
 <ul>
-  <li>UBC student</li>
+  <li>UBC students</li>
 </ul>
 
 <h3>What will it do:</h3> 
