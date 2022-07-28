@@ -62,7 +62,7 @@ Calorie-Tracker is a web application designed to support students’ dietary goa
   <li> User can search for restaurants </li>
   <li> User can view restaurant recommendations based on location/calorie intake so far/time </li>
   <li> User gets food reminders </li>
-  <li> Google map for navigation </li>
+  <li> Google map for navigation. </li>
 </ul>
 
 <h3>2-3 stretch requirements (plan to complete at least 1!):</h3>
