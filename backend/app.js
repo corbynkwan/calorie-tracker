@@ -225,8 +225,8 @@ app.post("/Reminders/Subscribe", (req, res) => {
 
 // *Initialize Server
 
-const port = 5001 || process.env.PORT;
-const host = '127.0.0.1' || process.env.HOST;
+const port = process.env.PORT || 5001;
+const host = process.env.HOST || '127.0.0.1';
 app.listen(port, host, async() => {
     
     try {
