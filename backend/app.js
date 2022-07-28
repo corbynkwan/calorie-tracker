@@ -19,15 +19,6 @@ const nearby = require("./services/nearby");
 const item = require("./services/item");
 const test = require('./services/test');
 const user = require('./services/user');
-const crawler = require('./crawler/crawler');
-
-
-testCrawlerFunction();
-
-async function testCrawlerFunction(){
-    let restaurantsData = await eatery.updateRestaurants();
-    item.updateAllItems(restaurantsData);
-}
 
 
 // *Middleware

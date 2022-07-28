@@ -53,7 +53,7 @@ item.getByID = async(id) => {
     return new Promise(async(resolve, reject) => {
 
         try {
-
+            await db.connect();
             const foundEatery = await db.item.findOne({_id:new ObjectId(id)});
             resolve({code: 201, result: foundEatery});
 
@@ -70,7 +70,7 @@ item.getByEateryId = async(eateryId) => {
     return new Promise(async(resolve, reject) => {
 
         try {
-
+            await db.connect();
             const foundItems = await db.item.find({restaurantId:new ObjectId(eateryId)});
             resolve({code: 200, result: foundItems});
 
@@ -87,7 +87,7 @@ item.getAll = async() => {
     return new Promise(async(resolve,reject) => {
 
         try{
-
+            await db.connect();
             const allItems = await db.item.find({});
             resolve({code: 200, results: allItems});
 
@@ -107,6 +107,7 @@ item.getByFilters = async(rawFilters) => {
         try{
 
             let filters = rawFilters.split(",");
+            await db.connect();
             const foundItems = await db.item.find({filters:{$all:filters}});
             resolve({code: 200, results: foundItems});
 
@@ -126,6 +127,7 @@ item.getByEateryIdAndFilters = async(eateryId, rawFilters) => {
 
         try{
             let filters = rawFilters.split(",");
+            await db.connect();
             const foundItems = await db.item.find({restaurantId:new ObjectId(eateryId), filters:{$all:filters}});
             resolve({code: 200, results: foundItems});
 
@@ -141,9 +143,9 @@ item.getByEateryIdAndFilters = async(eateryId, rawFilters) => {
 
 item.updateAllItems = async function(RestaurantsData){
     let itemsData = await crawler.getAllItems(RestaurantsData);
+    await db.connect();
     for(let i in itemsData){
         await db.item.findOneAndUpdate({item_id:itemsData[i].item_id},itemsData[i],{upsert:true});
     }
-    console.log("complete");
 }
 module.exports = item;

@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "crawler_start": "node ./crawler/CrawlerDrive.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dhruv Malik, Zehao Lu, Amy Lee, Corbyn Kwan",
@@ -15,6 +16,7 @@
     "express-jwt": "^7.7.5",
     "jwks-rsa": "^2.1.4",
     "mongoose": "^6.4.0",
+    "node-schedule": "^2.1.0",
     "nodemon": "^2.0.19"
   }
 }
