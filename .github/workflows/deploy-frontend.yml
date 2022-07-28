@@ -23,5 +23,5 @@ jobs:
         - name: Build & Deploy Frontend
           uses: digitalocean/app_action@main
           with:
-            app_name: calorie-tracker-frontend
+            app_name: calorie-tracker-prod
             token: ${{ secrets.SECRET_KEY }}

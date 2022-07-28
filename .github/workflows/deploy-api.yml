@@ -23,5 +23,5 @@ jobs:
         - name: Deploy Backend API
           uses: digitalocean/app_action@main
           with:
-            app_name: calorie-tracker-backend
+            app_name: calorie-tracker-prod
             token: ${{ secrets.SECRET_KEY }}
