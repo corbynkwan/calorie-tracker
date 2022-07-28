@@ -1,0 +1,27 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+defaults:
+  run:
+    working-directory: frontend
+
+jobs:
+
+  deploy:
+      name: Deploy
+      runs-on: ubuntu-latest
+
+      steps: 
+        - name: Checkout
+          uses: actions/checkout@v1
+
+        - name: Build & Deploy Frontend
+          uses: digitalocean/app_action@main
+          with:
+            app_name: calorie-tracker-frontend
+            token: ${{ secrets.SECRET_KEY }}

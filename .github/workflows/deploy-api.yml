@@ -1,0 +1,27 @@
+name: Deploy API
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+defaults:
+  run:
+    working-directory: backend
+
+jobs:
+
+  deploy:
+      name: Deploy
+      runs-on: ubuntu-latest
+
+      steps: 
+        - name: Checkout
+          uses: actions/checkout@v1
+
+        - name: Deploy Backend API
+          uses: digitalocean/app_action@main
+          with:
+            app_name: calorie-tracker-backend
+            token: ${{ secrets.SECRET_KEY }}
