@@ -57,20 +57,66 @@ user.foodLog.add = async(userDetails, logItem) => {
 }
 
 user.foodLog.get = async(userDetails) => {
-
+    // Retrieve current date's food log when user Logged in 
+    const date = new Date();
     return new Promise(async(resolve, reject) => {
-        try {
-            await user.prepareForTransaction(userDetails);
-            const userRecord = await db.User.findOne(
-                {email: userDetails.email}
-            )
-            resolve({code: 200, log: userRecord.foodLog});
-    
-        } catch (e) {
+    try {
+        await user.prepareForTransaction(userDetails);
+        const userRecord = await db.User.aggregate([ 
+            { $match: {email: userDetails.email}},
+            { $project: {
+                foodLog: {$filter: {
+                    input: '$foodLog',
+                    as: 'log',
+                   cond: {
+                    $regexMatch: {
+                      input: "$$log.dateTime",
+                      // Only match the date part e.g. "2022-07-23" 
+                      regex: date.toISOString().substring(0,10)
+                    }
+                  }
+                }}
+            }}
+        ])
 
-            reject({code: e.code || 406, error: e.error || 'DB Error'});
+        resolve({code: 200, log: userRecord[0].foodLog});
 
-        }
+    } catch (e) {
+
+        reject({code: e.code || 406, error: e.error || 'DB Error'});
+
+}
+    })
+}
+
+user.foodLog.getByDate = async(userDetails, dateTime) => {
+    return new Promise(async(resolve, reject) => {
+    try {
+        await user.prepareForTransaction(userDetails);
+        const userRecord = await db.User.aggregate([ 
+            { $match: {email: userDetails.email}},
+            { $project: {
+                foodLog: {$filter: {
+                    input: '$foodLog',
+                    as: 'log',
+                   cond: {
+                    $regexMatch: {
+                      input: "$$log.dateTime",
+                      // Only match the date part e.g. "2022-07-23" 
+                      regex: dateTime
+                    }
+                  }
+                }}
+            }}
+        ])
+
+        resolve({code: 200, log: userRecord[0].foodLog});
+
+    } catch (e) {
+
+        reject({code: e.code || 406, error: e.error || 'DB Error'});
+
+}
     })
 }
 

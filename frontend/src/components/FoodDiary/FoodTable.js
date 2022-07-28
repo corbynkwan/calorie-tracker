@@ -238,7 +238,7 @@ export default function EnhancedTable(props) {
           <Table
             sx={{ maxWidth: 50 }}
             aria-labelledby="tableTitle"
-            size={dense ? "small" : "mediumf"}
+            size={dense ? "small" : "medium"}
           >
             <EnhancedTableHead
               order={order}

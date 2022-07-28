@@ -17,7 +17,7 @@ const mongoose = require("mongoose");
 const eatery = require("./services/eatery");
 const nearby = require("./services/nearby");
 const item = require("./services/item");
-const test = require('./services/test');
+// const test = require('./services/test');
 const user = require('./services/user');
 
 // *Middleware
@@ -89,6 +89,17 @@ app.get('/User/FoodLogs/', async(req, res) => {
 
 });
 
+/* Get FoodLog by date of currently LoggedIn user */
+app.get('/User/FoodLogs/:dateTime', async(req, res) => {
+    try {
+        const retrivedData = await user.foodLog.getByDate(req.userDetails, req.params.dateTime);
+        res.statusCode = retrivedData.code;
+        res.json(retrivedData);
+    } catch (error) {
+        res.statusCode = 500;
+        res.json({});
+    }
+});
 
 /* Add to FoodLog of currently LoggedIn user */
 app.post('/User/FoodLog/', async(req, res) => {

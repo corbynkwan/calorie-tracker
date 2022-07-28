@@ -4,7 +4,6 @@ export const getUser = createAsyncThunk('user/getUser', async () => {
 
   let info = JSON.parse(sessionStorage.getItem("user"));
   let jwt = JSON.parse(sessionStorage.getItem("jwt"));
-
   let response = await fetch('http://localhost:5001/User/FoodLogs', {
     method: 'GET',
     headers: {
@@ -17,6 +16,23 @@ export const getUser = createAsyncThunk('user/getUser', async () => {
   let log = response.log; 
 
   return {info: info, log: log};
+
+});
+
+export const getUserLog = createAsyncThunk('user/getUserLog', async (dateTime) => {
+  let jwt = JSON.parse(sessionStorage.getItem("jwt"));
+  let response = await fetch(`http://localhost:5001/User/FoodLogs/${dateTime}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${jwt.token}`
+    }
+  })
+
+  response = await response.json();
+  let log = response.log; 
+
+  return log;
 
 });
 
@@ -96,6 +112,10 @@ const userSlice = createSlice({
         .addCase(getUser.fulfilled, (state, action) => {
           console.log('getUser.fulfilled',action.payload)
           return action.payload;
+        })
+        .addCase(getUserLog.fulfilled, (state, action) => {
+          console.log('getUserLog.fulfilled',action.payload)
+          state.log = action.payload;
         })
         .addCase(postUserLog.fulfilled, (state, action) => {
           console.log('postUserLog.fulfilled',action.payload)
