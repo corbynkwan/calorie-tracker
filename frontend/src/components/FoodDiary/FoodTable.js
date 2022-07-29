@@ -26,7 +26,12 @@ import EditableRow from "./EditableRow";
 import { useState } from "react";
 
 let rows = [];
-
+let dailyGoal = {
+  calories: "1500",
+  fat: "50",
+  carbs: "180",
+  protein: "80",
+};
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -96,7 +101,7 @@ const headCells = [
     description: false,
     disablePadding: false,
     label: "Delete",
-  }
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -117,22 +122,26 @@ function EnhancedTableHead(props) {
           >
             {headCell.id === "edit" || headCell.id === "delete" ? (
               <div>{headCell.label}</div>
-            ) : <TableSortLabel
-            active={orderBy === headCell.id}
-            direction={orderBy === headCell.id ? order : "asc"}
-            onClick={
-              headCell.id === "edit" || headCell.id === "delete"
-                ? false
-                : createSortHandler(headCell.id)
-            }
-          >
-            {headCell.label}
-            {orderBy === headCell.id ? (
-              <Box component="span" sx={visuallyHidden}>
-                {order === "desc" ? "sorted descending" : "sorted ascending"}
-              </Box>
-            ) : null}
-          </TableSortLabel>}
+            ) : (
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={
+                  headCell.id === "edit" || headCell.id === "delete"
+                    ? false
+                    : createSortHandler(headCell.id)
+                }
+              >
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <Box component="span" sx={visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            )}
           </TableCell>
         ))}
       </TableRow>
@@ -194,7 +203,7 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function EnhancedTable(props) {
-  const {user, editEvent, deleteEvent} = props;
+  const { user, editEvent, deleteEvent } = props;
   rows = user.log;
 
   const [order, setOrder] = React.useState("asc");
@@ -228,6 +237,16 @@ export default function EnhancedTable(props) {
     setDense(event.target.checked);
   };
 
+  const sum = (col) => {
+    return rows
+      .map((row) => row[col])
+      .reduce((sum, colValue) => sum + parseInt(colValue), 0);
+  };
+
+  let calorieTotal = sum("calories");
+  let fatTotal = sum("fat");
+  let carbsTotal = sum("carbs");
+  let proteinTotal = sum("protein");
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -278,6 +297,35 @@ export default function EnhancedTable(props) {
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
+              <TableRow style={{"borderWidth":"3px", 'borderColor':"#aaaaaa", 'borderTopStyle':'solid'}}>
+                <TableCell><strong>Totals</strong></TableCell>
+                <TableCell align="right">{calorieTotal}</TableCell>
+                <TableCell align="right">{fatTotal}</TableCell>
+                <TableCell align="right"> {carbsTotal}</TableCell>
+                <TableCell align="right"> {proteinTotal}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell><strong>Daily Goal</strong></TableCell>
+                <TableCell align="right">{dailyGoal.calories}</TableCell>
+                <TableCell align="right">{dailyGoal.fat}</TableCell>
+                <TableCell align="right">{dailyGoal.carbs}</TableCell>
+                <TableCell align="right">{dailyGoal.protein}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell><strong>Remaining</strong></TableCell>
+                <TableCell align="right" style={{color: "green"}}>
+                  {calorieTotal - dailyGoal.calories}
+                </TableCell>
+                <TableCell align="right" style={{color: "green"}}>
+                  {calorieTotal - dailyGoal.fat}
+                </TableCell>
+                <TableCell align="right" style={{color: "green"}}>
+                  {calorieTotal - dailyGoal.carbs}
+                </TableCell>
+                <TableCell align="right" style={{color: "green"}}>
+                  {calorieTotal - dailyGoal.protein}
+                </TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
