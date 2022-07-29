@@ -2,7 +2,8 @@
 
 <h2>Project Description </h2>
 
-Calorie-Tracker is a web application designed to support students’ dietary goals by helping them track their calorie intake and recommending food options available on UBC campus. Students can easily log their daily food, visualize a breakdown of their food intake, and receive restaurant and food suggestions based on menus’ nutrition facts. 
+Calorie-Tracker is a web application designed to support UBC students’ dietary goals. Create your first food diary with Calorie-Tracker’s exclusive menu selection from UBC restaurants, and view your personal nutrient reports and food recommendations on UBC campus to make healthy food choices!
+
 
 <h3>Who is it for: </h3>
 <ul>
@@ -38,39 +39,41 @@ Calorie-Tracker is a web application designed to support students’ dietary goa
 
  <h3>3-5 minimal requirements (will definitely complete):</h3>
 <ul> 
-   <li> User can input daily calories and macronutrient intake </li> 
+   <li> User can input daily calories and macronutrient intake:white_check_mark:</li> 
     <ul>
     <li> Make UI for them to do this </li>
     <li> REST API to save and fetch data from the database </li>
     <li> Make a Schema to sanitise and validate data to be stored in the database document </li> 
     <li> Make a document in the database to store user's calorie and macronutrient intake </li>
     </ul>
-   <li> User can select items from restaurants based on their intake </li> 
+   <li> User can select food items from restaurants' menus:white_check_mark:</li> 
     <ul> 
       <li> Make ui for them to do this </li> 
       <li> Create database schema to store items of restaurants </li>
       <li> Update api to fetch database for this database document </li>
-      <li> User can track their intake for current and previous days </li>
     </ul>
-  <li> User can input when they usually eat meals </li>
-  <li>All items in restaurants has calorie and macronutrient information </li>
+  <li> User can log their meals and track their calorie and macronutrient by date:white_check_mark:</li>
+  <li> User can view restaurants' menu items and their calorie and macronutrient information:white_check_mark:</li>
 </ul> 
 
 <h3>3-7 "standard" requirements (will most likely complete):</h3>
 <ul>
   <li> Filter items from restaurants based on dietary/alergies/cuisine </li>
-  <li> User can search for restaurants </li>
-  <li> User can view restaurant recommendations based on location/calorie intake so far/time </li>
-  <li> User gets food reminders </li>
-  <li> Google map for navigation. </li>
+  <li> User can search for restaurants</li>
+  <li> User can view restaurant recommendations based on opening hours and location</li>
+  <li> User can view restaurant recommendations based on suggested remaining calorie intake</li>
+  <li> User can visualize their calorie and macronutrient reports</li>
+  <li> User will recieve food reminders</li>
+  <li> Google map for navigation.</li>
 </ul>
 
 <h3>2-3 stretch requirements (plan to complete at least 1!):</h3>
 <ul>
+  <li> Crawler(s) to fetch resturant data</li>
   <li> Background location tracking, and push notificaitons for recommendations. </li>
   <li> Machine learning for food recommendations </li>
   <li> Food reviews/rating feature </li>
-  <li> Crawler(s) to fetch resturant data</li>
+  
 </ui>
 
 <h2>Prototypes: </h2>
