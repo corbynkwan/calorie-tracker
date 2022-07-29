@@ -17,8 +17,8 @@ const mongoose = require("mongoose");
 const eatery = require("./services/eatery");
 const nearby = require("./services/nearby");
 const item = require("./services/item");
-// const test = require('./services/test');
 const user = require('./services/user');
+
 
 // *Middleware
 
@@ -218,6 +218,14 @@ app.delete('/User/FoodLog/:logId', async(req, res) => {
 
 });
 
+app.post('/test/Update',async()=>{
+    try{
+        let restaurantsData = crawler.restaurants();
+        await eatery.updateRestaurants(restaurantsData);
+    }catch (e) {
+        
+    }
+})
 
 app.post("/Reminders/Subscribe", (req, res) => {
     // Get pushSubscription object
@@ -237,8 +245,9 @@ app.post("/Reminders/Subscribe", (req, res) => {
 
 // *Initialize Server
 
-const port = 5001 || process.env.port;
-app.listen(port, async() => {
+const port = process.env.PORT || 5001;
+const host = process.env.HOST || '127.0.0.1';
+app.listen(port, host, async() => {
     
     try {
         console.log(`\x1b[36mStarting API...\x1b[0m`);
