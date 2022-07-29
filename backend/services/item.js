@@ -1,11 +1,8 @@
-/*
-    *Test Service
-*/
-
 const db = require('../db/db.config');
 const mongoose = require("mongoose");
 const ObjectId = require('mongoose').Types.ObjectId;
-const crawler = require('../crawler/crawler')
+const crawler = require('../crawler/crawler');
+
 const itemSchema = {
     _id: {
         type: ObjectId,
@@ -42,6 +39,10 @@ const itemSchema = {
     filters: {
         type: Array,
         required: false
+    },
+    nutritionData:{
+        type: Object,
+        required: true
     }
 };
 
@@ -49,18 +50,13 @@ db.item=mongoose.model('items',itemSchema);
 const item = {}
 
 item.getByID = async(id) => {
-
     return new Promise(async(resolve, reject) => {
-
         try {
             await db.connect();
-            const foundEatery = await db.item.findOne({_id:new ObjectId(id)});
+            const foundEatery = await db.item.findOne({item_id:new ObjectId(id)});
             resolve({code: 201, result: foundEatery});
-
         } catch (e) {
-
             reject({code: 406, error: e});
-
         }
     })
 }
@@ -68,16 +64,12 @@ item.getByID = async(id) => {
 item.getByEateryId = async(eateryId) => {
 
     return new Promise(async(resolve, reject) => {
-
         try {
             await db.connect();
             const foundItems = await db.item.find({restaurantId:new ObjectId(eateryId)});
             resolve({code: 200, result: foundItems});
-
         } catch (e) {
-
             reject({code: 406, error: e});
-
         }
     })
 }
@@ -85,58 +77,40 @@ item.getByEateryId = async(eateryId) => {
 item.getAll = async() => {
 
     return new Promise(async(resolve,reject) => {
-
         try{
             await db.connect();
             const allItems = await db.item.find({});
             resolve({code: 200, results: allItems});
-
         } catch (e) {
-
             reject({code: 406, error: e});
-
         }
 
     })
 }
 
 item.getByFilters = async(rawFilters) => {
-
     return new Promise(async(resolve,reject) => {
-
         try{
-
             let filters = rawFilters.split(",");
             await db.connect();
             const foundItems = await db.item.find({filters:{$all:filters}});
             resolve({code: 200, results: foundItems});
-
         } catch (e) {
-
             reject({code: 406, error: e});
-
         }
-
     })
-
 }
 
 item.getByEateryIdAndFilters = async(eateryId, rawFilters) => {
-
     return new Promise(async(resolve,reject) => {
-
         try{
             let filters = rawFilters.split(",");
             await db.connect();
             const foundItems = await db.item.find({restaurantId:new ObjectId(eateryId), filters:{$all:filters}});
             resolve({code: 200, results: foundItems});
-
         } catch (e) {
-
             reject({code: 406, error: e});
-
         }
-
     })
 
 }
@@ -148,4 +122,5 @@ item.updateAllItems = async function(RestaurantsData){
         await db.item.findOneAndUpdate({item_id:itemsData[i].item_id},itemsData[i],{upsert:true});
     }
 }
+
 module.exports = item;

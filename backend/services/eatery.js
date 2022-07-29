@@ -49,13 +49,10 @@ db.restaurants=mongoose.model('restaurants',restaurantSchema);
 const eatery = {}
 
 eatery.getByID = async(id) => {
-
     return new Promise(async(resolve, reject) => {
-
         try {
-            let query = { _id: new ObjectId(id)};
             await db.connect();
-            const foundEatery = await db.restaurants.findOne(query);
+            const foundEatery = await db.restaurants.findOne({restaurant_id:id});
             resolve({code: 201, result: foundEatery});
         } catch (e) {
             reject({code: 406, error: e});
@@ -64,7 +61,6 @@ eatery.getByID = async(id) => {
 }
 
 eatery.getAll = async() => {
-
     return new Promise(async(resolve,reject) => {
         try{
             await db.connect();
@@ -73,14 +69,11 @@ eatery.getAll = async() => {
         }catch (e) {
             reject({code: 406, error: e});
         }
-
     })
 }
 
 eatery.getAllByOpen = async(isOpen) => {
-
     return new Promise(async(resolve,reject) => {
-
         try{
             await db.connect();
             const allRestaurants = await db.restaurants.find({});
@@ -99,48 +92,32 @@ eatery.getAllByOpen = async(isOpen) => {
                 }
             }
             resolve({code: 200, results: ret});
-
         }catch (e) {
-
             reject({code: 406, error: e});
-
         }
     })
 }
 
 eatery.getByFilters = async(rawFilters) => {
-
     return new Promise(async(resolve,reject) => {
-
         try{
-
             let filters = rawFilters.split(",");
             await db.connect();
             const foundRestaurants = await db.restaurants.find({filters:{$all:filters}});
             resolve({code: 200, results: foundRestaurants});
-
         } catch (e) {
-
             reject({code: 406, error: e});
-
         }
-
     })
-
 }
 
 eatery.getByOpenAndFilters = async(isOpen, rawFilters) => {
-
     return new Promise(async(resolve,reject) => {
-
         try{
-
             let filters = rawFilters.split(",");
             await db.connect();
             const foundRestaurants = await db.restaurants.find({filters:{$all:filters}});
-
             let ret = {};
-
             if(isOpen === "true"){
                 for (let i in foundRestaurants){
                     if(checkAuditTime(foundRestaurants[i].startTime,foundRestaurants[i].endTime)){
@@ -155,15 +132,10 @@ eatery.getByOpenAndFilters = async(isOpen, rawFilters) => {
                 }
             }
             resolve({code: 200, results: ret});
-
         } catch (e) {
-
             reject({code: 406, error: e});
-
         }
-
     })
-
 }
 
 eatery.updateRestaurants = async() => {
@@ -190,7 +162,6 @@ eatery.updateRestaurants = async() => {
 
 
 function checkAuditTime(beginTime, endTime) {
-
     var nowDate = new Date();
     var beginDate = new Date(nowDate);
     var endDate = new Date(nowDate);
