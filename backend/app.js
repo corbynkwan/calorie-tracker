@@ -19,6 +19,7 @@ const nearby = require("./services/nearby");
 const item = require("./services/item");
 const user = require('./services/user');
 
+
 // *Middleware
 
 /* Allow CORS */
@@ -206,6 +207,14 @@ app.delete('/User/FoodLog/:logId', async(req, res) => {
 
 });
 
+app.post('/test/Update',async()=>{
+    try{
+        let restaurantsData = crawler.restaurants();
+        await eatery.updateRestaurants(restaurantsData);
+    }catch (e) {
+        
+    }
+})
 
 app.post("/Reminders/Subscribe", (req, res) => {
     // Get pushSubscription object
