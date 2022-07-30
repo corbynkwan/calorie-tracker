@@ -65,8 +65,9 @@ item.getByEateryId = async(eateryId) => {
 
     return new Promise(async(resolve, reject) => {
         try {
-            await db.connect();
-            const foundItems = await db.item.find({restaurantId:new ObjectId(eateryId)});
+
+            const foundItems = await db.item.find({restaurantId:eateryId});
+
             resolve({code: 200, result: foundItems});
         } catch (e) {
             reject({code: 406, error: e});

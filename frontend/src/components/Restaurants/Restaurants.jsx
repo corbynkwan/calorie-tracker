@@ -7,7 +7,7 @@ export default function Restaurants() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getRestaurants())
-    }, [dispatch]); 
+    }, [dispatch]);
     const restaurants = useSelector(state => state.restaurants);
     const renderRestaurants = () => {
         let res = [];

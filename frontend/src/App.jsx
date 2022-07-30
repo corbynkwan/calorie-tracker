@@ -21,7 +21,7 @@ import Home from './pages/Home/Home';
 import FoodDiary from './pages/FoodDiary/FoodDiary';
 
 import CustomFoodPage from './pages/CustomFood/CustomFoodPage';
-
+import Restaurant from './/pages/Restaurant/Restaurant';
 /* redux related */ 
 import { getUser } from './store/userSlice';
 
@@ -68,6 +68,7 @@ function App() {
           <Route path="/" element={<Home user={userData}/>} />
           <Route path="diary" element={<FoodDiary user={userData}/>} />
           <Route path="diary/add" element={<CustomFoodPage />} />
+          <Route path="restaurant" element={<Restaurant />} />
         </Routes>
       <Footer/>
     </div>
