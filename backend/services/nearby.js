@@ -50,6 +50,7 @@ nearby.getRestaurantsWithinDist = async(lat,lon,maxDist) => {
             reject({code: 403, error:"require all of lat, lon, maxDistance"})
         }
         try {
+            await db.connect();
             const allRestaurants = await db.restaurants.find({});
             resolve(allRestaurants);
         } catch (e) {

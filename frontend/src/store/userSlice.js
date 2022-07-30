@@ -5,7 +5,7 @@ export const getUser = createAsyncThunk('user/getUser', async () => {
   let info = JSON.parse(sessionStorage.getItem("user"));
   let jwt = JSON.parse(sessionStorage.getItem("jwt"));
 
-  let response = await fetch('http://localhost:5001/User/FoodLogs', {
+  let response = await fetch('https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/User/FoodLogs', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -20,10 +20,27 @@ export const getUser = createAsyncThunk('user/getUser', async () => {
 
 });
 
+export const getUserLog = createAsyncThunk('user/getUserLog', async (dateTime) => {
+  let jwt = JSON.parse(sessionStorage.getItem("jwt"));
+  let response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/User/FoodLogs/${dateTime}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${jwt.token}`
+    }
+  })
+
+  response = await response.json();
+  let log = response.log; 
+
+  return log;
+
+});
+
 export const postUserLog = createAsyncThunk('user/postUserLog', async (newRow) => {
   let jwt = JSON.parse(sessionStorage.getItem("jwt"));
 
-  let response = await fetch('http://localhost:5001/User/FoodLog', {
+  let response = await fetch('https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/User/FoodLog', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +61,7 @@ export const putUserLog = createAsyncThunk('user/putUserLog', async (newRow) => 
 
   let jwt = JSON.parse(sessionStorage.getItem("jwt"));
 
-  let response = await fetch('http://localhost:5001/User/FoodLog', {
+  let response = await fetch('https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/User/FoodLog', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -66,7 +83,7 @@ export const deleteUserLog = createAsyncThunk('user/deleteUserLog', async (logId
   
   let jwt = JSON.parse(sessionStorage.getItem("jwt"));
 
-  let response = await fetch(`http://localhost:5001/User/FoodLog/${logId}`, {
+  let response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/User/FoodLog/${logId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -96,6 +113,10 @@ const userSlice = createSlice({
         .addCase(getUser.fulfilled, (state, action) => {
           console.log('getUser.fulfilled',action.payload)
           return action.payload;
+        })
+        .addCase(getUserLog.fulfilled, (state, action) => {
+          console.log('getUserLog.fulfilled',action.payload)
+          state.log = action.payload;
         })
         .addCase(postUserLog.fulfilled, (state, action) => {
           console.log('postUserLog.fulfilled',action.payload)
