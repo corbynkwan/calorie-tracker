@@ -22,7 +22,7 @@ export const getUser = createAsyncThunk('user/getUser', async () => {
 
 export const getUserLog = createAsyncThunk('user/getUserLog', async (dateTime) => {
   let jwt = JSON.parse(sessionStorage.getItem("jwt"));
-  let response = await fetch(`http://localhost:5001/User/FoodLogs/${dateTime}`, {
+  let response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/User/FoodLogs/${dateTime}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
