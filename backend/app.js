@@ -19,6 +19,7 @@ const nearby = require("./services/nearby");
 const item = require("./services/item");
 const user = require('./services/user');
 
+
 // *Middleware
 
 /* Allow CORS */
@@ -88,6 +89,17 @@ app.get('/User/FoodLogs/', async(req, res) => {
 
 });
 
+/* Get FoodLog by date of currently LoggedIn user */
+app.get('/User/FoodLogs/:dateTime', async(req, res) => {
+    try {
+        const retrivedData = await user.foodLog.getByDate(req.userDetails, req.params.dateTime);
+        res.statusCode = retrivedData.code;
+        res.json(retrivedData);
+    } catch (error) {
+        res.statusCode = 500;
+        res.json({});
+    }
+});
 
 /* Add to FoodLog of currently LoggedIn user */
 app.post('/User/FoodLog/', async(req, res) => {
@@ -206,6 +218,14 @@ app.delete('/User/FoodLog/:logId', async(req, res) => {
 
 });
 
+app.post('/test/Update',async()=>{
+    try{
+        let restaurantsData = crawler.restaurants();
+        await eatery.updateRestaurants(restaurantsData);
+    }catch (e) {
+        
+    }
+})
 
 app.post("/Reminders/Subscribe", (req, res) => {
     // Get pushSubscription object
