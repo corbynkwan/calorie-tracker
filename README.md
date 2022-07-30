@@ -58,19 +58,19 @@ Calorie-Tracker is a web application designed to support UBC students’ dietary
 
 <h3>3-7 "standard" requirements (will most likely complete):</h3>
 <ul>
-  <li> Filter items from restaurants based on dietary/alergies/cuisine </li>
-  <li> User can search for restaurants</li>
-  <li> User can view restaurant recommendations based on opening hours and location</li>
-  <li> User can view restaurant recommendations based on suggested remaining calorie intake</li>
-  <li> User can visualize their calorie and macronutrient reports</li>
-  <li> User will recieve food reminders</li>
-  <li> Google map for navigation.</li>
+  <li> Filter items from restaurants based on dietary/alergies/cuisine (completed on backend)</li>
+  <li> User can search for restaurants ✅ is being enhanced</li>
+  <li> User can view restaurant recommendations based on opening hours and location (Working on this)</li>
+  <li> User can view restaurant recommendations based on suggested remaining calorie intake (Working on this) </li>
+  <li> User can visualize their calorie and macronutrient reports (Working on this) </li>
+  <li> User will recieve food reminders ✅ </li>
+  <li> Google map for navigation. ✅ is being enhanced</li>
 </ul>
 
 <h3>2-3 stretch requirements (plan to complete at least 1!):</h3>
 <ul>
-  <li> Crawler(s) to fetch resturant data</li>
-  <li> Background location tracking, and push notificaitons for recommendations. </li>
+  <li> Crawler(s) to fetch resturant data ✅ </li>
+  <li> Push notificaitons for recommendations. ✅ </li>
   <li> Machine learning for food recommendations </li>
   <li> Food reviews/rating feature </li>
   
