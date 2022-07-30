@@ -62,8 +62,6 @@ export const getRestaurantFoods = createAsyncThunk('foods/getRestaurantFoods', a
 }
   response = (await response.json()).result;
   
-  console.log('sometingresponse',response)
-  console.log('response from getRestaurantsFoods', response)
   return response
 });
 

@@ -16,7 +16,7 @@ export default function RestaurantCard(props){
         document.querySelector('.popout-wrapper').style.display = 'flex';
         document.querySelector('body').style.overflowY = 'hidden';
     }
-    const {name,address,thumbnail,desc} = props.restaurant
+    const {name,address,thumbnail,desc,restaurant_id} = props.restaurant
     return (
         <Container maxWidth={"sm"}>
             <Paper
@@ -59,7 +59,7 @@ export default function RestaurantCard(props){
                             </Grid>
                             <Grid item>
                                 <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                                    <Link to="/restaurant" style={{ textDecoration: 'none' }}>
+                                    <Link to={`/restaurant?id=${restaurant_id}`} style={{ textDecoration: 'none' }}>
                                         <Button>
                                             See Menu
                                         </Button>
