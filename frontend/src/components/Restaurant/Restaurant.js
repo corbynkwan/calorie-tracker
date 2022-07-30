@@ -1,4 +1,6 @@
 import {Box, Button, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
+import { Link } from "react-router-dom";
+
 const Img = styled('img')({
     margin: 'auto',
     display: 'block',
@@ -57,9 +59,11 @@ export default function RestaurantCard(props){
                             </Grid>
                             <Grid item>
                                 <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                                    <Button onClick={openPopUp}>
-                                        See Menu
-                                    </Button>
+                                    <Link to="/restaurant" style={{ textDecoration: 'none' }}>
+                                        <Button>
+                                            See Menu
+                                        </Button>
+                                    </Link>
                                 </Typography>
                             </Grid>
                         </Grid>

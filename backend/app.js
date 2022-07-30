@@ -161,6 +161,7 @@ app.get('/eatery',async (req, res) => {
 // filters(every filter is split by , )
 // eateryId+filters
 app.get('/items',async (req, res) => {
+    console.log(req.query)
     if (req.query.eateryId === undefined && req.query.id === undefined && req.query.filters === undefined) {
         let retrievedData = await item.getAll();
         res.statusCode=retrievedData.code;
@@ -170,7 +171,15 @@ app.get('/items',async (req, res) => {
         res.statusCode=retrievedData.code;
         res.json(retrievedData);
     }else if(req.query.id===undefined && req.query.eateryId !== undefined && req.query.filters === undefined){
-        let retrievedData = await item.getByEateryId(req.query.eateryId);
+        console.log('here')
+        console.log(req.query.eateryId)
+        let retrievedData;
+        try {
+        retrievedData = await item.getByEateryId(req.query.eateryId);
+        } catch(error) {
+            console.log(error)
+        }
+        console.log('here2')
         res.statusCode=retrievedData.code;
         res.json(retrievedData);
     }else if(req.query.id === undefined && req.query.eateryId === undefined && req.query.filters !== undefined){

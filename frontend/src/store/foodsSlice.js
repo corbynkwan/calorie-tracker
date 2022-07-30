@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk  } from '@reduxjs/toolkit'
-
+import axios from 'axios'
 export const getAllFoods = createAsyncThunk('foods/getAllFoods', async () => {
   const foods = [
     {
@@ -39,40 +39,32 @@ export const getAllFoods = createAsyncThunk('foods/getAllFoods', async () => {
   */
 });
 
-export const getRestaurantFoods = createAsyncThunk('foods/getRestaurantFoods', async (restaurantId) => {
-  const foods = [
-    {
-      name: "pizza 1",
-      calories: 1000,
-      filters: [],
-      thumbnail: "http://theindigokitchen.com/wp-content/uploads/2017/09/Bento2.jpg"
-    },
-    {
-      name: "pizza 2",
-      calories: 1000,
-      filters: []
-    },
-    {
-      name: "pizza 3",
-      calories: 1000,
-      filters: []
-    },
-    {
-      name: "pizza 4",
-      calories: 1000,
-      filters: []
-    }
-
-  ]
-  return foods;
-  /* ADD back once backend is working 
+export const getRestaurantFoods = createAsyncThunk('foods/getRestaurantFoods', async (eateryId) => {
+  let jwt = JSON.parse(sessionStorage.getItem("jwt"));
+  console.log('called')
   const params = {};
-  if(restaurantId !== undefined) {
-    params.restaurantId = restaurantId;
+  if(eateryId !== undefined) {
+    params.eateryId = eateryId;
   }
-  const response = await axios.get(ROUTE, params);
-  return response.data;
-  */
+  console.log('params',params)
+  console.log(JSON.stringify(params))
+  let response;
+  try{
+   response = await fetch(`http://localhost:5001/items?eateryId=${eateryId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${jwt.token}`
+    }
+  })
+} catch(err) {
+  console.log(err)
+}
+  response = (await response.json()).result;
+  
+  console.log('sometingresponse',response)
+  console.log('response from getRestaurantsFoods', response)
+  return response
 });
 
 const foodsSlice = createSlice({

@@ -5,9 +5,7 @@ import { getRestaurants } from '../../store/restaurantsSlice';
 import RestaurantCard from '../Restaurant/Restaurant';
 export default function Restaurants() {
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getRestaurants())
-    }, [dispatch]); 
+  
     const restaurants = useSelector(state => state.restaurants);
     const renderRestaurants = () => {
         let res = [];

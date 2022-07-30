@@ -19,7 +19,7 @@ const itemSchema = {
         required: false
     },
     restaurantId: {
-        type: ObjectId,
+        type: String,
         required: true
     },
     protein: {
@@ -66,7 +66,7 @@ item.getByEateryId = async(eateryId) => {
 
         try {
 
-            const foundItems = await db.item.find({restaurantId:new ObjectId(eateryId)});
+            const foundItems = await db.item.find({restaurantId:eateryId});
             resolve({code: 200, result: foundItems});
 
         } catch (e) {
