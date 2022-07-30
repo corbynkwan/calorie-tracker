@@ -20,6 +20,23 @@ export const getUser = createAsyncThunk('user/getUser', async () => {
 
 });
 
+export const getUserLog = createAsyncThunk('user/getUserLog', async (dateTime) => {
+  let jwt = JSON.parse(sessionStorage.getItem("jwt"));
+  let response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/User/FoodLogs/${dateTime}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${jwt.token}`
+    }
+  })
+
+  response = await response.json();
+  let log = response.log; 
+
+  return log;
+
+});
+
 export const postUserLog = createAsyncThunk('user/postUserLog', async (newRow) => {
   let jwt = JSON.parse(sessionStorage.getItem("jwt"));
 
@@ -96,6 +113,10 @@ const userSlice = createSlice({
         .addCase(getUser.fulfilled, (state, action) => {
           console.log('getUser.fulfilled',action.payload)
           return action.payload;
+        })
+        .addCase(getUserLog.fulfilled, (state, action) => {
+          console.log('getUserLog.fulfilled',action.payload)
+          state.log = action.payload;
         })
         .addCase(postUserLog.fulfilled, (state, action) => {
           console.log('postUserLog.fulfilled',action.payload)

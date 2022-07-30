@@ -89,6 +89,17 @@ app.get('/User/FoodLogs/', async(req, res) => {
 
 });
 
+/* Get FoodLog by date of currently LoggedIn user */
+app.get('/User/FoodLogs/:dateTime', async(req, res) => {
+    try {
+        const retrivedData = await user.foodLog.getByDate(req.userDetails, req.params.dateTime);
+        res.statusCode = retrivedData.code;
+        res.json(retrivedData);
+    } catch (error) {
+        res.statusCode = 500;
+        res.json({});
+    }
+});
 
 /* Add to FoodLog of currently LoggedIn user */
 app.post('/User/FoodLog/', async(req, res) => {
