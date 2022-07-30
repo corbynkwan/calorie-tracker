@@ -69,7 +69,7 @@ Calorie-Tracker is a web application designed to support UBC students’ dietary
 <h3>2-3 stretch requirements (plan to complete at least 1!):</h3>
 <ul>
   <li> Crawler(s) to fetch resturant data ✅ </li>
-  <li> Push notificaitons for recommendations. ✅ </li>
+  <li> Push notificaitons for recommendations </li>
   <li> Machine learning for food recommendations </li>
   <li> Food reviews/rating feature </li>
   
