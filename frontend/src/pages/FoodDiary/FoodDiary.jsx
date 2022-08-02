@@ -20,11 +20,8 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import FoodTable from "../../components/FoodDiary/FoodTable";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
-import useStyles from "./style";
 import {
   deleteUserLog,
   putUserLog,
@@ -33,6 +30,12 @@ import {
 } from "../../store/userSlice";
 import { setDate } from "../../store/dateSlice";
 
+/* styles */
+import useStyles from "./style";
+
+/* components */
+import FoodTable from "../../components/FoodDiary/FoodTable";
+import Report from "../../components/Report/Report";
 export default function FoodDiary(props) {
   const classes = useStyles();
   const storeDate = useSelector((state) => state.date);
@@ -40,6 +43,8 @@ export default function FoodDiary(props) {
   // Quick Tools
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  // timezone offset in milliseconds
+  const tzoffset = new Date().getTimezoneOffset() * 60000;
   const handleQuickToolsClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -83,7 +88,6 @@ export default function FoodDiary(props) {
               Food Diary
             </Typography>
           </Grid>
-
           <Grid item>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
@@ -91,16 +95,17 @@ export default function FoodDiary(props) {
                 inputFormat="MM/dd/yyyy"
                 value={dateTime}
                 onChange={(dateTime) => {
+                  // minus timezone offset to get ISOstring representing local time     
+                  dateTime = new Date(dateTime - tzoffset).toISOString()
                   setDateTime(dateTime);
                   // Date only format e.g. "2022-07-23"
-                  dispatch(setDate(dateTime.toISOString()));
-                  dispatch(getUserLog(dateTime.toISOString().substring(0, 10)));
+                  dispatch(setDate(dateTime));
+                  dispatch(getUserLog(dateTime.substring(0, 10)));
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
             </LocalizationProvider>
           </Grid>
-
           <Grid item>
             <ButtonGroup variant="contained" color="primary">
               <Button>
@@ -137,7 +142,6 @@ export default function FoodDiary(props) {
               </Menu>
             </ButtonGroup>
           </Grid>
-
           <Grid item>
             <FoodTable
               user={props.user}
@@ -145,6 +149,9 @@ export default function FoodDiary(props) {
               deleteEvent={handleDeleteEvent}
             />
           </Grid>
+          {/* <Grid item>
+            <Report />
+          </Grid> */}
         </Grid>
       </Paper>
     </>

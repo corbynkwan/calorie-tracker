@@ -57,8 +57,12 @@ user.foodLog.add = async(userDetails, logItem) => {
 }
 
 user.foodLog.get = async(userDetails) => {
-    // Retrieve current date's food log when user Logged in 
-    const date = new Date();
+    // Retrieve today's date's food log when user Logged in
+    // timezone offset in milliseconds
+    const tzoffset = new Date().getTimezoneOffset() * 60000; 
+    let date = new Date();
+    // minus timezone offset to get ISOstring representing local time 
+    date  = new Date(date - tzoffset).toISOString().slice(0, -1);
     return new Promise(async(resolve, reject) => {
     try {
         await user.prepareForTransaction(userDetails);
@@ -72,7 +76,7 @@ user.foodLog.get = async(userDetails) => {
                     $regexMatch: {
                       input: "$$log.dateTime",
                       // Only match the date part e.g. "2022-07-23" 
-                      regex: date.toISOString().substring(0,10)
+                      regex: date.substring(0,10)
                     }
                   }
                 }}
