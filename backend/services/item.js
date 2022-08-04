@@ -53,7 +53,7 @@ item.getByID = async(id) => {
     return new Promise(async(resolve, reject) => {
         try {
             await db.connect();
-            const foundEatery = await db.item.findOne({item_id:new ObjectId(id)});
+            const foundEatery = await db.item.findOne({item_id:id});
             resolve({code: 201, result: foundEatery});
         } catch (e) {
             reject({code: 406, error: e});
@@ -107,7 +107,7 @@ item.getByEateryIdAndFilters = async(eateryId, rawFilters) => {
         try{
             let filters = rawFilters.split(",");
             await db.connect();
-            const foundItems = await db.item.find({restaurantId:new ObjectId(eateryId), filters:{$all:filters}});
+            const foundItems = await db.item.find({restaurantId:eateryId, filters:{$all:filters}});
             resolve({code: 200, results: foundItems});
         } catch (e) {
             reject({code: 406, error: e});

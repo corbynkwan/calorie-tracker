@@ -143,27 +143,34 @@ app.put('/User/FoodLog/', async(req, res) => {
 // filters(every filter is split by , )
 // isOpen + filters
 app.get('/eatery',async (req, res) => {
-    if (req.query.id === undefined && req.query.isOpen === undefined && req.query.filters === undefined) {
-        let retrievedData = await eatery.getAll();
-        res.statusCode=retrievedData.code;
-        res.json(retrievedData);
-    }else if(req.query.id !== undefined && req.query.isOpen === undefined && req.query.filters === undefined){
-        let retrievedData = await eatery.getByID(req.query.id);
-        res.statusCode=retrievedData.code;
-        res.json(retrievedData);
-    }else if(req.query.id === undefined && req.query.isOpen !== undefined && req.query.filters === undefined){
-        let retrievedData = await eatery.getAllByOpen(req.query.isOpen);
-        res.statusCode=retrievedData.code;
-        res.json(retrievedData);
-    }else if(req.query.id === undefined && req.query.isOpen === undefined && req.query.filters !== undefined){
-        let retrievedData = await eatery.getByFilters(req.query.filters);
-        res.statusCode=retrievedData.code;
-        res.json(retrievedData);
-    }else if(req.query.id === undefined && req.query.isOpen !== undefined && req.query.filters !== undefined){
-        let retrievedData = await eatery.getByOpenAndFilters(req.query.isOpen, req.query.filters);
-        res.statusCode=retrievedData.code;
-        res.json(retrievedData);
+    try{
+        if (req.query.id === undefined && req.query.isOpen === undefined && req.query.filters === undefined) {
+            let retrievedData = await eatery.getAll();
+            res.statusCode=retrievedData.code;
+            res.json(retrievedData);
+        }else if(req.query.id !== undefined && req.query.isOpen === undefined && req.query.filters === undefined){
+            let retrievedData = await eatery.getByID(req.query.id);
+            res.statusCode=retrievedData.code;
+            res.json(retrievedData);
+        }else if(req.query.id === undefined && req.query.isOpen !== undefined && req.query.filters === undefined){
+            let retrievedData = await eatery.getAllByOpen(req.query.isOpen);
+            res.statusCode=retrievedData.code;
+            res.json(retrievedData);
+        }else if(req.query.id === undefined && req.query.isOpen === undefined && req.query.filters !== undefined){
+            let retrievedData = await eatery.getByFilters(req.query.filters);
+            res.statusCode=retrievedData.code;
+            res.json(retrievedData);
+        }else if(req.query.id === undefined && req.query.isOpen !== undefined && req.query.filters !== undefined){
+            let retrievedData = await eatery.getByOpenAndFilters(req.query.isOpen, req.query.filters);
+            res.statusCode=retrievedData.code;
+            res.json(retrievedData);
+        }
+    }catch (e) {
+        console.log(e);
+        res.statusCode = 500;
+        res.json({});
     }
+
 })
 
 // query parameter:
@@ -173,39 +180,44 @@ app.get('/eatery',async (req, res) => {
 // filters(every filter is split by , )
 // eateryId+filters
 app.get('/items',async (req, res) => {
-    console.log(req.query)
-    if (req.query.eateryId === undefined && req.query.id === undefined && req.query.filters === undefined) {
-        let retrievedData = await item.getAll();
-        res.statusCode=retrievedData.code;
-        res.json(retrievedData);
-    }else if(req.query.id!==undefined && req.query.eateryId===undefined && req.query.filters === undefined){
-        let retrievedData = await item.getByID(req.query.id);
-        res.statusCode=retrievedData.code;
-        res.json(retrievedData);
-    }else if(req.query.id===undefined && req.query.eateryId !== undefined && req.query.filters === undefined){
-        console.log('here')
-        console.log(req.query.eateryId)
-        let retrievedData;
-        try {
-        retrievedData = await item.getByEateryId(req.query.eateryId);
-        } catch(error) {
-            console.log(error)
+    try{
+        console.log(req.query)
+        if (req.query.eateryId === undefined && req.query.id === undefined && req.query.filters === undefined) {
+            let retrievedData = await item.getAll();
+            res.statusCode=retrievedData.code;
+            res.json(retrievedData);
+        }else if(req.query.id!==undefined && req.query.eateryId===undefined && req.query.filters === undefined){
+            let retrievedData = await item.getByID(req.query.id);
+            res.statusCode=retrievedData.code;
+            res.json(retrievedData);
+        }else if(req.query.id===undefined && req.query.eateryId !== undefined && req.query.filters === undefined){
+            console.log('here')
+            console.log(req.query.eateryId)
+            let retrievedData;
+            retrievedData = await item.getByEateryId(req.query.eateryId);
+            console.log('here2')
+            res.statusCode=retrievedData.code;
+            res.json(retrievedData);
+        }else if(req.query.id === undefined && req.query.eateryId === undefined && req.query.filters !== undefined){
+            let retrievedData = await item.getByFilters(req.query.filters);
+            res.statusCode=retrievedData.code;
+            res.json(retrievedData);
+        }else if(req.query.id === undefined && req.query.eateryId !== undefined && req.query.filters !== undefined){
+            let retrievedData = await item.getByEateryIdAndFilters(req.query.eateryId, req.query.filters);
+            res.statusCode=retrievedData.code;
+            res.json(retrievedData);
         }
-        console.log('here2')
-        res.statusCode=retrievedData.code;
-        res.json(retrievedData);
-    }else if(req.query.id === undefined && req.query.eateryId === undefined && req.query.filters !== undefined){
-        let retrievedData = await item.getByFilters(req.query.filters);
-        res.statusCode=retrievedData.code;
-        res.json(retrievedData);
-    }else if(req.query.id === undefined && req.query.eateryId !== undefined && req.query.filters !== undefined){
-        let retrievedData = await item.getByEateryIdAndFilters(req.query.eateryId, req.query.filters);
-        res.statusCode=retrievedData.code;
-        res.json(retrievedData);
+    }catch (e) {
+        console.log(e);
+        res.statusCode = 500;
+        res.json({});
     }
+
 
 })
 
+// Get the nearby restaurants that is within a distance.
+// Query Param: lat, lon, maxDist.
 app.get('/nearby/',async (req,res)=>{
     let retrievedData = await nearby.getRestaurantsWithinDist(req.query.lat,req.query.lon,req.query.maxDist);
     res.statusCode=retrievedData.code;
@@ -218,7 +230,6 @@ app.delete('/User/FoodLog/:logId', async(req, res) => {
     try {
         const retrivedData = await user.foodLog.delete(req.userDetails, req.params.logId);
         res.statusCode = retrivedData.code;
-
         res.json(retrivedData);
     } catch (error) {
         res.statusCode = 500;
