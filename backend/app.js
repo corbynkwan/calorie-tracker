@@ -101,6 +101,32 @@ app.get('/User/FoodLogs/:dateTime', async(req, res) => {
     }
 });
 
+// Get everyday calorie
+app.get('/User/Calories/:dateTime', async(req, res)=>{
+    try{
+        const retrievedData = await user.calorie.get(req.userDetails,req.params.dateTime);
+        res.statusCode = retrivedData.code;
+        res.json(retrivedData);
+    } catch (error) {
+        res.statusCode = 500;
+        res.json({});
+    }
+})
+
+// Get remaining calorie
+app.get('/User/Calories/remaining/:dateTime', async(req, res)=>{
+    try{
+        const retrievedData = await user.calorie.getRemaining(req.userDetails,req.params.dateTime);
+        res.statusCode = retrievedData.code;
+        res.json(retrievedData);
+    } catch (error) {
+        console.log(error);
+        res.statusCode = 500;
+        res.json({error:error});
+    }
+})
+
+
 /* Add to FoodLog of currently LoggedIn user */
 app.post('/User/FoodLog/', async(req, res) => {
 

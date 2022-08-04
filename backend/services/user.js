@@ -120,6 +120,39 @@ user.foodLog.getByDate = async(userDetails, dateTime) => {
     })
 }
 
+user.calorie = {};
+
+user.calorie.get = async(userDetails)=>{
+    return new Promise(async(resolve, reject) => {
+        try {
+            await db.connect();
+            const retrivedData= await db.User.findOne({email:userDetails.email});
+            resolve({code: 201, result:retrivedData._doc.dailyCalorie});
+        } catch (e) {
+            reject({code: 406, error: e});
+        }
+    })
+}
+
+user.calorie.getRemaining = async(userDetails,dateTime)=>{
+    try{
+        const maxCalData = await user.calorie.get(userDetails);
+        const maxCal = maxCalData.result;
+        const oneDayFoodLogData = await user.foodLog.getByDate(userDetails, dateTime);
+
+        let calCount = 0;
+        const foodLogs = oneDayFoodLogData.log;
+        for(let i in foodLogs){
+            calCount += parseFloat(foodLogs[i].calories);
+        }
+        return {code:201,result:calCount};
+    }
+    catch (e) {
+        reject({code: 406, error: e});
+    }
+
+}
+
 user.foodLog.delete = async(userDetails, logId) => {
 
     return new Promise(async(resolve, reject) => {
