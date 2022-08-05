@@ -24,23 +24,27 @@ const GradientColors = () => {
     </linearGradient>
   );
 };
-const target = 1500;
+const targets= {
+   "calories": 1500,
+   "carbs":180,
+   "fat":50,
+   "protein":75
+}
 
-const yAxisMax = (data) => {
+const yAxisMax = (data,selectedNutrient) => {
   if (data !== undefined) {
-    const datMax = Math.max(...data.map((o) => o["calories"]));
-    return datMax > target ? datMax + 100 : target + 100;
+    const datMax = Math.max(...data.map((o) => o[{selectedNutrient}]));
+    return datMax > targets[selectedNutrient] ? datMax + 100 : targets[selectedNutrient]  + 100;
   } else {
-    return target + 100;
+    return targets[selectedNutrient] + 100;
   }
 };
 
-const MyGraph = ({ data }) => {
+const MyGraph = ({ data, selectedNutrient }) => {
   const classes = useStyles();
   return (
     <div>
       <div className={classes.graphContainer}>
-        <h1>Calories</h1>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <defs>
@@ -63,17 +67,17 @@ const MyGraph = ({ data }) => {
               stroke="#EEEEEE"
             />
             <YAxis
-              dataKey="calories"
-              domain={[0, yAxisMax(data)]}
+              dataKey= {selectedNutrient}
+              domain={[0, yAxisMax(data, selectedNutrient)]}
               tick={{ fill: "#B6BAC3" }}
               stroke="#EEEEEE"
               type="number"
             />
-            <ReferenceLine y={target} stroke="black" strokeWidth={2}>
-              <Label value={target} position="top" />
+            <ReferenceLine y={targets[selectedNutrient]} stroke="black" strokeWidth={2}>
+              <Label value={targets[selectedNutrient]} position="top" />
             </ReferenceLine>
             <Area
-              dataKey="calories"
+              dataKey={selectedNutrient}
               type="monotone"
               stroke="#8884d8"
               strokeWidth={3}

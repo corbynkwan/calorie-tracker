@@ -19,9 +19,9 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
 import FoodDiary from './pages/FoodDiary/FoodDiary';
-
 import CustomFoodPage from './pages/CustomFood/CustomFoodPage';
 import Restaurant from './/pages/Restaurant/Restaurant';
+import Report from './pages/Report/Report';
 /* redux related */ 
 import { getUser } from './store/userSlice';
 
@@ -69,6 +69,7 @@ function App() {
           <Route path="diary" element={<FoodDiary user={userData}/>} />
           <Route path="diary/add" element={<CustomFoodPage />} />
           <Route path="restaurant" element={<Restaurant />} />
+          <Route path="report" element={<Report />}/>
         </Routes>
       <Footer/>
     </div>

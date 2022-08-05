@@ -1,5 +1,5 @@
 /*
-    Styles for Food Diary Page
+    Styles for Report Page
 */
 
 import { makeStyles } from "@mui/styles";
@@ -18,6 +18,16 @@ const useStyles = makeStyles({
   dropdownContainer: {
     position: "absolute",
     right: 10,
+    "& button": {
+      color: "black",
+      border: "1.5px solid #EDEEF1",
+      width: "150px",
+      borderRadius: "15px",
+    },
+  },
+  nutrientDropdownContainer: {
+    position: "absolute",
+    right: 200,
     "& button": {
       color: "black",
       border: "1.5px solid #EDEEF1",

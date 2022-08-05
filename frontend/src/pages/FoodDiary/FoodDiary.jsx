@@ -35,7 +35,6 @@ import useStyles from "./style";
 
 /* components */
 import FoodTable from "../../components/FoodDiary/FoodTable";
-import Report from "../../components/Report/Report";
 export default function FoodDiary(props) {
   const classes = useStyles();
   const storeDate = useSelector((state) => state.date);
@@ -85,19 +84,13 @@ export default function FoodDiary(props) {
         >
           <Grid item>
             <Typography variant="h4" className={classes.heading}>
-              Date here {dateTime.toISOString()}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="h4" className={classes.heading}>
               Food Diary
             </Typography>
           </Grid>
           <Grid item>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker
+              <DesktopDatePicker
                 label="Date desktop"
-                // inputFormat="MM/dd/yyyy"
                 value={dateTime}
                 onChange={(dateTime) => {
                   console.log("What is dateTime", dateTime.toISOString())
@@ -127,9 +120,6 @@ export default function FoodDiary(props) {
               editEvent={handleEditEvent}
               deleteEvent={handleDeleteEvent}
             />
-          </Grid>
-          <Grid item>
-            <Report />
           </Grid>
         </Grid>
       </Paper>

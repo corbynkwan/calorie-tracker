@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from "react-router-dom";
 
-const pages = ['Food Log'];
+const pages = ['Food Log', "Report"];
 const settings = ['Logout'];
 
 const Header = ({user, logout}) => {
@@ -123,6 +123,7 @@ const Header = ({user, logout}) => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
+              (page==="Food Log"? 
               <Link to="/diary" style={{ textDecoration: 'none' }}>
               <Button
                 key={page}
@@ -132,6 +133,15 @@ const Header = ({user, logout}) => {
                 {page}
               </Button>
               </Link>
+          : <Link to="/report" style={{ textDecoration: 'none' }}>
+              <Button
+                key={page}
+                onClick={openPopUp}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {page}
+              </Button>
+              </Link>)
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
