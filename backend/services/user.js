@@ -120,7 +120,7 @@ user.foodLog.getReportPeriod = async (userDetails, period) => {
   return new Promise(async (resolve, reject) => {
     try {
       await user.prepareForTransaction(userDetails);
-      const userRecord = await db.User.aggregate([
+      const report = await db.User.aggregate([
         { $match: { email: userDetails.email } },
         {
           $project: {
@@ -152,7 +152,7 @@ user.foodLog.getReportPeriod = async (userDetails, period) => {
               $sum: {
                 $convert: {
                   input: "$foodLog.calories",
-                  to: "decimal",
+                  to: "double",
                 },
               },
             },
@@ -160,7 +160,7 @@ user.foodLog.getReportPeriod = async (userDetails, period) => {
               $sum: {
                 $convert: {
                   input: "$foodLog.fat",
-                  to: "decimal",
+                  to: "double",
                 },
               },
             },
@@ -168,7 +168,7 @@ user.foodLog.getReportPeriod = async (userDetails, period) => {
               $sum: {
                 $convert: {
                   input: "$foodLog.carbs",
-                  to: "decimal",
+                  to: "double",
                 },
               },
             },
@@ -176,7 +176,7 @@ user.foodLog.getReportPeriod = async (userDetails, period) => {
               $sum: {
                 $convert: {
                   input: "$foodLog.protein",
-                  to: "decimal",
+                  to: "double",
                 },
               },
             },
@@ -186,8 +186,7 @@ user.foodLog.getReportPeriod = async (userDetails, period) => {
         {$unset: "_id"},
         { $sort: { date: 1 } },
       ]);
-
-      resolve({ code: 200, logsReport: userRecord[0].foodLog });
+      resolve({ code: 200, logsReport: report});
     } catch (e) {
       reject({ code: e.code || 406, error: e.error || "DB Error" });
     }
@@ -239,8 +238,6 @@ user.foodLog.modify = async (userDetails, log) => {
 };
 
 const getDatesTimezoneInfo = (dateTime, period = false) => {
-  console.log("What is dateTIme", dateTime);
-
   const dateTimeObj = new Date(dateTime);
   // timezone offset in milliseconds
   const tzoffset = new Date().getTimezoneOffset() * 60000;
@@ -264,12 +261,10 @@ const getDatesTimezoneInfo = (dateTime, period = false) => {
       .substring(0, 10);
     if (!period) {
       // Food Log
-      console.log("Food log");
       dateTimeStart = dateUTC + timeUTC;
       dateTimeEnd = nextDateUTC + timeUTC;
     } else {
       // Report
-      console.log("Report");
       dateTimeEnd = nextDateUTC + timeUTC;
       dateTimeStart = new Date(
         new Date(dateTimeEnd).setDate(new Date(dateTimeEnd).getDate() - period)

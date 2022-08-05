@@ -1,6 +1,5 @@
 import React from "react";
 import useStyles from "./style";
-import moment from "moment";
 import {
   AreaChart,
   Area,
@@ -36,23 +35,10 @@ const yAxisMax = (data) => {
   }
 };
 
-const dateTicks = (dataTime) => {
-  // return moment.utc(dataTime).format("MMMM/D");
-};
-//type="number"
-
-const time = (data) => {
-  if (data !== undefined) {
-    moment.utc(data[0].dateTime);
-  } else {
-    console.log("data still undefined");
-  }
-};
 const MyGraph = ({ data }) => {
   const classes = useStyles();
   return (
     <div>
-      {console.log("Anything here", time(data))}
       <div className={classes.graphContainer}>
         <h1>Calories</h1>
         <ResponsiveContainer width="100%" height="100%">
@@ -70,10 +56,10 @@ const MyGraph = ({ data }) => {
               opacity={0.4}
             />
             <XAxis
-              dataKey="dateTime"
+              dataKey="date"
               domain={["auto", "auto"]}
               tick={{ fill: "black" }}
-              tickFormatter={(dateTime) => dateTicks(dateTime)}
+              tickFormatter={(date) => date}
               stroke="#EEEEEE"
             />
             <YAxis

@@ -15,7 +15,20 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
   response = await response.json();
   let log = response.log;
 
-  return { info: info, log: log };
+  let reportResponse = await fetch(
+    `http://localhost:5001/User/FoodLogReport/7`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${jwt.token}`,
+      },
+    }
+  );
+  reportResponse = await reportResponse.json();
+  let logsReport = reportResponse.logsReport;
+
+  return { info: info, log: log, logsReport: logsReport};
 });
 
 export const getUserLog = createAsyncThunk(
@@ -55,8 +68,8 @@ export const getUserLogReportPeriod = createAsyncThunk(
       }
     );
     response = await response.json();
-    console.log("What is response in userslice", response);
     let logsReport = response.logsReport;
+
     return logsReport;
   }
 );
@@ -79,7 +92,6 @@ export const postUserLog = createAsyncThunk(
     }`,
       }
     );
-
     response = await response.json();
     let log = response.log;
 
@@ -140,7 +152,7 @@ const userSlice = createSlice({
   initialState: {
     info: {},
     log: [],
-    logsReport: ["empty"]
+    logsReport: [],
   },
   reducers: {
     example_reducer: (state, action) => {
@@ -152,7 +164,9 @@ const userSlice = createSlice({
     builder
       .addCase(getUser.fulfilled, (state, action) => {
         console.log("getUser.fulfilled", action.payload);
-        return action.payload;
+        state.info = action.payload.info;
+        state.log = action.payload.log;
+        state.logsReport = action.payload.logsReport;
       })
       .addCase(getUserLog.fulfilled, (state, action) => {
         console.log("getUserLog.fulfilled", action.payload);

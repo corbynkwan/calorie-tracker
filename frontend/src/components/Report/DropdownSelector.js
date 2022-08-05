@@ -9,16 +9,6 @@ import { menu } from "./Item";
  * Add your all dropdown categories here with unique key
  */
 const dropdownCategories = [
-  // {
-  //   key: 0,
-  //   content: "Today",
-  //   value: "Today",
-  // },
-  // {
-  //   key: 1,
-  //   content: "Yesterday",
-  //   value: "Yesterday",
-  // },
   {
     key: 0,
     content: "Last 7 days",
@@ -36,13 +26,7 @@ const dropdownCategories = [
     content: "Last 30 days",
     value: "Last_30_days",
     period: 30
-  },
-  // {
-  //   key: 3,
-  //   content: "Last 90 days",
-  //   value: "Last_90_days",
-  //   period: 90
-  // },
+  }
 ];
 
 
@@ -51,7 +35,7 @@ export const DropdownSelector = ({ fetchCustomData }) => {
   const classes = useStyles();
 
   // This state is used to track selected value from dropdown
-  const [activeTimeFrame, setActiveTimeFrame] = useState(2);
+  const [activeTimeFrame, setActiveTimeFrame] = useState(0);
 
 
   const handleDataFetching = (key, period) => {
