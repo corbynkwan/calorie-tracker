@@ -39,12 +39,12 @@ import Report from "../../components/Report/Report";
 export default function FoodDiary(props) {
   const classes = useStyles();
   const storeDate = useSelector((state) => state.date);
+  // timezone offset in milliseconds
+  const tzoffset = new Date().getTimezoneOffset() * 60000;
   const [dateTime, setDateTime] = React.useState(new Date(storeDate.date));
   // Quick Tools
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  // timezone offset in milliseconds
-  const tzoffset = new Date().getTimezoneOffset() * 60000;
   const handleQuickToolsClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -85,30 +85,33 @@ export default function FoodDiary(props) {
         >
           <Grid item>
             <Typography variant="h4" className={classes.heading}>
+              Date here {dateTime.toISOString()}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="h4" className={classes.heading}>
               Food Diary
             </Typography>
           </Grid>
           <Grid item>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DesktopDatePicker
+              <DateTimePicker
                 label="Date desktop"
-                inputFormat="MM/dd/yyyy"
+                // inputFormat="MM/dd/yyyy"
                 value={dateTime}
                 onChange={(dateTime) => {
-                  // minus timezone offset to get ISOstring representing local time     
-                  dateTime = new Date(dateTime - tzoffset).toISOString()
+                  console.log("What is dateTime", dateTime.toISOString())
                   setDateTime(dateTime);
+                  dispatch(setDate(dateTime.toISOString()));
                   // Date only format e.g. "2022-07-23"
-                  dispatch(setDate(dateTime));
-                  dispatch(getUserLog(dateTime.substring(0, 10)));
+                  dispatch(getUserLog(dateTime.toISOString()));
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
             </LocalizationProvider>
           </Grid>
           <Grid item>
-            <ButtonGroup variant="contained" color="primary">
-              <Button>
+              <Button  variant="contained" color="primary">
                 <Link
                   to="/diary/add"
                   className={classes.link}
@@ -117,30 +120,6 @@ export default function FoodDiary(props) {
                   ADD FOOD
                 </Link>
               </Button>
-
-              <Button
-                onClick={handleQuickToolsClick}
-                endIcon={<ArrowDropDownIcon />}
-              >
-                {" "}
-                QUICK TOOLS{" "}
-              </Button>
-
-              <Menu
-                id="menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleQuickToolsClose}
-              >
-                <MenuItem onClick={handleQuickToolsClose} disableRipple>
-                  Copy Yesterday
-                </MenuItem>
-
-                <MenuItem onClick={handleQuickToolsClose} disableRipple>
-                  Copy from date
-                </MenuItem>
-              </Menu>
-            </ButtonGroup>
           </Grid>
           <Grid item>
             <FoodTable
@@ -149,9 +128,9 @@ export default function FoodDiary(props) {
               deleteEvent={handleDeleteEvent}
             />
           </Grid>
-          {/* <Grid item>
+          <Grid item>
             <Report />
-          </Grid> */}
+          </Grid>
         </Grid>
       </Paper>
     </>

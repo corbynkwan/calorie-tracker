@@ -135,6 +135,11 @@ export default function CustomFoodGrid({submitEvent}) {
                           InputLabelProps={{
                             shrink: true,
                           }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">kcal</InputAdornment>
+                            ),
+                          }}
                           variant="filled"
                         />
                       </Grid>
@@ -148,7 +153,7 @@ export default function CustomFoodGrid({submitEvent}) {
                           }}
                           InputProps={{
                             endAdornment: (
-                              <InputAdornment position="end">kg</InputAdornment>
+                              <InputAdornment position="end">g</InputAdornment>
                             ),
                           }}
                           variant="filled"

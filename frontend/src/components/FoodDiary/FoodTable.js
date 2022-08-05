@@ -314,16 +314,16 @@ export default function EnhancedTable(props) {
               <TableRow>
                 <TableCell><strong>Remaining</strong></TableCell>
                 <TableCell align="right" style={{color: "green"}}>
-                  {calorieTotal - dailyGoal.calories}
+                  {dailyGoal.calories - calorieTotal}
                 </TableCell>
                 <TableCell align="right" style={{color: "green"}}>
-                  {calorieTotal - dailyGoal.fat}
+                  {dailyGoal.fat - fatTotal}
                 </TableCell>
                 <TableCell align="right" style={{color: "green"}}>
-                  {calorieTotal - dailyGoal.carbs}
+                  {dailyGoal.carbs - carbsTotal}
                 </TableCell>
                 <TableCell align="right" style={{color: "green"}}>
-                  {calorieTotal - dailyGoal.protein}
+                  {dailyGoal.protein - proteinTotal}
                 </TableCell>
               </TableRow>
             </TableBody>
