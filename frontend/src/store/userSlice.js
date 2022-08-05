@@ -4,7 +4,7 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
   let info = JSON.parse(sessionStorage.getItem("user"));
   let jwt = JSON.parse(sessionStorage.getItem("jwt"));
 
-  let response = await fetch("http://localhost:5001/User/FoodLogs", {
+  let response = await fetch("https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/User/FoodLogs", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -16,7 +16,7 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
   let log = response.log;
 
   let reportResponse = await fetch(
-    `http://localhost:5001/User/FoodLogReport/7`,
+    `https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/User/FoodLogReport/7`,
     {
       method: "GET",
       headers: {
@@ -36,7 +36,7 @@ export const getUserLog = createAsyncThunk(
   async (dateTime) => {
     let jwt = JSON.parse(sessionStorage.getItem("jwt"));
     let response = await fetch(
-      `http://localhost:5001/User/FoodLogs/${dateTime}`,
+      `https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/User/FoodLogs/${dateTime}`,
       {
         method: "GET",
         headers: {
@@ -58,7 +58,7 @@ export const getUserLogReportPeriod = createAsyncThunk(
   async (period) => {
     let jwt = JSON.parse(sessionStorage.getItem("jwt"));
     let response = await fetch(
-      `http://localhost:5001/User/FoodLogReport/${period}`,
+      `https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/User/FoodLogReport/${period}`,
       {
         method: "GET",
         headers: {
