@@ -43,6 +43,10 @@ const itemSchema = {
     nutritionData:{
         type: Object,
         required: true
+    },
+    calories:{
+        type:Number,
+        required:true
     }
 };
 

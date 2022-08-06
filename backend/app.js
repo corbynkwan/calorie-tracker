@@ -126,6 +126,19 @@ app.get('/User/Calories/remaining/:dateTime', async(req, res)=>{
     }
 })
 
+//Get item recommendation based on distance, remaining calorie amount ,
+app.get('/Recommendation/:dateTime',async(req,res)=>{
+    try{
+        let retrievedData = await user.recommendation(req.userDetails,req.query.lat,req.query.lon,req.params.dateTime);
+        res.statusCode = retrievedData.code;
+        res.json(retrievedData);
+    }
+    catch (error) {
+        console.log(error);
+        res.statusCode = 500;
+        res.json({error:error});
+    }
+})
 
 /* Add to FoodLog of currently LoggedIn user */
 app.post('/User/FoodLog/', async(req, res) => {
