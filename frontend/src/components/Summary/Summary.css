@@ -1,7 +1,8 @@
 .Summary {
     height: 252px;
     background: #171a29;
-    width: calc(100% -100px);
+    /* width: calc(100% -100px); */
+    width: 100%;
     position: relative;
     padding-top: 10px;
     text-align: left;

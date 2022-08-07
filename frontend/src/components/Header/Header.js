@@ -11,6 +11,7 @@ import {
   Menu,
   MenuItem,
 } from "@material-ui/core";
+import { maxWidth } from "@mui/system";
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -29,8 +30,10 @@ const settings = ["Logout"];
 
 const useStyles = makeStyles(() => ({
   header: {
-    backgroundColor: "#464A5D",
+    // backgroundColor: "#464A5D",
     borderStyle: "none",
+    minHeight: "60px",
+    maxHeight: "60px"
   },
   logo: {
     fontFamily: "Work Sans, sans-serif",
