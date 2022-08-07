@@ -41,6 +41,10 @@ const restaurantSchema = {
     filters: {
         type: Array,
         required: false
+    },
+    geolocation:{
+        type:Object,
+        required: true
     }
 
 };
@@ -78,7 +82,7 @@ eatery.getAllByOpen = async(isOpen) => {
             await db.connect();
             const allRestaurants = await db.restaurants.find({});
             let ret = [];
-            if(isOpen==="true"){
+            if(isOpen===true){
                 for (let i in allRestaurants){
                     if(checkAuditTime(allRestaurants[i].startTime,allRestaurants[i].endTime)){
                         ret.push(allRestaurants[i]);
@@ -156,8 +160,8 @@ eatery.updateRestaurants = async() => {
                 endTime:eateries[i].endTime.substring(0,5),
                  menu_ids: menuObj
             },{upsert:true});
-            return eateries;
         }
+        return eateries;
 }
 
 

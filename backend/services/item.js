@@ -18,7 +18,7 @@ const itemSchema = {
     },
     thumbnail: {
         type: String,
-        required: false
+        required: true
     },
     restaurantId: {
         type: String,
@@ -43,6 +43,10 @@ const itemSchema = {
     nutritionData:{
         type: Object,
         required: true
+    },
+    calories:{
+        type:Number,
+        required:true
     }
 };
 

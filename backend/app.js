@@ -50,20 +50,24 @@ app.use(jwtCheck);
 /* Attaching user details to incoming request object */
 
 const userGateway = async(req, res, next) => {
-    let methods = ['GET', 'POST', 'PUT', 'DELETE'];
+    try{
+        let methods = ['GET', 'POST', 'PUT', 'DELETE'];
 
-    if (methods.includes(req.method)) {
-        const token = req.headers.authorization.split(' ')[1];
-        const resp = await axios.get(`${process.env.AUTH_ISSUER}userInfo`,
-        {
-            headers: {
-                "authorization": `Bearer ${token}`
-            }
-        }
-        );
+        if (methods.includes(req.method)) {
+            const token = req.headers.authorization.split(' ')[1];
+            const resp = await axios.get(`${process.env.AUTH_ISSUER}userInfo`,
+                {
+                    headers: {
+                        "authorization": `Bearer ${token}`
+                    }
+                }
+            );
 
-        const userDetails = resp.data;
-        req.userDetails = userDetails;
+            const userDetails = resp.data;
+            req.userDetails = userDetails;
+    }
+    }catch (e) {
+        console.log(e);
     }
     
     next();
@@ -101,6 +105,18 @@ app.get('/User/FoodLogs/:dateTime', async(req, res) => {
     }
 });
 
+// Get everyday calorie
+app.get('/User/Calories/:dateTime', async(req, res)=>{
+    try{
+        const retrievedData = await user.calorie.get(req.userDetails,req.params.dateTime);
+        res.statusCode = retrivedData.code;
+        res.json(retrivedData);
+    } catch (error) {
+        res.statusCode = 500;
+        res.json({});
+    }
+})
+
 /* Get FoodLogs in a time period of currently LoggedIn user for nutrition report*/
 app.get('/User/FoodLogReport/:period', async(req, res) => {
     try {
@@ -111,7 +127,35 @@ app.get('/User/FoodLogReport/:period', async(req, res) => {
         res.statusCode = 500;
         res.json({});
     }
-});
+})
+
+// Get remaining calorie
+app.get('/User/Calories/remaining/:dateTime', async(req, res)=>{
+    try{
+        const retrievedData = await user.calorie.getRemaining(req.userDetails,req.params.dateTime);
+        res.statusCode = retrievedData.code;
+        res.json(retrievedData);
+    } catch (error) {
+        console.log(error);
+        res.statusCode = 500;
+        res.json({error:error});
+    }
+})
+
+//Get item recommendation based on distance, remaining calorie amount ,
+app.get('/Recommendation/:dateTime',async(req,res)=>{
+    try{
+        let retrievedData = await user.recommendation(req.userDetails,req.query.lat,req.query.lon,req.params.dateTime);
+        res.statusCode = retrievedData.code;
+        res.json(retrievedData);
+    }
+    catch (error) {
+        console.log(error);
+        res.statusCode = 500;
+        res.json({error:error});
+    }
+})
+
 
 /* Add to FoodLog of currently LoggedIn user */
 app.post('/User/FoodLog/', async(req, res) => {

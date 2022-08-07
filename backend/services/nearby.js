@@ -60,9 +60,11 @@ nearby.getRestaurantsWithinDist = async(lat,lon,maxDist) => {
     }).then((allRestaurants)=>{
         let list = [];
         for(let index in allRestaurants){
-            let dist = CoolWPDistance(parseFloat(allRestaurants[index].lon),parseFloat(allRestaurants[index].lat),parseFloat(lon),parseFloat(lat));
-            if(dist<maxDist){
-                list.push(allRestaurants[index]);
+            if(allRestaurants[index].geolocation){
+                let dist = CoolWPDistance(parseFloat(allRestaurants[index].geolocation.longitude),parseFloat(allRestaurants[index].geolocation.latitude),parseFloat(lon),parseFloat(lat));
+                if(dist<maxDist){
+                    list.push(allRestaurants[index]);
+                }
             }
         }
         return{code:201, results:list};
@@ -74,7 +76,7 @@ function getRad(d){
     return d*PI/180.0;
 }
 
-function CoolWPDistance(lng1,lat1,lng2,lat2){
+nearby.calculateDistance = function CoolWPDistance(lng1,lat1,lng2,lat2){
     if(lng1===lng2&&lat1===lat2)return 0;
     var f = getRad((lat1 + lat2)/2);
     var g = getRad((lat1 - lat2)/2);
