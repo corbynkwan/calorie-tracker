@@ -14,7 +14,7 @@ export default function Recommended() {
         let res = [];
         for (let i = 0; i < foods.length; i++) {
           res.push(
-            <Grid item xs={3}> <Food food={foods[i]}></Food></Grid>
+            <Grid key={i} item xs={3}> <Food food={foods[i]}></Food></Grid>
           );
         }
         return res;

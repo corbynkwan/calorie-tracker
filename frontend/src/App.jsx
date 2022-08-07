@@ -16,12 +16,13 @@ import './App.css';
 
 /* components & pages*/
 import Header from './components/Header/Header';
+import Header2 from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
 import FoodDiary from './pages/FoodDiary/FoodDiary';
-
 import CustomFoodPage from './pages/CustomFood/CustomFoodPage';
 import Restaurant from './/pages/Restaurant/Restaurant';
+import Report from './pages/Report/Report';
 /* redux related */ 
 import { getUser } from './store/userSlice';
 
@@ -48,15 +49,18 @@ function App() {
   }, [isLoading]);
 
   //* Monitoring changes to user
-  useEffect(async() => {
-
+  useEffect(() =>{
+    async function monitorChange() {
+      // You can await here
     if (isAuthenticated) {
       dispatch(getUser());
     } else if (!isLoading && !isAuthenticated) {
       alert("Session Expired, Please login again.");
       window.location.reload();
     }
-  }, [dispatch]);
+  }
+  monitorChange();
+}, [dispatch]);
 
   const userData = useSelector(state => state.user);
 
@@ -69,6 +73,7 @@ function App() {
           <Route path="diary" element={<FoodDiary user={userData}/>} />
           <Route path="diary/add" element={<CustomFoodPage />} />
           <Route path="restaurant" element={<Restaurant />} />
+          <Route path="report" element={<Report />}/>
         </Routes>
       <Footer/>
     </div>

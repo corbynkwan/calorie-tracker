@@ -19,6 +19,7 @@
     position: relative;
     width: 350px;
     height: 100px;
+    color: white;
 }
 
 .time-remaining h3{
@@ -26,6 +27,7 @@
     font-style: normal;
     font-weight: 500;
     font-size: 17px;
+    color: white;
 }
 
 .right-intake-status {

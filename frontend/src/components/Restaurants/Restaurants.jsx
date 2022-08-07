@@ -13,7 +13,7 @@ export default function Restaurants() {
         let res = [];
         for (let i = 0; i < restaurants.length; i++) {
           res.push(
-            <Grid item xs={5} ><RestaurantCard restaurant={restaurants[i]}></RestaurantCard></Grid>
+            <Grid key={restaurants[i]._id} item xs={5} ><RestaurantCard restaurant={restaurants[i]}></RestaurantCard></Grid>
           );
         }
         return res;
@@ -21,7 +21,6 @@ export default function Restaurants() {
     return (
         <section className="Restaurants">
             <h2>Restaurants @ UBC</h2>
-
             <div className='items-inline'>
                <Grid container item spacing={2}>
                    {renderRestaurants()}
