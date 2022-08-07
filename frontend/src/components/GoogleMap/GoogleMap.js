@@ -18,7 +18,8 @@ class MyGoogleMap extends Component {
     geoCoder: null,
     curRoutePolyline: null,
     places: [],
-    center: [],
+    // UBC lat and lng 
+    center: {lat: 49.2606, lng: -123.246 },
     zoom: 14,
     address: "",
     draggable: true,
@@ -29,7 +30,7 @@ class MyGoogleMap extends Component {
     curAddress: "",
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.setCurrentLocation();
   }
 
@@ -53,10 +54,10 @@ class MyGoogleMap extends Component {
   };
 
   // _onClick = (value) => {
-    // this.setState({
-    //   lat: value.lat,
-    //   lng: value.lng,
-    // });
+  // this.setState({
+  //   lat: value.lat,
+  //   lng: value.lng,
+  // });
   // };
 
   nearbySearch = () => {
@@ -108,14 +109,18 @@ class MyGoogleMap extends Component {
   };
 
   apiHasLoaded = (map, maps) => {
-    this.setState({
-      mapApiLoaded: true,
-      mapInstance: map,
-      mapApi: maps,
-    });
-    this._generateRoute(null);
-    this._generateAddress();
-    this.nearbySearch();
+    this.setState(
+      {
+        mapApiLoaded: true,
+        mapInstance: map,
+        mapApi: maps,
+      },
+      () => {
+        this._generateRoute(null);
+        this._generateAddress();
+        this.nearbySearch();
+      }
+    );
   };
 
   addPlace = (place) => {
