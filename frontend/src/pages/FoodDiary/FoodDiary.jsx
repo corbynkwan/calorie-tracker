@@ -41,18 +41,8 @@ export default function FoodDiary(props) {
   // timezone offset in milliseconds
   const tzoffset = new Date().getTimezoneOffset() * 60000;
   const [dateTime, setDateTime] = React.useState(new Date(storeDate.date));
-  // Quick Tools
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleQuickToolsClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleQuickToolsClose = () => {
-    setAnchorEl(null);
-  };
 
   // Data manipulation events
-
   const dispatch = useDispatch();
 
   /* Delete Food Log */
