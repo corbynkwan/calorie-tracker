@@ -14,16 +14,13 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { visuallyHidden } from "@mui/utils";
 import ReadOnlyRow from "./ReadOnlyRow";
 import EditableRow from "./EditableRow";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 let rows = [];
 let dailyGoal = {
@@ -156,8 +153,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-//Reference: https://mui.com/material-ui/react-table/
-
 const EnhancedTableToolbar = (props) => {
   const { numSelected } = props;
 
@@ -212,6 +207,20 @@ export default function EnhancedTable(props) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [editedRow, setEditedRow] = useState(null);
+  const sum = (col) => {
+    return rows
+      .map((row) => row[col])
+      .reduce((sum, colValue) => sum + parseInt(colValue), 0);
+  };
+
+  let caloriesTotal = sum("calories");
+  let fatTotal = sum("fat");
+  let carbsTotal = sum("carbs");
+  let proteinTotal = sum("protein");
+  let caloriesRemaining = dailyGoal.calories - caloriesTotal;
+  let fatRemaining = dailyGoal.fat - fatTotal;
+  let carbsRemaining = dailyGoal.carbs - carbsTotal;
+  let proteinRemaining = dailyGoal.protein - proteinTotal;
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -237,16 +246,6 @@ export default function EnhancedTable(props) {
     setDense(event.target.checked);
   };
 
-  const sum = (col) => {
-    return rows
-      .map((row) => row[col])
-      .reduce((sum, colValue) => sum + parseInt(colValue), 0);
-  };
-
-  let calorieTotal = sum("calories");
-  let fatTotal = sum("fat");
-  let carbsTotal = sum("carbs");
-  let proteinTotal = sum("protein");
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -297,34 +296,70 @@ export default function EnhancedTable(props) {
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
-              <TableRow style={{"borderWidth":"3px", 'borderColor':"#aaaaaa", 'borderTopStyle':'solid'}}>
-                <TableCell><strong>Totals</strong></TableCell>
-                <TableCell align="right">{calorieTotal}</TableCell>
+              <TableRow
+                style={{
+                  borderWidth: "3px",
+                  borderColor: "#aaaaaa",
+                  borderTopStyle: "solid",
+                }}
+              >
+                <TableCell>
+                  <strong>Totals</strong>
+                </TableCell>
+                <TableCell align="right">{caloriesTotal}</TableCell>
                 <TableCell align="right">{fatTotal}</TableCell>
                 <TableCell align="right"> {carbsTotal}</TableCell>
                 <TableCell align="right"> {proteinTotal}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell><strong>Daily Goal</strong></TableCell>
+                <TableCell>
+                  <strong>Daily Goal</strong>
+                </TableCell>
                 <TableCell align="right">{dailyGoal.calories}</TableCell>
                 <TableCell align="right">{dailyGoal.fat}</TableCell>
                 <TableCell align="right">{dailyGoal.carbs}</TableCell>
                 <TableCell align="right">{dailyGoal.protein}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell><strong>Remaining</strong></TableCell>
-                <TableCell align="right" style={{color: "green"}}>
-                  {calorieTotal - dailyGoal.calories}
+                <TableCell>
+                  <strong>Remaining</strong>
                 </TableCell>
-                <TableCell align="right" style={{color: "green"}}>
-                  {calorieTotal - dailyGoal.fat}
-                </TableCell>
-                <TableCell align="right" style={{color: "green"}}>
-                  {calorieTotal - dailyGoal.carbs}
-                </TableCell>
-                <TableCell align="right" style={{color: "green"}}>
-                  {calorieTotal - dailyGoal.protein}
-                </TableCell>
+                {caloriesRemaining > 0 ? (
+                  <TableCell align="right" style={{ color: "green" }}>
+                    {caloriesRemaining}
+                  </TableCell>
+                ) : (
+                  <TableCell align="right" style={{ color: "red" }}>
+                    {caloriesRemaining}
+                  </TableCell>
+                )}
+                {fatRemaining > 0 ? (
+                  <TableCell align="right" style={{ color: "green" }}>
+                    {fatRemaining}
+                  </TableCell>
+                ) : (
+                  <TableCell align="right" style={{ color: "red" }}>
+                    {fatRemaining}
+                  </TableCell>
+                )}
+                {carbsRemaining > 0 ? (
+                  <TableCell align="right" style={{ color: "green" }}>
+                    {carbsRemaining}
+                  </TableCell>
+                ) : (
+                  <TableCell align="right" style={{ color: "red" }}>
+                    {carbsRemaining}
+                  </TableCell>
+                )}
+                {proteinRemaining > 0 ? (
+                  <TableCell align="right" style={{ color: "green" }}>
+                    {proteinRemaining}
+                  </TableCell>
+                ) : (
+                  <TableCell align="right" style={{ color: "red" }}>
+                    {proteinRemaining}
+                  </TableCell>
+                )}
               </TableRow>
             </TableBody>
           </Table>

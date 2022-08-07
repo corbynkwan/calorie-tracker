@@ -1,7 +1,8 @@
 .Summary {
     height: 252px;
     background: #171a29;
-    width: calc(100% -100px);
+    /* width: calc(100% -100px); */
+    width: 100%;
     position: relative;
     padding-top: 10px;
     text-align: left;
@@ -19,6 +20,7 @@
     position: relative;
     width: 350px;
     height: 100px;
+    color: white;
 }
 
 .time-remaining h3{
@@ -26,6 +28,7 @@
     font-style: normal;
     font-weight: 500;
     font-size: 17px;
+    color: white;
 }
 
 .right-intake-status {

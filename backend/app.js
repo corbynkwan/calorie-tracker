@@ -117,6 +117,18 @@ app.get('/User/Calories/:dateTime', async(req, res)=>{
     }
 })
 
+/* Get FoodLogs in a time period of currently LoggedIn user for nutrition report*/
+app.get('/User/FoodLogReport/:period', async(req, res) => {
+    try {
+        const retrivedData = await user.foodLog.getReportPeriod(req.userDetails, req.params.period);
+        res.statusCode = retrivedData.code;
+        res.json(retrivedData);
+    } catch (error) {
+        res.statusCode = 500;
+        res.json({});
+    }
+})
+
 // Get remaining calorie
 app.get('/User/Calories/remaining/:dateTime', async(req, res)=>{
     try{
@@ -143,6 +155,7 @@ app.get('/Recommendation/:dateTime',async(req,res)=>{
         res.json({error:error});
     }
 })
+
 
 /* Add to FoodLog of currently LoggedIn user */
 app.post('/User/FoodLog/', async(req, res) => {
