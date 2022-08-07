@@ -18,7 +18,7 @@ const itemSchema = {
     },
     thumbnail: {
         type: String,
-        required: false
+        required: true
     },
     restaurantId: {
         type: String,

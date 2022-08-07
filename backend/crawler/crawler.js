@@ -64,7 +64,7 @@ crawler.getAllItems = async function(restaurantsData){
                                 mg_vitamin_d:item.food.rounded_nutrition_info.mg_vitamin_d,
                             },
                             price:item.price,
-                            thumbanil:item.food.image_url,
+                            thumbnail:item.food.image_url,
                             restaurantId:restaurantsData[restaurantIndex].id,
                             filters:item.food.icons.food_icons.map(e=>e.synced_name)
                         }

@@ -50,20 +50,24 @@ app.use(jwtCheck);
 /* Attaching user details to incoming request object */
 
 const userGateway = async(req, res, next) => {
-    let methods = ['GET', 'POST', 'PUT', 'DELETE'];
+    try{
+        let methods = ['GET', 'POST', 'PUT', 'DELETE'];
 
-    if (methods.includes(req.method)) {
-        const token = req.headers.authorization.split(' ')[1];
-        const resp = await axios.get(`${process.env.AUTH_ISSUER}userInfo`,
-        {
-            headers: {
-                "authorization": `Bearer ${token}`
-            }
-        }
-        );
+        if (methods.includes(req.method)) {
+            const token = req.headers.authorization.split(' ')[1];
+            const resp = await axios.get(`${process.env.AUTH_ISSUER}userInfo`,
+                {
+                    headers: {
+                        "authorization": `Bearer ${token}`
+                    }
+                }
+            );
 
-        const userDetails = resp.data;
-        req.userDetails = userDetails;
+            const userDetails = resp.data;
+            req.userDetails = userDetails;
+    }
+    }catch (e) {
+        console.log(e);
     }
     
     next();
