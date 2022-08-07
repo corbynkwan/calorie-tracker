@@ -16,6 +16,7 @@ import './App.css';
 
 /* components & pages*/
 import Header from './components/Header/Header';
+import Header2 from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
 import FoodDiary from './pages/FoodDiary/FoodDiary';
@@ -48,15 +49,18 @@ function App() {
   }, [isLoading]);
 
   //* Monitoring changes to user
-  useEffect(async() => {
-
+  useEffect(() =>{
+    async function monitorChange() {
+      // You can await here
     if (isAuthenticated) {
       dispatch(getUser());
     } else if (!isLoading && !isAuthenticated) {
       alert("Session Expired, Please login again.");
       window.location.reload();
     }
-  }, [dispatch]);
+  }
+  monitorChange();
+}, [dispatch]);
 
   const userData = useSelector(state => state.user);
 
