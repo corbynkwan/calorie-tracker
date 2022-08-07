@@ -24,7 +24,7 @@ async function getRecommendation(setRecommendation) {
         console.log("hello");
         let response;
         try{
-            response = await fetch(`http://localhost:5001/Recommendation/${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${(d.getDate()).toString().padStart(2,'0')}?lat=${lat}&lon=${lng}`, {
+            response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/Recommendation/${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${(d.getDate()).toString().padStart(2,'0')}?lat=${lat}&lon=${lng}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ async function getRecommendation(setRecommendation) {
         for(let i in result){
             // get restaurant name by id
             try{
-                response = await fetch('http://localhost:5001/eatery?id='+ resultJson.result[i].restaurantId, {
+                response = await fetch('https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/eatery?id='+ resultJson.result[i].restaurantId, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
