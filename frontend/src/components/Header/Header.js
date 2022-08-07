@@ -39,11 +39,12 @@ const useStyles = makeStyles(() => ({
     fontFamily: "Work Sans, sans-serif",
     fontWeight: 600,
     color: "#FFFEFE",
-    // textAlign: "left",
+    minHeight: 0
   },
   button: {
     color: "#FFFEFE",
     marginLeft: "38px",
+    fontFamily: "Work Sans, sans-serif"
   },
 }));
 
