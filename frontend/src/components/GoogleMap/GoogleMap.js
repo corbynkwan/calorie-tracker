@@ -18,8 +18,8 @@ class MyGoogleMap extends Component {
     geoCoder: null,
     curRoutePolyline: null,
     places: [],
-    // UBC lat and lng 
-    center: {lat: 49.2606, lng: -123.246 },
+    // UBC lat and lng
+    center: { lat: 49.2606, lng: -123.246 },
     zoom: 14,
     address: "",
     draggable: true,
@@ -30,43 +30,24 @@ class MyGoogleMap extends Component {
     curAddress: "",
   };
 
-  componentDidMount() {
+  componentWillMount() {
     this.setCurrentLocation();
   }
 
-  onMarkerInteraction = (childKey, childProps, mouse) => {
-    this.setState({
-      draggable: false,
-      lat: mouse.lat,
-      lng: mouse.lng,
-    });
-  };
-  onMarkerInteractionMouseUp = (childKey, childProps, mouse) => {
-    this.setState({ draggable: true });
-    this._generateAddress();
-  };
-
-  _onChange = ({ center, zoom }) => {
+  _onZoom = ({ center, zoom }) => {
     this.setState({
       center: center,
       zoom: zoom,
     });
   };
 
-  // _onClick = (value) => {
-  // this.setState({
-  //   lat: value.lat,
-  //   lng: value.lng,
-  // });
-  // };
-
   nearbySearch = () => {
     const { mapInstance: map, mapApi: maps, curLat, curLng } = this.state;
     const request = {
       // For testing location at UBC
-      // location: { lat: 49.2606, lng: -123.246 },
+      location: { lat: 49.2606, lng: -123.246 },
       // Acutal location
-      location: { lat: curLat, lng: curLng },
+      // location: { lat: curLat, lng: curLng },
       radius: "500",
       // openNow: true,
       types: ["restaurant", "cafe"],
@@ -108,7 +89,37 @@ class MyGoogleMap extends Component {
     });
   };
 
+  createRouteMarker = (lat, lng, placeName, address) => {
+    const { mapInstance: map } = this.state;
+    const svgMarker = {
+      path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+      fillColor: "green",
+      fillOpacity: 1,
+      strokeWeight: 0,
+      rotation: 0,
+      scale: 2,
+      anchor: new google.maps.Point(15, 30),
+    };
+    const locationMarker = new google.maps.Marker({
+      map,
+      position: { lat: lat, lng: lng },
+      title: placeName,
+      icon: svgMarker,
+    });
+    const contentString = "<div>" + "<h1>" + placeName + "</h1>" + "<p>" + address + "</p>" + "</div>";
+    let infowindow = new google.maps.InfoWindow({ content: contentString });
+    locationMarker.addListener("click", () => {
+      infowindow.open({
+        anchor: locationMarker,
+        map,
+        shouldFocus: true,
+      });
+    });
+  };
+
   apiHasLoaded = (map, maps) => {
+    const { curLat, curLng} = this.state;
+
     this.setState(
       {
         mapApiLoaded: true,
@@ -116,8 +127,8 @@ class MyGoogleMap extends Component {
         mapApi: maps,
       },
       () => {
-        this._generateRoute(null);
         this._generateAddress();
+        this.createRouteMarker(curLat, curLng, "My location", this.state.curAddress);
         this.nearbySearch();
       }
     );
@@ -130,6 +141,7 @@ class MyGoogleMap extends Component {
         el.short_name !== "Metro Vancouver" &&
         el.short_name !== "CA"
     );
+    // Search Destination Address
     const formatted_address = place_address_filtered.reduce(
       (adrs, adrsSegment) => adrs + adrsSegment.short_name + " ",
       ""
@@ -141,11 +153,17 @@ class MyGoogleMap extends Component {
       lng: place.geometry.location.lng(),
       address: formatted_address,
     });
-    this._generateAddress();
     this._generateRoute({
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
     });
+
+    this.createRouteMarker(
+      place.geometry.location.lat(),
+      place.geometry.location.lng(),
+      place.name,
+      formatted_address
+    );
   };
 
   _generateRoute(dest) {
@@ -159,15 +177,12 @@ class MyGoogleMap extends Component {
 
     const directionsService = new maps.DirectionsService();
     const directionsDisplay = new maps.DirectionsRenderer();
-    if (dest === null) {
-      // UBC lat and lng
-      dest = { lat: 49.2606, lng: -123.246 };
-    }
+
     directionsService.route(
       {
         // Origin: geo location
         origin: { lat: curLat, lng: curLng },
-        // Destination: UBC when first rendered
+        // Search Destination lat and lng
         destination: dest,
         travelMode: "WALKING",
       },
@@ -179,6 +194,9 @@ class MyGoogleMap extends Component {
           }
           let routePolyline = new google.maps.Polyline({
             path: response.routes[0].overview_path,
+            strokeColor: "#34aefa",
+            strokeOpacity: 1.0,
+            strokeWeight: 5,
           });
           routePolyline.setMap(map);
           this.setState({
@@ -192,20 +210,18 @@ class MyGoogleMap extends Component {
   }
 
   _generateAddress() {
-    const { mapApi } = this.state;
+    const { mapApi, curLat, curLng } = this.state;
 
     const geocoder = new mapApi.Geocoder();
 
     geocoder.geocode(
-      { location: { lat: this.state.curLat, lng: this.state.curLng } },
+      { location: { lat: curLat, lng: curLng } },
       (results, status) => {
         if (status === "OK") {
           if (results[0]) {
             this.zoom = 12;
             this.setState({
               curAddress: results[0].formatted_address,
-              curLat: results[0].geometry.location.lat(),
-              curLng: results[0].geometry.location.lng(),
             });
           } else {
             window.alert("No results found");
@@ -230,7 +246,7 @@ class MyGoogleMap extends Component {
   }
 
   render() {
-    const { places, mapApiLoaded, mapInstance, mapApi } = this.state;
+    const { mapApiLoaded, mapInstance, mapApi } = this.state;
 
     return (
       <Wrapper>
@@ -261,11 +277,8 @@ class MyGoogleMap extends Component {
                 },
               ],
             }}
-            onChange={this._onChange}
-            onChildMouseDown={this.onMarkerInteraction}
-            onChildMouseUp={this.onMarkerInteractionMouseUp}
-            onChildMouseMove={this.onMarkerInteraction}
-            // onClick={this._onClick}
+            onChange={this._onZoom}
+            onClick={this.onClickMarker}
             bootstrapURLKeys={{
               key: process.env.REACT_APP_GOOGLE_API_KEY,
               libraries: ["places", "geometry"],
@@ -273,16 +286,6 @@ class MyGoogleMap extends Component {
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
           >
-            <Marker
-              text={this.state.address}
-              lat={this.state.lat}
-              lng={this.state.lng}
-            />
-            <Marker
-              text={this.state.curAddress}
-              lat={this.state.curLat}
-              lng={this.state.curLng}
-            />
           </GoogleMapReact>
         </div>
         <div className="info-wrapper">

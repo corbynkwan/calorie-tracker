@@ -2,32 +2,33 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { makeStyles } from "@material-ui/core";
 
-const Wrapper = styled.div`
-  position: absolute;
-  width: 38px;
-  height: 37px;
-  background-image: url(https://icon-library.com/images/pin-icon-png/pin-icon-png-9.jpg);
-  background-size: contain;
-  background-repeat: no-repeat;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  cursor: grab;
-`;
+const useStyles = makeStyles(() => ({
+  marker: {
+    position: "absolute",
+    width: "60px",
+    height: "60px",
+  }
+}));
 
-const Marker = ({ text, onClick }) => <Wrapper alt={text} onClick={onClick} />;
+const handleClick = (lat, lng) =>{
+  let infowindow = new google.maps.InfoWindow({ content: "my location" });
+  infowindow.open({
+    anchor: {lat: lat, lng: lng},
+    shouldFocus: false,
+  });
+}
 
-Marker.defaultProps = {
-  onClick: null,
-};
-
-Marker.propTypes = {
-  onClick: PropTypes.func,
-  text: PropTypes.string.isRequired,
+const Marker = ({ text, onClickMarker}) => {
+  const classes = useStyles();
+  return <div>
+         <img src="https://play-lh.googleusercontent.com/Pw5p_lV7R11FBhf4ImtrQLDKByRttJcEc2oXEY3i_ZaSEmXsV7AuAelC7xCRhuFvHQ" 
+         alt={text} 
+         className={classes.marker}
+         onClick={onClickMarker}
+      />
+    </div>;
 };
 
 export default Marker;
