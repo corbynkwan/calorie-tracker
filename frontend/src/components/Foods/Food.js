@@ -1,6 +1,21 @@
 import {Button, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
 import {Img} from "../../components/Restaurant/Restaurant";
 
+function getCalories(calories) {
+    if(calories)
+        return (
+            <Typography variant="body2" gutterBottom>
+                {calories} Cals
+            </Typography>
+        );
+    else
+        return(
+            <Typography variant="body2" gutterBottom>
+                Missing Calorie Data
+            </Typography>
+        )
+}
+
 export function Food(props){
     const {name,calories,thumbnail,from} = props.food
     return (
@@ -25,9 +40,7 @@ export function Food(props){
                                 <Typography gutterBottom variant="subtitle1" component="div">
                                    {name}
                                 </Typography>
-                                <Typography variant="body2" gutterBottom>
-                                   {calories}
-                                </Typography>
+                                {getCalories(calories)}
                                 <Typography variant="body2" >
                                     {from}
                                 </Typography>

@@ -73,7 +73,7 @@ export default function FoodDiary(props) {
           spacing={3}
         >
           <Grid item>
-            <Typography variant="h4" className={classes.heading}>
+            <Typography variant="h4" className={classes.subheading}>
               Food Diary
             </Typography>
           </Grid>

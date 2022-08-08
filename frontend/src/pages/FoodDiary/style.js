@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     grid: {
         minHeight: "100vh",
     },
-    heading: {
+    subheading: {
         fontFamily: "monospace !important",
         fontWeight: "700 !important",
         letterSpacing: ".2rem !important",
