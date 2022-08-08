@@ -32,8 +32,8 @@ const useStyles = makeStyles(() => ({
   header: {
     // backgroundColor: "#464A5D",
     borderStyle: "none",
-    minHeight: "60px",
-    maxHeight: "60px"
+    minHeight: "60px !important",
+    maxHeight: "60px  !important"
   },
   logo: {
     fontFamily: "Work Sans, sans-serif",
@@ -44,7 +44,7 @@ const useStyles = makeStyles(() => ({
   button: {
     color: "#FFFEFE",
     marginLeft: "38px",
-    fontFamily: "Work Sans, sans-serif"
+    fontFamily: "Work Sans, sans-serif !important"
   },
 }));
 

@@ -6,14 +6,13 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles({
   container: {
-    color: "#fff",
-    padding: "1rem",
+    padding: "30px",
     transition: "0.3s ease-in-out",
     width: "1200px",
-    height: "400px",
+    height: "auto",
     display: "flex",
     flexDirection: "column",
-    position: "relative",
+    // position: "relative",
   },
   dropdownContainer: {
     position: "absolute",

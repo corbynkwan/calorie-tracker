@@ -12,12 +12,6 @@ const useStyles = makeStyles({
     grid: {
         minHeight: "100vh",
     },
-    subheading: {
-        fontFamily: "monospace !important",
-        fontWeight: "700 !important",
-        letterSpacing: ".2rem !important",
-        textDecoration: "none",
-    },
     link: { 
         textDecoration: "none", 
         color: "white"
