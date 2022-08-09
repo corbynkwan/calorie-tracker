@@ -15,7 +15,6 @@ export default function Restaurant() {
 
   return (
     <>
-    <div>TESTING</div>
     <FoodTable id={query.get("id")}/>
 
     </>

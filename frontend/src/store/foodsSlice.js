@@ -50,7 +50,7 @@ export const getRestaurantFoods = createAsyncThunk('foods/getRestaurantFoods', a
   console.log(JSON.stringify(params))
   let response;
   try{
-   response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/items?eateryId=${eateryId}`, {
+   response = await fetch(`http://localhost:5001/items?eateryId=${eateryId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

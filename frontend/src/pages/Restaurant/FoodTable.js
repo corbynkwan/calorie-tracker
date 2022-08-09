@@ -200,16 +200,11 @@ const EnhancedTableToolbar = (props) => {
             <AddIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Filter list">
+        {/* <Tooltip title="Filter list">
           <IconButton>
             <FilterListIcon />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
     </Toolbar>
   );
 };
@@ -219,7 +214,7 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function FoodTable({id}) {
-  const [order, setOrder] = React.useState('asc');
+  const [order, setOrder] = React.useState('desc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
