@@ -29,7 +29,7 @@ class AutoComplete extends Component {
     const options = {
       bounds: defaultBounds,
       componentRestrictions: { country: "ca" },
-      fields: ["address_components", "geometry", "icon", "name"],
+      fields: ["place_id","address_components", "geometry", "icon", "name"],
       strictBounds: true,
       // restrict your search to a specific type of result
       types: ["restaurant", "cafe"],
