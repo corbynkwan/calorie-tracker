@@ -45,6 +45,10 @@ const restaurantSchema = {
     geolocation:{
         type:Object,
         required: true
+    },
+    logo:{
+        type:String,
+        required: false
     }
 
 };

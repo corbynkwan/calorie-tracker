@@ -16,7 +16,7 @@ export default function RestaurantCard(props){
         document.querySelector('.popout-wrapper').style.display = 'flex';
         document.querySelector('body').style.overflowY = 'hidden';
     }
-    const {name,address,thumbnail,desc,restaurant_id} = props.restaurant
+    const {name,address,logo,desc,restaurant_id} = props.restaurant
     return (
         <Container maxWidth={"sm"}>
             <Paper
@@ -34,7 +34,7 @@ export default function RestaurantCard(props){
                         <Container disableGutters  sx={{ width: 150, height: 128}}>
                             <div alt="complex" style={
                                 {
-                                    backgroundImage: `url(${thumbnail})`,
+                                    backgroundImage: `url(${logo})`,
                                     backgroundSize: 'contain',
                                     backgroundRepeat: 'no-repeat',
                                     backgroundPosition: "center center",
