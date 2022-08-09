@@ -109,8 +109,8 @@ app.get('/User/FoodLogs/:dateTime', async(req, res) => {
 app.get('/User/Calories/:dateTime', async(req, res)=>{
     try{
         const retrievedData = await user.calorie.get(req.userDetails,req.params.dateTime);
-        res.statusCode = retrivedData.code;
-        res.json(retrivedData);
+        res.statusCode = retrievedData.code;
+        res.json(retrievedData);
     } catch (error) {
         res.statusCode = 500;
         res.json({});

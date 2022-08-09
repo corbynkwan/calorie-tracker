@@ -67,17 +67,20 @@ async function getRecommendation(setRecommendation) {
 
 }
 
-export default function Recommended() {
-    const dispatch = useDispatch();
-    const [recommendation,setRecommendation] = useState([]);
-    useEffect(() => {
-       console.log("recommend rendered");
-       getRecommendation(setRecommendation);
-    }, []);
-    const foods = recommendation;
+export default function Recommended({user}) {
 
     const renderFoods = () => {
+        const dispatch = useDispatch();
+        const [recommendation,setRecommendation] = useState([]);
+        useEffect(() => {
+            if (user != null && user != undefined) {
+                console.log("recommend rendered");
+                getRecommendation(setRecommendation);
+            }
+        }, []);
+        const foods = recommendation;
         console.log("renderingFood!");
+        console.log(foods);
         let res = [];
         if(foods){
             for (let i = 0; i < foods.length; i++) {
