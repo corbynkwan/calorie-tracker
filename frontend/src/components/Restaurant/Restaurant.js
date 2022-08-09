@@ -1,4 +1,4 @@
-import {Box, Button, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
+import {Box, Button, Container, Grid, Paper, styled, makeStyles, Typography} from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 const Img = styled('img')({
@@ -10,12 +10,6 @@ const Img = styled('img')({
 
 export default function RestaurantCard(props){
 
-    const openPopUp = () => {
-        window.scrollTo({ top: 0, left: 0});
-        document.querySelector('.item-selection-popout').style.display = 'unset';
-        document.querySelector('.popout-wrapper').style.display = 'flex';
-        document.querySelector('body').style.overflowY = 'hidden';
-    }
     const {name,address,logo,desc,restaurant_id} = props.restaurant
     return (
         <Container maxWidth={"sm"}>

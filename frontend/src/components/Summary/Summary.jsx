@@ -19,7 +19,7 @@ export default function Summary(props) {
 
       <div className="right-intake-status">
         <h3>Your Intake</h3>
-        <p>X Calories remaining</p>
+        <p>800 Calories remaining</p>
         <div className="progress-bar-underlay"></div>
         <div className="progress-bar-overlay"></div>
         <Link to="/diary" style={{ textDecoration: "none" }}>
