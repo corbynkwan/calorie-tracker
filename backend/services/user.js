@@ -258,7 +258,7 @@ user.calorie.getRemaining = async(userDetails,dateTime)=>{
         for(let i in foodLogs){
             calCount += parseFloat(foodLogs[i].calories);
         }
-        return {code:201,result:1600-calCount};
+        return {code:201,result:maxCaloriePerDay-calCount};
     }
     catch (e) {
         reject({code: 406, error: e});
