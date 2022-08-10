@@ -333,14 +333,6 @@ class MyGoogleMap extends Component {
             onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
           ></GoogleMapReact>
         </div>
-        <div className="info-wrapper">
-          <div className="map-details">
-            Destination: <span>{this.state.address}</span>
-          </div>
-          <div className="map-details">
-            Current Location: <span>{this.state.curAddress}</span>
-          </div>
-        </div>
       </Wrapper>
     );
   }

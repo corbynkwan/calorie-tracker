@@ -1,19 +1,34 @@
 import { createSlice, createAsyncThunk  } from '@reduxjs/toolkit'
 
 export const getRestaurants = createAsyncThunk('restaurants/getRestaurants', async (restaurantId,filters) => {
-  //Dummy data since backend isn't working
+
   let jwt = JSON.parse(sessionStorage.getItem("jwt"));
-  console.log('called')
 
   let response;
+
   try{
-   response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/eatery`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Bearer ${jwt.token}`
-    }
-  })
+    
+    let latitude = '';
+    let longitude = '';
+
+    navigator.geolocation.getCurrentPosition(async(position) => {
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+
+      response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/nearby?lat=${latitude}&lon=${longitude}&maxDist=1000`, {
+        method: 'GET',
+  
+        headers: {
+  
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${jwt.token}`
+  
+        }
+      });
+
+
+    })
+
 } catch(err) {
   console.log(err)
 }

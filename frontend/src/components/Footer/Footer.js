@@ -8,12 +8,12 @@ import Link from '@mui/material/Link';
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
+      {'© '}{new Date().getFullYear() + " "}
       <Link color="inherit" href="https://calorie-tracker-prod-wfc97.ondigitalocean.app/">
-       CalorieTracker
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+       
+      Team Alpha
+
+      </Link>{'. Made with ❤️ at UBC.'}
     </Typography>
   );
 }

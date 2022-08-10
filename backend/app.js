@@ -51,7 +51,7 @@ app.use(jwtCheck);
 
 const userGateway = async(req, res, next) => {
     try{
-        let methods = ['GET', 'POST', 'PUT', 'DELETE'];
+        let methods = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'];
 
         if (methods.includes(req.method)) {
             const token = req.headers.authorization.split(' ')[1];

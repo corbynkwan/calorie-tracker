@@ -1,11 +1,21 @@
 .Restaurants {
-    width: calc(100% - 100px);
+    margin-top: 35px;
+    width: 100%;
     text-align: left;
-    padding-left: 26px;
-    padding-right: 50px;
 }
 
 .items-inline{
     padding: 0;
     display: flex;
+}
+.Restaurants h2 {
+
+    margin-left: 50px;
+
+}
+
+.Restaurants h3 {
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

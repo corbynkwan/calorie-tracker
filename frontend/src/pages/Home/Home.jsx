@@ -22,7 +22,6 @@ function Home(props) {
       <HeaderWithSearch/>
       <Summary user={props.user} />
       <Recommended user={props.user} />
-      <GoogleMap />
       <Restaurants user={props.user} />
      
     </div>

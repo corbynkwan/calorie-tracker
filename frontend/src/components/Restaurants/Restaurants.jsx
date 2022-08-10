@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { getRestaurants } from '../../store/restaurantsSlice';
 import RestaurantCard from '../Restaurant/Restaurant';
+import GoogleMap from '../GoogleMap/GoogleMap';
+import './Restaurants.css';
+
 export default function Restaurants({user}) {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -20,7 +23,9 @@ export default function Restaurants({user}) {
     }
     return (
         <section className="Restaurants">
-            <h2>Restaurants @ UBC</h2>
+            <h2>Restaurants on campus</h2>
+            <GoogleMap />
+            <h3>Walkable {'(<1KM)'}</h3>
             <div className='items-inline'>
                <Grid container item spacing={2}>
                    {renderRestaurants()}
