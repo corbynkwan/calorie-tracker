@@ -79,7 +79,7 @@ Calorie-Tracker is a web application designed to support UBC students’ dietary
 <h2> Unit 4 - NoSQL with MongoDB </h2>
 <p>MongoDB is our choice for database storage with all persistent data(name, email, foodlog), restaurants, and items stored as collections in the database. The Node & Express routes are connected to MongoDB to allow for create, read, update and delete operations on data. For example, checking if a user exists by verifying email, then retrieving corresponding food log of the user. MongoDB is optimized for basic queries as well as complex aggregation such as filtering food logs by time frame and  grouping the calorie consumption over that period which gives insights into nutrient data for the user. Our application defined mongoose Schema for each of our collections to ensure required and id fields such as the user's email are uniquely identified and correctly inputted. MongoDB provides a more intuitive data storage mechanism compared to SQL’s relational table structure, it is an effective choice for our app as it allows for flexible model structure and data type changes to handle missing fields such as calorie amount in food items. </p>
 <h2>Unit 5 Releasing Engineering</h2>
-<p>Our application is deployed using Ocean Digital with frontend and backend folders separately. We chose the monorepo structure as this was easier to maintain, and allows the team to be able to work full stack more seamlessly. We chose digital ocean over Heroku for its simplicity of use. </p>
+<p>Our application is deployed using DigitalOcean with frontend and backend folders separately. We chose the monorepo structure as this was easier to maintain, and allows the team to be able to work full stack more seamlessly. We chose DigitalOcean over Heroku for its simplicity of use. </p>
 <h2>Above and Beyond Functionalities</h2>
 <h3>Crawler</h3>
 <p>To solve the difficulty of data collection, we introduced a crawler to collect data instead of collecting manually. The crawler uses Axios to fetch data such as UBC’s restaurants and food item information including name, location (lat, lng) and nutrient information from https://ubc.nutrislice.com/ and convert them into food collection and restaurant collection format using mongoose. The conversion includes date format transformation and data combination.  We scheduled it to collect data once a day to make the data up to date. </p>
@@ -103,8 +103,8 @@ The backend validates the token using a private key and fetches basic details of
   
   Search Engine: The search engine for the app is built using a framework called TypeSense - this allows us to provide a quick search experience with typo tolerance.
 TypeSense runs as a separate process on the server and provides an API for our app to communicate with it.
-Whenever new documents are added to the searchable collection (Restaurants) in our MongoDB database, it triggers a function on our backend to send relevant parts of the new documents to TypeSense.
-TypeSense then indexes this data and stores it in a cache for a faster response time..
+When new documents are added to the searchable collection (Restaurants) in our MongoDB database, relevant parts of these documents get synced with TypeSense.
+TypeSense then indexes this data and stores it in a cache for a faster response time.
 The frontend directly sends a GET request to the TypeSense API when the user performs a search on the UI and fetches the results.
 
 <h3>Corbyn</h3>
