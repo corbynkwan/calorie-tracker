@@ -9,7 +9,11 @@ import './Restaurants.css';
 export default function Restaurants({user}) {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getRestaurants())
+        navigator.geolocation.getCurrentPosition((position) => {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+            dispatch(getRestaurants({lat: latitude, lon: longitude}))
+          });
     }, [user]);
     const restaurants = useSelector(state => state.restaurants);
     const renderRestaurants = () => {
@@ -25,7 +29,7 @@ export default function Restaurants({user}) {
         <section className="Restaurants">
             <h2>Restaurants on campus</h2>
             <GoogleMap />
-            <h3>Walkable {'(<1KM)'}</h3>
+            <h3>Walkable {'(<0.5KM)'}</h3>
             <div className='items-inline'>
                <Grid container item spacing={2}>
                    {renderRestaurants()}

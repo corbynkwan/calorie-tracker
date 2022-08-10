@@ -1,34 +1,24 @@
 import { createSlice, createAsyncThunk  } from '@reduxjs/toolkit'
 
-export const getRestaurants = createAsyncThunk('restaurants/getRestaurants', async (restaurantId,filters) => {
+export const getRestaurants = createAsyncThunk('restaurants/getRestaurants', async (coordinates,filters) => {
 
   let jwt = JSON.parse(sessionStorage.getItem("jwt"));
 
   let response;
 
   try{
-    
-    let latitude = '';
-    let longitude = '';
 
-    navigator.geolocation.getCurrentPosition(async(position) => {
-      latitude = position.coords.latitude;
-      longitude = position.coords.longitude;
+   response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/nearby?lat=${coordinates.lat}&lon=${coordinates.lon}&maxDist=500`, {
+    method: 'GET',
 
-      response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/nearby/?lat=${latitude}&lon=${longitude}&maxDist=1000`, {
-        method: 'GET',
-  
-        headers: {
-  
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${jwt.token}`
-  
-        }
-      });
+    headers: {
 
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${jwt.token}`
 
-    })
+    }
 
+  })
 } catch(err) {
   console.log(err)
 }

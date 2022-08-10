@@ -61,7 +61,7 @@ nearby.getRestaurantsWithinDist = async(lat,lon,maxDist) => {
         let list = [];
         for(let index in allRestaurants){
             if(allRestaurants[index].geolocation){
-                let dist = CoolWPDistance(parseFloat(allRestaurants[index].geolocation.longitude),parseFloat(allRestaurants[index].geolocation.latitude),parseFloat(lon),parseFloat(lat));
+                let dist = nearby.calculateDistance(parseFloat(allRestaurants[index].geolocation.longitude),parseFloat(allRestaurants[index].geolocation.latitude),parseFloat(lon),parseFloat(lat));
                 if(dist<maxDist){
                     list.push(allRestaurants[index]);
                 }

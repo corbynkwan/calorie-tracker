@@ -292,7 +292,7 @@ app.get('/items',async (req, res) => {
 
 // Get the nearby restaurants that is within a distance.
 // Query Param: lat, lon, maxDist.
-app.get('/nearby/',async (req,res)=>{
+app.get('/nearby',async (req,res)=>{
     let retrievedData = await nearby.getRestaurantsWithinDist(req.query.lat,req.query.lon,req.query.maxDist);
     res.statusCode=retrievedData.code;
     res.json(retrievedData);
