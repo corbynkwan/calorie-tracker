@@ -33,9 +33,14 @@ async function getRecommendation(setRecommendation) {
             console.log(err)
         }
         let resultJson = await response.json();
+
+        //console.log(resultJson)
         let result = resultJson.result.map(function (e){
             return {name:e.name,
                 calories:e.calories,
+                protein:e.protein,
+                carbs:e.carbs,
+                fat:e.fat,
                 filters:e.filters,
                 from:'temp',
                 thumbnail:e.thumbnail}
