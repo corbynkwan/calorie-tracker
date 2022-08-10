@@ -1,13 +1,55 @@
 import "./HeaderWithSearch.css";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
 import logo from "../../assets/images/alpha-logo.svg";
+import { InstantSearch, SearchBox, Hits, Stats } from 'react-instantsearch-dom';
+import { searchClient } from "../../typesenseAdapter";
+import {useState} from 'react';
+import RestaurantCard from "../Restaurant/Restaurant";
+
+const hit = ({hit}) => {
+  return (
+    <div className="hit">
+
+      <RestaurantCard restaurant={hit}/>
+
+    </div>
+  )
+}
+
+const Content = () => {
+  return (
+    <div className="searchResults">
+      <h2>Search Results</h2>
+      <Stats></Stats>
+      <Hits hitComponent={hit}></Hits>
+    </div>
+  )
+}
 
 export default function HeaderWithSearch(props) {
+
+  const [showResults, setShowResults] = useState(false);
+  document.querySelector('body').style.overflowY = 'visible';
+
+  const displayManager = (state) => {
+    if (state.query.length > 0) {
+      document.querySelector('body').style.overflowY = 'hidden';
+      setShowResults(true);
+    } else {
+      setShowResults(false);
+      document.querySelector('body').style.overflowY = 'visible';
+    }
+  } 
+
   return (
     <section className="SearchHeader">
-     <img src={logo} alt="Alpha Calorie Tracker Logo"></img>
+      <img src={logo} alt="Alpha Calorie Tracker Logo"></img>
+
+      <InstantSearch indexName="restaurants" searchClient={searchClient} onSearchStateChange={searchState => displayManager(searchState)}>
+        <SearchBox></SearchBox>
+        {showResults? <Content/>:""}
+      </InstantSearch>
     </section>
   );
 }
