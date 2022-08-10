@@ -1,6 +1,7 @@
 import {Button, Container, Grid, Paper, styled, Typography} from "@material-ui/core";
 import {Img} from "../../components/Restaurant/Restaurant";
-
+import {postUserLog} from "../../store/userSlice";
+import {useDispatch} from "react-redux";
 function getCalories(calories) {
     if(calories)
         return (
@@ -17,7 +18,10 @@ function getCalories(calories) {
 }
 
 export function Food(props){
-    const {name,calories,thumbnail,from} = props.food
+    console.log(props.food)
+    const {name,calories,protein,carbs,fat,thumbnail,from} = props.food
+    const dispatch = useDispatch();
+
     return (
             <Paper>
                 <Grid container direction={"column"}>
@@ -47,7 +51,7 @@ export function Food(props){
                             </Grid>
                             <Grid item>
                                 <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                                    <Button >
+                                    <Button onClick={(event) => {dispatch(postUserLog({name,calories,fat,carbs,protein}));alert("Food added!")}}>
                                         Add this item
                                     </Button>
                                 </Typography>

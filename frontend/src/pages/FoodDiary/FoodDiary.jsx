@@ -71,6 +71,7 @@ export default function FoodDiary(props) {
           direction="column"
           className={classes.grid}
           spacing={3}
+          padding={3}
         >
           <Grid item>
             <Typography variant="h4">
