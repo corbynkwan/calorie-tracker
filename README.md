@@ -91,7 +91,56 @@ Calorie-Tracker is a web application designed to support UBC students’ dietary
 <p>Our application integrated a Google map for users to find restaurants available on campus. Geometry API is used to identify a user's geolocation by latitude and longitude, which returns the user's address and displays a marker identifying the user’s location at map center. Restaurants within a user's walking distance are then fetched and displayed on map markers with restaurant name, address, and google map navigation. </p>
 <h2>Next Steps </h2>
 <p>There are a few in-progress goals we hope we could enhance in the future to increase our app’s functionality, this includes implementing the frontend for users to filter restaurants based on dietary requirements, making UI responsive, and crowdsourcing more restaurants and food options available on UBC campus. </p>
-<h3>List of Contributions</h3>
+<h2>List of Contributions</h2>
+<h3>Dhruv</h3>
+
+     
+     Authentication system:
+Uses Auth0 as an authentication provider that manages the login process between the user and their identity provider (or stores their email and password securely if the user chooses not to use an external provider)
+Upon successful authentication, Auth0 provides a token to our app, through a callback to the frontend.
+This token is used to verify the user each time an API call is made between the frontend and backend.
+The backend validates the token using a private key and fetches basic details of the user (email, name, whether they are still logged in, etc) from Auth0.
+  
+  Search Engine: The search engine for the app is built using a framework called TypeSense - this allows us to provide a quick search experience with typo tolerance.
+TypeSense runs as a separate process on the server and provides an API for our app to communicate with it.
+Whenever new documents are added to the searchable collection (Restaurants) in our MongoDB database, it triggers a function on our backend to send relevant parts of the new documents to TypeSense.
+TypeSense then indexes this data and stores it in a cache for a faster response time..
+The frontend directly sends a GET request to the TypeSense API when the user performs a search on the UI and fetches the results.
+
+<h3>Corbyn</h3>
+ <p>Setup of redux stuff 
+Created multiple slices that store the redux reducer logic and actions. Has the user slice, restaurants slice, foods slice. 
+These slices include API calls to the backend, and the state of the user, restaurants, foods so that data is managed cleanly 
+Header + Footer
+Copy and pasted from material-ui 
+Restaurants page
+Table template was from material-ui
+restaurant id is on the URL which then makes an API call to the backend to get the restaurant information which then loads all the restaurant’s foods into the table 
++ button on the restaurant page makes an api call to the backend to add add the foods to the user’s calories
+</P>
+<h3>Zehao</h3>
+
+      
+Crawler:Using Axios to send requests and get responses. Finding the data to be collected, including the restaurant data and the item data. Connect them with the restaurant id.
+converting the data to the format we want to store.
+Using mongoose to save the result into the mongoDB
+      Recommendation frontend/backend Api: 
+ Recommendation is based on distance, calories of food, remaining calories of users, opening time and current time.
+First, it will find the nearest four restaurants. 
+Then it will randomly pick one item in that restaurant that is meeting some requirements, including the restaurant being open and the food calories does not exceed the remaining calories. 
+
+<h3>Amy</h3>
+<p>
+  Google map
+Used Google Map Geometry API to identify user’s geolocation by latitude and longitude, retrieve user’s address and display at map center.
+Used Places API to display a marker on map with restaurant details such as location, opening hours
+Food Log Report 
+Used the rechart library to allow an area graph representation of each nutrient category’s (y-axis  sum of nutrient’s consumption) intake over a period of time (x-axis dates)
+Convert local date to ISOstring representation. Since date info and represented and stored in UTC timezone, the date/times are first being identified as before or after local time 5pm(the next day in UTC), then used UTC time frame that has considered the timezone offset to aggregate nutrient consumption over the period of time 
+
+</P>
+
+
 <h2>Prototypes: </h2>
 <img src="https://github.com/corbynkwan/calorie-tracker/blob/main/Paper%20Prototype%201%20.png" alt="Paper Prototype 1" width="800"/>
 <img src="https://github.com/corbynkwan/calorie-tracker/blob/main/UI%20Prototype%201%20.png" alt="UI Prototype 2" width="800"/>
