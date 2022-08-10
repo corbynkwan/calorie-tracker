@@ -39,7 +39,7 @@ function App() {
       if (!isLoading && !user) {
         loginWithRedirect();
       } else if (!isLoading && user) {
-        console.log(user);
+        
         sessionStorage.setItem("user", JSON.stringify(user));
         sessionStorage.setItem("jwt", JSON.stringify({token: await getAccessTokenSilently()}));
         dispatch(getUser());
@@ -56,7 +56,6 @@ function App() {
   useEffect(() =>{
     async function monitorChange() {
     if (isAuthenticated && sessionStorage.getItem("user")) {
-      //console.log(`user is ${sessionStorage.getItem("user")}`)
       setAppReady(true);
     } else if (!isLoading && !isAuthenticated) {
       alert("Session Expired, Please login again.");

@@ -67,7 +67,7 @@ class MyGoogleMap extends Component {
         };
         service.findPlaceFromQuery(request, (results, status) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
-            console.log("What is results", results[0])
+           
             this.createMarker(results[0]);
           }
         });
@@ -189,7 +189,7 @@ class MyGoogleMap extends Component {
   };
 
   addPlace = (place) => {
-    console.log("What is place", place);
+    
     const place_address_filtered = place.address_components.filter(
       (el) =>
         el.short_name !== "Greater Vancouver A" &&
@@ -339,7 +339,6 @@ class MyGoogleMap extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("What is state.restaurants", state.restaurants);
   return {
     restaurants: state.restaurants,
   };

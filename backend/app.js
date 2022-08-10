@@ -255,31 +255,38 @@ app.get('/getEateryName',async(req,res) => {
 // eateryId+filters
 app.get('/items',async (req, res) => {
     try{
-        console.log(req.query)
         if (req.query.eateryId === undefined && req.query.id === undefined && req.query.filters === undefined) {
+
             let retrievedData = await item.getAll();
             res.statusCode=retrievedData.code;
             res.json(retrievedData);
+
         }else if(req.query.id!==undefined && req.query.eateryId===undefined && req.query.filters === undefined){
+
             let retrievedData = await item.getByID(req.query.id);
             res.statusCode=retrievedData.code;
             res.json(retrievedData);
+
         }else if(req.query.id===undefined && req.query.eateryId !== undefined && req.query.filters === undefined){
-            console.log('here')
-            console.log(req.query.eateryId)
+
             let retrievedData;
             retrievedData = await item.getByEateryId(req.query.eateryId);
-            console.log('here2')
+
             res.statusCode=retrievedData.code;
             res.json(retrievedData);
+
         }else if(req.query.id === undefined && req.query.eateryId === undefined && req.query.filters !== undefined){
+
             let retrievedData = await item.getByFilters(req.query.filters);
             res.statusCode=retrievedData.code;
             res.json(retrievedData);
+
         }else if(req.query.id === undefined && req.query.eateryId !== undefined && req.query.filters !== undefined){
+
             let retrievedData = await item.getByEateryIdAndFilters(req.query.eateryId, req.query.filters);
             res.statusCode=retrievedData.code;
             res.json(retrievedData);
+
         }
     }catch (e) {
         console.log(e);
@@ -322,7 +329,9 @@ app.post('/test/Update',async()=>{
 })
 
 app.post("/Reminders/Subscribe", (req, res) => {
+    
     // Get pushSubscription object
+
     const subscription = req.body;
   
     // Send 201 - resource created
@@ -332,9 +341,6 @@ app.post("/Reminders/Subscribe", (req, res) => {
     const payload = JSON.stringify({ title: "When do you usualy eat?" });
   
     // Pass object into sendNotification
-   // webpush
-     // .sendNotification(subscription, payload)
-      //.catch(err => console.error(err));
   });
 
 // *Initialize Server

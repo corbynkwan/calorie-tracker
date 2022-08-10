@@ -26,22 +26,26 @@ function Report(props) {
   };
 
   return (
-    <div>
-      <Grid container
-      justify="center"
-      alignItems="center"
-      direction="column">
-        <Grid item>
-        <div className={classes.container}>
-          <h1>Nutrition Report</h1>
-          <h1>{selectedNutrient}</h1>
-          <NutrientDropdown setNutrientGraph={setNutrientGraph} />
-          <TimeFrameDropdown fetchCustomData={fetchCustomData} />
-          <MyGraph data={logsReport} selectedNutrient={selectedNutrient} />
-        </div>
+    <section>
+      <Header user={props.user} logout={props.logout}/>
+      <div>
+        <Grid container
+        justify="center"
+        alignItems="center"
+        direction="column">
+          <Grid item>
+          <div className={classes.container}>
+            <h1>Nutrition Report</h1>
+            <h1>{selectedNutrient}</h1>
+            <NutrientDropdown setNutrientGraph={setNutrientGraph} />
+            <TimeFrameDropdown fetchCustomData={fetchCustomData} />
+            <MyGraph data={logsReport} selectedNutrient={selectedNutrient} />
+          </div>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </section>
+    
   );
 }
 

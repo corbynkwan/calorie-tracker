@@ -14,7 +14,6 @@ function getCoordinates() {
 
 async function getRecommendation(setRecommendation) {
     try{
-        console.log('getting recommendation');
         let jwt = JSON.parse(sessionStorage.getItem("jwt"));
         let d = new Date();
         const position = await getCoordinates();
@@ -33,8 +32,6 @@ async function getRecommendation(setRecommendation) {
             console.log(err)
         }
         let resultJson = await response.json();
-
-        //console.log(resultJson)
         let result = resultJson.result.map(function (e){
             return {name:e.name,
                 calories:e.calories,
