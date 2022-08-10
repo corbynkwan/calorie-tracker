@@ -19,7 +19,7 @@ import HeaderWithSearch from "../../components/HeaderWithSearch/HeaderWithSearch
 function Home(props) {
   return (
     <div className="Home">
-      <HeaderWithSearch/>
+      <HeaderWithSearch user={props.user} logout={props.logout}/>
       <Summary user={props.user} />
       <Recommended user={props.user} />
       <Restaurants user={props.user} />

@@ -1,8 +1,7 @@
 import "./HeaderWithSearch.css";
-import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/alpha-logo.svg";
-import { InstantSearch, SearchBox, Hits, Stats, RefinementList, Menu } from 'react-instantsearch-dom';
+import { InstantSearch, SearchBox, Hits, Stats, RefinementList } from 'react-instantsearch-dom';
 import { searchClient } from "../../typesenseAdapter";
 import {useState} from 'react';
 import RestaurantCard from "../Restaurant/Restaurant";
@@ -37,7 +36,7 @@ const Content = () => {
   )
 }
 
-export default function HeaderWithSearch(props) {
+export default function HeaderWithSearch({user, logout}) {
 
   const [showResults, setShowResults] = useState(false);
   document.querySelector('body').style.overflowY = 'visible';
@@ -60,6 +59,10 @@ export default function HeaderWithSearch(props) {
         <SearchBox translations={{placeholder: 'Search Restuarants by name, address or cuisine'}}></SearchBox>
         {showResults? <Content/>:""}
       </InstantSearch>
+
+      <div className="right-panel" onClick={logout}>
+        <p>Logout</p>
+      </div>
     </section>
   );
 }

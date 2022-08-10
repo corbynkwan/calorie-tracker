@@ -97,3 +97,13 @@
     width: 20%;
     position: absolute;
 }
+
+.right-panel {
+    float: right;
+    margin-right: 50px;
+    margin-top: 25px;
+    font-family: 'Poppins';
+    font-weight: 500;
+    color: #080808;
+    cursor: pointer;
+}
