@@ -27,7 +27,7 @@ export default function Restaurants({user}) {
     }
     return (
         <section className="Restaurants">
-            <h2>Restaurants on campus</h2>
+            <h2>What's cooking nearby?</h2>
             <GoogleMap />
             <h3>Walkable {'(<0.5KM)'}</h3>
             <div className='items-inline'>

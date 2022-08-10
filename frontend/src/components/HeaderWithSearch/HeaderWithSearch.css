@@ -48,7 +48,7 @@
 }
 
 .ais-Hits-list li {
-    padding-top: 50px;
+    padding-top: 30px;
 }
 
 .searchResults h2 {
@@ -96,5 +96,4 @@
     display: inline-block;
     width: 20%;
     position: absolute;
-    padding-top: 15px;
 }

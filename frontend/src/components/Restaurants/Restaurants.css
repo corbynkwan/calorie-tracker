@@ -11,6 +11,8 @@
 .Restaurants h2 {
 
     margin-left: 50px;
+    font-family: 'Poppins';
+    margin-bottom: 20px;
 
 }
 
@@ -18,4 +20,5 @@
     margin-left: 50px;
     margin-top: 20px;
     margin-bottom: 20px;
+    font-family: 'Poppins';
 }

@@ -10,3 +10,8 @@
     padding: 0;
     display: flex;
 }
+
+.Recommended h2 {
+    font-family: 'Poppins';
+    margin-bottom: 20px;
+}

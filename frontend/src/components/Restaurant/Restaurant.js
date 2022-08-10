@@ -14,14 +14,11 @@ export default function RestaurantCard(props){
     return (
         <Container maxWidth={"sm"}>
             <Paper
-                sx={{
-                    p: 2,
-                    margin: 'auto',
-                    maxWidth: 500,
-                    flexGrow: 1,
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-                }}
+            style={{
+                borderRadius: '10px',
+                marginBottom: '25px',
+                boxShadow: "rgb(28 28 28 / 15%) 0px 2px 8px",
+            }}
             >
                 <Grid container spacing={2}>
                     <Grid item>
@@ -41,18 +38,15 @@ export default function RestaurantCard(props){
                     <Grid item xs={2} sm container>
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
-                                <Typography gutterBottom variant="subtitle1" component="div">
-                                    {name}
+                                <Typography gutterBottom variant="subtitle1" component="div" style={{fontFamily: 'Poppins'}}>
+                                    <b>{name}</b>
                                 </Typography>
-                                <Typography variant="body2" gutterBottom>
+                                <Typography variant="body2" gutterBottom style={{fontFamily: 'Poppins'}}>
                                     {address}
-                                </Typography>
-                                <Typography variant="body2" >
-                                    {desc}
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <Typography sx={{ cursor: 'pointer' }} variant="body2">
+                                <Typography sx={{ cursor: 'pointer' }} variant="body2" style={{fontFamily: 'Poppins'}}>
                                     <Link to={`/restaurant?id=${restaurant_id}`} style={{ textDecoration: 'none' }}>
                                         <Button>
                                             See Menu

@@ -91,7 +91,7 @@ export default function Recommended({user}) {
         console.log(foods);
         let res = [];
         if(foods){
-            for (let i = 0; i < foods.length; i++) {
+            for (let i = 0; i < foods.length && i < 4; i++) {
                 //      name: "Burger",
                 //       calories: 750,
                 //       filters: [],

@@ -23,7 +23,7 @@ export function Food(props){
     const dispatch = useDispatch();
 
     return (
-            <Paper style={{borderRadius: '15px', boxShadow: `0px 0px 5px 0px rgb(135 135 135 / 30%)`}}>
+            <Paper style={{borderRadius: '15px', boxShadow: `boxShadow: "rgb(28 28 28 / 15%) 0px 2px 8px`}}>
                 <Grid container direction={"column"}>
                     <Grid item>
                         <Container disableGutters>
