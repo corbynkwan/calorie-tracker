@@ -95,7 +95,7 @@ Calorie-Tracker is a web application designed to support UBC students’ dietary
 <h3>Dhruv</h3>
 
      
-     Authentication system:
+Authentication system:
 Uses Auth0 as an authentication provider that manages the login process between the user and their identity provider (or stores their email and password securely if the user chooses not to use an external provider)
 Upon successful authentication, Auth0 provides a token to our app, through a callback to the frontend.
 This token is used to verify the user each time an API call is made between the frontend and backend.
