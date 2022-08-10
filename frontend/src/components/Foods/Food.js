@@ -21,6 +21,7 @@ export function Food(props){
     console.log(props.food)
     const {name,calories,protein,carbs,fat,thumbnail,from} = props.food
     const dispatch = useDispatch();
+    const dateTime = new Date().toISOString();
 
     return (
             <Paper style={{borderRadius: '15px', boxShadow: `boxShadow: "rgb(28 28 28 / 15%) 0px 2px 8px`}}>
@@ -52,7 +53,7 @@ export function Food(props){
                             </Grid>
                             <Grid item>
                                 <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                                    <Button onClick={(event) => {dispatch(postUserLog({name,calories,fat,carbs,protein}));alert("Food added!")}}>
+                                    <Button onClick={(event) => {dispatch(postUserLog({name,calories,fat,carbs,protein, dateTime}));alert("Food added!")}}>
                                         Add this item
                                     </Button>
                                 </Typography>

@@ -59,7 +59,6 @@ export default function Restaurant(props) {
                 label="Date desktop"
                 value={dateTime}
                 onChange={(dateTime) => {
-                  console.log("What is dateTime", dateTime.toISOString())
                   setDateTime(dateTime);
                   dispatch(setDate(dateTime.toISOString()));
                   // Date only format e.g. "2022-07-23"
