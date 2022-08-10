@@ -216,7 +216,8 @@ user.recommendation = async(userDetails,lat,lon,dateTime)=>{
     try {
         let openingRestaurant = await eatery.getAllByOpen(true);
         openingRestaurant = openingRestaurant.results;
-        const remainingCalorie = await user.calorie.getRemaining(userDetails, dateTime);
+        let remainingCalorie = await user.calorie.getRemaining(userDetails, dateTime);
+        remainingCalorie = remainingCalorie.result;
         let distanceArr = []
         for (let i in openingRestaurant) {
             items = await item.getByEateryId(openingRestaurant[i].restaurant_id);
@@ -235,7 +236,7 @@ user.recommendation = async(userDetails,lat,lon,dateTime)=>{
             recommendItems = recommendItems.result;
             if(recommendItems.length!=0){
                 // recommended item's calorie should not exceed the everyday calorie limit.
-                recommendItems.filter(e=>{e.calories<=remainingCalorie||!e.calories});
+                recommendItems.filter(e=>{e.calories && e.carbs && e.calories<=remainingCalorie});
                 const recommendItem = recommendItems[Math.floor(Math.random() * recommendItems.length)];
                 res.push(recommendItem);
             }
@@ -261,7 +262,7 @@ user.calorie.getRemaining = async(userDetails,dateTime)=>{
         return {code:201,result:maxCaloriePerDay-calCount};
     }
     catch (e) {
-        reject({code: 406, error: e});
+        return({code: 406, error: e});
     }
 
 }

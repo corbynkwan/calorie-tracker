@@ -226,6 +226,24 @@ app.get('/eatery',async (req, res) => {
         res.statusCode = 500;
         res.json({});
     }
+})
+
+app.get('/getEateryName',async(req,res) => {
+    try{
+        let ids = JSON.parse(req.query.ids);
+        let result = [];
+        for(let i in ids) {
+            let queryRes = await eatery.getByID(ids[i]);
+            result.push(queryRes.result.name);
+        }
+        res.statusCode=200;
+        res.json({code:200,result:result});
+
+    }catch (e) {
+        console.log(e);
+        res.statusCode = 500;
+        res.json({});
+    }
 
 })
 
