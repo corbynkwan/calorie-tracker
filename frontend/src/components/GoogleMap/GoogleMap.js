@@ -267,16 +267,6 @@ class MyGoogleMap extends Component {
 
     return (
       <Wrapper>
-        {mapApiLoaded && (
-          <div>
-            <h2>Search for a Restarant</h2>
-            <AutoComplete
-              map={mapInstance}
-              mapApi={mapApi}
-              addplace={this.addPlace}
-            />
-          </div>
-        )}
         <div className="main-wrapper">
           <GoogleMapReact
             center={this.state.center}
