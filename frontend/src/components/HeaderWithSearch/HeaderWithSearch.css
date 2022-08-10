@@ -32,3 +32,37 @@
 .ais-SearchBox-reset {
     display: none;
 }
+
+.searchResults {
+    position: fixed;
+    z-index: 10;
+    background: white;
+    width: 100vw;
+    margin-left: -50px;
+    height: calc(100vh - 82px);
+    overflow-y: scroll;
+}
+
+.ais-Hits-list {
+    list-style-type: none;
+}
+
+.ais-Hits-list li {
+    padding-top: 50px;
+}
+
+.searchResults h2 {
+    margin-left: 50px;
+    font-family: 'Poppins';
+    font-weight: 600;
+    margin-top: 15px;
+    font-size: 25px;
+}
+
+.ais-Stats{
+    margin-left: 50px;
+    margin-top: -5px;
+    font-family: 'Poppins';
+    color: gray;
+    font-weight: 600;
+}
