@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { getRestaurants } from '../../store/restaurantsSlice';
 import RestaurantCard from '../Restaurant/Restaurant';
-export default function Restaurants() {
+export default function Restaurants({user}) {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getRestaurants())
-    }, [dispatch]);
+    }, [user]);
     const restaurants = useSelector(state => state.restaurants);
     const renderRestaurants = () => {
         let res = [];

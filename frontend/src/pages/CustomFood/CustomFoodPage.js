@@ -4,8 +4,9 @@ import CustomFoodGrid from "../../components/CustomFood/CustomFoodGrid";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { postUserLog } from "../../store/userSlice";
+import Header from "../../components/Header/Header";
 
-export default function CustomFoodPage() {
+export default function CustomFoodPage(props) {
   const location = useLocation();
   const { selectedDateTime } = location.state;
 
@@ -18,6 +19,7 @@ export default function CustomFoodPage() {
 
   return (
     <>
+    <Header user={props.user} logout={props.logout}/>
       <Paper
         sx={{
           p: 2,

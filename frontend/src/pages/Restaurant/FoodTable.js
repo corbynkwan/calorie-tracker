@@ -26,6 +26,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useEffect} from 'react' 
 import { getAllFoods,getRestaurantFoods } from '../../store/foodsSlice';
 import {postUserLog} from '../../store/userSlice'
+import { useLocation } from "react-router-dom";
+
 function createData(name, calories, fat, carbs, protein) {
   return {
     name,
@@ -220,6 +222,9 @@ export default function FoodTable({id}) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const location = useLocation();
+  const storeDate = useSelector((state) => state.date);
+  const [dateTime, setDateTime] = React.useState(new Date(storeDate.date));
   const dispatch = useDispatch();
   useEffect(() => {
       dispatch(getRestaurantFoods(id))
@@ -252,7 +257,8 @@ export default function FoodTable({id}) {
         carbs,
         protein
       } = foodToAdd[0];
-      dispatch(postUserLog({name,calories,fat,carbs,protein}));
+      console.log("selectedDateTime:",dateTime)
+      dispatch(postUserLog({name,calories,fat,carbs,protein,dateTime}));
     })
   }
   const handleClick = (event, name) => {

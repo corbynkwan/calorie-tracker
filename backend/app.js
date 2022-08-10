@@ -109,8 +109,8 @@ app.get('/User/FoodLogs/:dateTime', async(req, res) => {
 app.get('/User/Calories/:dateTime', async(req, res)=>{
     try{
         const retrievedData = await user.calorie.get(req.userDetails,req.params.dateTime);
-        res.statusCode = retrivedData.code;
-        res.json(retrivedData);
+        res.statusCode = retrievedData.code;
+        res.json(retrievedData);
     } catch (error) {
         res.statusCode = 500;
         res.json({});
@@ -221,6 +221,24 @@ app.get('/eatery',async (req, res) => {
             res.statusCode=retrievedData.code;
             res.json(retrievedData);
         }
+    }catch (e) {
+        console.log(e);
+        res.statusCode = 500;
+        res.json({});
+    }
+})
+
+app.get('/getEateryName',async(req,res) => {
+    try{
+        let ids = JSON.parse(req.query.ids);
+        let result = [];
+        for(let i in ids) {
+            let queryRes = await eatery.getByID(ids[i]);
+            result.push(queryRes.result.name);
+        }
+        res.statusCode=200;
+        res.json({code:200,result:result});
+
     }catch (e) {
         console.log(e);
         res.statusCode = 500;

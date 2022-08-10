@@ -1,0 +1,68 @@
+.SearchHeader {
+    padding: 15px 50px;
+}
+
+.SearchHeader img {
+    height: 55px;
+    margin-top: 12px;
+}
+
+.ais-SearchBox {
+    position: relative;
+    display: inline-block;
+    left: 15%;
+    width: 50%;
+}
+
+.ais-SearchBox-input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgb(232, 232, 232);
+    box-shadow: rgb(28 28 28 / 8%) 0px 2px 8px;
+    background: linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(255,255,255,1) 35%, rgba(240,240,240,1) 100%);
+    font-family: Poppins;
+    font-weight: 600;
+}
+
+.ais-SearchBox-submit {
+    display: none;
+}
+
+.ais-SearchBox-reset {
+    display: none;
+}
+
+.searchResults {
+    position: fixed;
+    z-index: 10;
+    background: white;
+    width: 100vw;
+    margin-left: -50px;
+    height: calc(100vh - 82px);
+    overflow-y: scroll;
+}
+
+.ais-Hits-list {
+    list-style-type: none;
+}
+
+.ais-Hits-list li {
+    padding-top: 50px;
+}
+
+.searchResults h2 {
+    margin-left: 50px;
+    font-family: 'Poppins';
+    font-weight: 600;
+    margin-top: 15px;
+    font-size: 25px;
+}
+
+.ais-Stats{
+    margin-left: 50px;
+    margin-top: -5px;
+    font-family: 'Poppins';
+    color: gray;
+    font-weight: 600;
+}
