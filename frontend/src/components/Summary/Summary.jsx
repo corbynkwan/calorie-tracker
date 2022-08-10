@@ -17,10 +17,10 @@ export default function Summary(props) {
     if (currentHour < 12) {
       setGreeting('morning');
       setMessage(`So, what's for breakfast today?`);
-    } else if (curHr < 16) {
+    } else if (currentHour < 16) {
       setGreeting('afternoon');
       setMessage(`Have a filling lunch :)`);
-    } else if (curHr < 18) {
+    } else if (currentHour < 18) {
       setGreeting('evening');
       setMessage(`Craving for a snack? We've got you covered.`);
     }else {
