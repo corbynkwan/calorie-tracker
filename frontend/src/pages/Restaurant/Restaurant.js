@@ -4,6 +4,7 @@ import {useLocation} from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { postUserLog } from '../../store/userSlice';
 import FoodTable from "./FoodTable";
+
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import {
   Button,
@@ -25,13 +26,14 @@ import {
   getUser,
 } from "../../store/userSlice";
 import useStyles from "../FoodDiary/style";
+import Header from "../../components/Header/Header";
 
 function useQuery() {
   const { search } = useLocation();
 
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
-export default function Restaurant() {
+export default function Restaurant(props) {
   const dispatch = useDispatch();
   let query = useQuery();
   const storeDate = useSelector((state) => state.date);
@@ -67,6 +69,9 @@ export default function Restaurant() {
               />
             </LocalizationProvider>
           </Grid>
+
+    <Header user={props.user} logout={props.logout}/>
+
     <FoodTable id={query.get("id")}/>
     </Grid>
     </Container>
