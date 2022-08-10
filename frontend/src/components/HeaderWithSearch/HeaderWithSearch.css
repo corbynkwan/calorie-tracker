@@ -107,3 +107,32 @@
     color: #080808;
     cursor: pointer;
 }
+
+.Header-Inner {
+    background-color: #3f51b5;
+    height: 70px;
+}
+
+.Header-Inner img {
+    height: 50px;
+    margin-top: -2px;
+}
+
+.Header-Inner .right-panel {
+    color: white;
+    margin-top: 10px;
+}
+
+.middle-menu {
+    width: 50%;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.middle-menu span {
+    color: white;
+    font-family: 'Poppins';
+    font-weight: 500;
+    margin-left: 15px;
+    margin-top: -10px;
+}

@@ -5,6 +5,7 @@ import { InstantSearch, SearchBox, Hits, Stats, RefinementList } from 'react-ins
 import { searchClient } from "../../typesenseAdapter";
 import {useState} from 'react';
 import RestaurantCard from "../Restaurant/Restaurant";
+import logoWhite from "../../assets/images/alpha-logo-white.svg";
 
 const hit = ({hit}) => {
   return (
@@ -36,7 +37,7 @@ const Content = () => {
   )
 }
 
-export default function HeaderWithSearch({user, logout}) {
+export default function HeaderWithSearch({user, logout, inner}) {
 
   const [showResults, setShowResults] = useState(false);
   document.querySelector('body').style.overflowY = 'visible';
@@ -52,17 +53,39 @@ export default function HeaderWithSearch({user, logout}) {
   } 
 
   return (
-    <section className="SearchHeader">
-      <img src={logo} alt="Alpha Calorie Tracker Logo"></img>
+    <>
+      {inner?
+        <section className="SearchHeader Header-Inner">
+          <a href="/"><img src={logoWhite} alt="Alpha Calorie Tracker Logo"></img></a>
 
-      <InstantSearch indexName="restaurants" searchClient={searchClient} onSearchStateChange={searchState => displayManager(searchState)}>
-        <SearchBox translations={{placeholder: 'Search Restuarants by name, address or cuisine'}}></SearchBox>
-        {showResults? <Content/>:""}
-      </InstantSearch>
+          <div className="middle-menu"> 
+            <Link to="/diary" style={{ textDecoration: "none" }}>
+              <span>Food Log</span>
+            </Link>
+            <Link to="/Report" style={{ textDecoration: "none" }}>
+              <span>My Report</span>
+            </Link>
+          </div>
 
-      <div className="right-panel" onClick={logout}>
-        <p>Logout</p>
-      </div>
-    </section>
+          <div className="right-panel" onClick={logout}>
+            <p>Logout</p>
+          </div>
+
+        </section>
+      :
+        <section className="SearchHeader">
+          <img src={logo} alt="Alpha Calorie Tracker Logo"></img>
+
+          <InstantSearch indexName="restaurants" searchClient={searchClient} onSearchStateChange={searchState => displayManager(searchState)}>
+            <SearchBox translations={{placeholder: 'Search Restuarants by name, address or cuisine'}}></SearchBox>
+            {showResults? <Content/>:""}
+          </InstantSearch>
+
+          <div className="right-panel" onClick={logout}>
+            <p>Logout</p>
+          </div>
+        </section>
+      }
+    </>
   );
 }

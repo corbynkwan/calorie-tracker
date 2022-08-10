@@ -11,7 +11,6 @@ import {
   Menu,
   MenuItem,
 } from "@material-ui/core";
-import { maxWidth } from "@mui/system";
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";

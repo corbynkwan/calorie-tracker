@@ -8,7 +8,7 @@ import { getUserLogReportPeriod } from "../../store/userSlice";
 import MyGraph from "../../components/Report/MyGraph";
 import TimeFrameDropdown from "../../components/Report/TimeFrameDropdown";
 import NutrientDropdown from "../../components/Report/NutrientDropdown";
-import Header from "../../components/Header/Header";
+import HeaderWithSearch from "../../components/HeaderWithSearch/HeaderWithSearch";
 
 function Report(props) {
   const classes = useStyles();
@@ -27,7 +27,7 @@ function Report(props) {
 
   return (
     <section>
-      <Header user={props.user} logout={props.logout}/>
+      <HeaderWithSearch user={props.user} logout={props.logout} inner={true}/>
       <div>
         <Grid container
         justify="center"

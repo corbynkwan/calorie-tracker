@@ -26,7 +26,7 @@ import {
   getUser,
 } from "../../store/userSlice";
 import useStyles from "../FoodDiary/style";
-import Header from "../../components/Header/Header";
+import HeaderWithSearch from "../../components/HeaderWithSearch/HeaderWithSearch";
 
 function useQuery() {
   const { search } = useLocation();
@@ -43,7 +43,7 @@ export default function Restaurant(props) {
 
   return (
     <>
-    <Header user={props.user} logout={props.logout}/>
+    <HeaderWithSearch user={props.user} logout={props.logout} inner={true}/>
 <Container maxWidth="md">
     <Grid
           container

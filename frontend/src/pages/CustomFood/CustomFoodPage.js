@@ -4,7 +4,7 @@ import CustomFoodGrid from "../../components/CustomFood/CustomFoodGrid";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { postUserLog } from "../../store/userSlice";
-import Header from "../../components/Header/Header";
+import HeaderWithSearch from "../../components/HeaderWithSearch/HeaderWithSearch";
 
 export default function CustomFoodPage(props) {
   const location = useLocation();
@@ -19,7 +19,7 @@ export default function CustomFoodPage(props) {
 
   return (
     <>
-    <Header user={props.user} logout={props.logout}/>
+    <HeaderWithSearch user={props.user} logout={props.logout} inner={true}/>
       <Paper
         sx={{
           p: 2,

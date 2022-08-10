@@ -3,7 +3,7 @@
  */
 
 import * as React from "react";
-import Header from "../../components/Header/Header";
+import HeaderWithSearch from "../../components/HeaderWithSearch/HeaderWithSearch";
 import {
   Paper,
   Button,
@@ -63,7 +63,7 @@ export default function FoodDiary(props) {
 
   return (
     <>
-    <Header user={props.user} logout={props.logout}/>
+    <HeaderWithSearch user={props.user} logout={props.logout} inner={true}/>
       <Paper className={classes.wrapper}>
         <Grid
           container
