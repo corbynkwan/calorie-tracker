@@ -22,13 +22,11 @@ export const getRestaurants = createAsyncThunk('restaurants/getRestaurants', asy
 });
 
 export const getNearbyRestaurants = createAsyncThunk('restaurants/getNearbyRestaurants', async (lat,long,maxDistance) => {
-  const params = {
-    lat: lat,
-    long: long,
-    maxDistance: maxDistance
-  };
-  //const response = await axios.get(ROUTE,params);
-  //return response.data;
+  // const params = {
+  //   lat: lat,
+  //   long: long,
+  //   maxDistance: maxDistance
+  // };
 
   return null;
 });
