@@ -39,6 +39,11 @@ class MyGoogleMap extends Component {
     this.setCurrentLocation();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.restaurants !== this.props.restaurants) {
+      this.nearbySearch();
+    }
+  }
   _onZoom = ({ center, zoom }) => {
     this.setState({
       center: center,
@@ -49,7 +54,6 @@ class MyGoogleMap extends Component {
   nearbySearch = () => {
     const { mapInstance: map, mapApi: maps, curLat, curLng } = this.state;
     const service = new google.maps.places.PlacesService(map);
-    const nextAddress = 0;
     if (this.props.restaurants.length !== 0) {
       let restaurantLat;
       let restaurantLng;
@@ -58,70 +62,16 @@ class MyGoogleMap extends Component {
         restaurantLng = this.props.restaurants[restaurant].geolocation.longitude;
         let request = {
           query: this.props.restaurants[restaurant].name,
-          fields: ["place_id"],
+          fields: ["place_id",  "name",  "formatted_address", "geometry"],
           locationBias: {lat: restaurantLat, lng: restaurantLng},
         };
-      
         service.findPlaceFromQuery(request, (results, status) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
-            console.log("What is result", results[0]);
-            const detailReqeust = {
-              placeId: results[0].place_id,
-              fields: [
-                "place_id",
-                "name",
-                "photo",
-                "geometry",
-                "formatted_address",
-                "opening_hours",
-                "website",
-              ],
-            };
-            service.getDetails(detailReqeust, (place, status) => {
-              if (status == google.maps.places.PlacesServiceStatus.OK) {
-                console.log("What is place", place)
-                this.createMarker(place);
-              }else{
-                console.log("What is status,", status)
-              }
-            });
+            console.log("What is results", results[0])
+            this.createMarker(results[0]);
           }
         });
       }
-    }else {
-      const request = {
-        // For testing location at UBC
-        //location: { lat: 49.2606, lng: -123.246 },
-        // Acutal location
-        location: { lat: curLat, lng: curLng },
-        radius: "500",
-        types: ["restaurant", "cafe"],
-      };
-      service.nearbySearch(request, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-          for (let i = 0; i < results.length; i++) {
-            const detailReqeust2 = {
-              placeId: results[i].place_id,
-              fields: [
-                "place_id",
-                "name",
-                "photo",
-                "geometry",
-                "formatted_address",
-                "opening_hours",
-                "website",
-              ],
-            };
-            service.getDetails(detailReqeust2, (place, status) => {
-              if (status == google.maps.places.PlacesServiceStatus.OK) {
-                this.createMarker(place);
-              }else if(status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT){
-
-              }
-            });
-          }
-        }
-      });
     }
   };
 
@@ -394,23 +344,11 @@ class MyGoogleMap extends Component {
           ></GoogleMapReact>
         </div>
         <div className="info-wrapper">
-          {/* <div className="map-details">
-            Latitude: <span>{this.state.lat}</span>, Longitude:{" "}
-            <span>{this.state.lng}</span>
-          </div>
-          <div className="map-details">
-            Zoom: <span>{this.state.zoom}</span>
-          </div> */}
           <div className="map-details">
             Destination: <span>{this.state.address}</span>
           </div>
-          {/* <div className="map-details">
-            Cur Latitude: <span>{this.state.curLat}</span>, Cur Longitude:{" "}
-            <span>{this.state.curLng}</span>
-          </div> */}
           <div className="map-details">
             Current Location: <span>{this.state.curAddress}</span>
-            {console.log("What is restaurants", this.props.restaurants)}
           </div>
         </div>
       </Wrapper>
