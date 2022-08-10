@@ -6,7 +6,7 @@
 
 // * Dependencies
 /* packages */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,6 +22,7 @@ import FoodDiary from './pages/FoodDiary/FoodDiary';
 import CustomFoodPage from './pages/CustomFood/CustomFoodPage';
 import Restaurant from './/pages/Restaurant/Restaurant';
 import Report from './pages/Report/Report';
+import Loading from './components/Loading/Loading';
 /* redux related */ 
 import { getUser } from './store/userSlice';
 
@@ -29,6 +30,7 @@ function App() {
 
   const {loginWithRedirect, logout, user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
   const dispatch = useDispatch();
+  const [appReady,setAppReady] = useState(false);
 
   //* Checking if authenticated, saving user, session data. 
   useEffect(() => {
@@ -37,6 +39,7 @@ function App() {
       if (!isLoading && !user) {
         loginWithRedirect();
       } else if (!isLoading && user) {
+        console.log(user);
         sessionStorage.setItem("user", JSON.stringify(user));
         sessionStorage.setItem("jwt", JSON.stringify({token: await getAccessTokenSilently()}));
         dispatch(getUser());
@@ -47,34 +50,38 @@ function App() {
 
   }, [isLoading]);
 
+  const userData = useSelector(state => state.user);
+
   //* Monitoring changes to user
   useEffect(() =>{
     async function monitorChange() {
-      // You can await here
-    if (isAuthenticated) {
-      dispatch(getUser());
+    if (isAuthenticated && sessionStorage.getItem("user")) {
+      //console.log(`user is ${sessionStorage.getItem("user")}`)
+      setAppReady(true);
     } else if (!isLoading && !isAuthenticated) {
       alert("Session Expired, Please login again.");
       window.location.reload();
     }
   }
   monitorChange();
-}, [dispatch]);
-
-  const userData = useSelector(state => state.user);
+}, [userData]);
 
   //* Routing with Header + Footer as constant
   return (
     <div className="App">
-      <Header user={userData} logout={logout}/>
+      {appReady?
+      <div>
         <Routes>
-          <Route path="/" element={<Home user={userData}/>} />
-          <Route path="diary" element={<FoodDiary user={userData}/>} />
-          <Route path="diary/add" element={<CustomFoodPage />} />
-          <Route path="restaurant" element={<Restaurant />} />
-          <Route path="report" element={<Report />}/>
+          <Route path="/" element={<Home user={userData} logout={logout}/>} />
+          <Route path="diary" element={<FoodDiary user={userData} logout={logout}/>} />
+          <Route path="diary/add" element={<CustomFoodPage user={userData} logout={logout}/>} />
+          <Route path="restaurant" element={<Restaurant user={userData} logout={logout} />} />
+          <Route path="report" element={<Report user={userData} logout={logout} />}/>
         </Routes>
-      <Footer/>
+        <Footer/>
+      </div> :
+      <Loading/>
+      }
     </div>
 
   );

@@ -3,7 +3,7 @@
  */
 
 import * as React from "react";
-
+import Header from "../../components/Header/Header";
 import {
   Paper,
   Button,
@@ -63,6 +63,7 @@ export default function FoodDiary(props) {
 
   return (
     <>
+    <Header user={props.user} logout={props.logout}/>
       <Paper className={classes.wrapper}>
         <Grid
           container

@@ -8,8 +8,9 @@ import { getUserLogReportPeriod } from "../../store/userSlice";
 import MyGraph from "../../components/Report/MyGraph";
 import TimeFrameDropdown from "../../components/Report/TimeFrameDropdown";
 import NutrientDropdown from "../../components/Report/NutrientDropdown";
+import Header from "../../components/Header/Header";
 
-function Report() {
+function Report(props) {
   const classes = useStyles();
   const logsReport = useSelector((state) => state.user.logsReport);
   const [selectedNutrient, setSelectedNutrient] = useState("calories");
@@ -26,6 +27,7 @@ function Report() {
 
   return (
     <div>
+      <Header user={props.user} logout={props.logout}/>
       <Grid container
       justify="center"
       alignItems="center"

@@ -23,7 +23,10 @@ export default function Summary(props) {
         <div className="progress-bar-underlay"></div>
         <div className="progress-bar-overlay"></div>
         <Link to="/diary" style={{ textDecoration: "none" }}>
-          <Button variant="outlined">Add More →</Button>
+          <Button variant="outlined">Log →</Button>
+        </Link>
+        <Link to="/report" style={{ textDecoration: "none" }}>
+          <Button variant="outlined">Visualise →</Button>
         </Link>
       </div>
     </section>
