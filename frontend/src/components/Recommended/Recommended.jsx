@@ -33,6 +33,9 @@ async function getRecommendation(setRecommendation) {
         }
         let resultJson = await response.json();
         let result = resultJson.result.map(function (e){
+            if(e.thumbnail === undefined){
+                e.thumbnail = "https://www.happyeater.com/listing/ce88fb3d-daa2-4961-bdb2-77d89ca7657e";
+            }
             return {name:e.name,
                 calories:e.calories,
                 protein:e.protein,
