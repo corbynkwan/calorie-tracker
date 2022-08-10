@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
 import AutoComplete from "./AutoComplete";
+import { connect } from "react-redux";
+import { getNearbyRestaurants } from "../../store/restaurantsSlice";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.main`
   width: 100%;
@@ -10,26 +13,29 @@ const Wrapper = styled.main`
 `;
 
 class MyGoogleMap extends Component {
-  state = {
-    mapApiLoaded: false,
-    mapInstance: null,
-    mapApi: null,
-    geoCoder: null,
-    curRoutePolyline: null,
-    places: [],
-    // UBC lat and lng
-    center: { lat: 49.2606, lng: -123.246 },
-    zoom: 14,
-    address: "",
-    draggable: true,
-    lat: null,
-    lng: null,
-    curLat: null,
-    curLng: null,
-    curAddress: "",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      mapApiLoaded: false,
+      mapInstance: null,
+      mapApi: null,
+      geoCoder: null,
+      curRoutePolyline: null,
+      places: [],
+      // UBC lat and lng
+      center: [49.2606, -123.246],
+      zoom: 14,
+      address: "",
+      draggable: true,
+      lat: null,
+      lng: null,
+      curLat: null,
+      curLng: null,
+      curAddress: "",
+    };
+  }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setCurrentLocation();
   }
 
@@ -42,50 +48,110 @@ class MyGoogleMap extends Component {
 
   nearbySearch = () => {
     const { mapInstance: map, mapApi: maps, curLat, curLng } = this.state;
-    const request = {
-      // For testing location at UBC
-      //location: { lat: 49.2606, lng: -123.246 },
-      // Acutal location
-      location: { lat: curLat, lng: curLng },
-      radius: "500",
-      types: ["restaurant", "cafe"],
-    };
     const service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, (results, status) => {
-      if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-        for (let i = 0; i < results.length; i++) {
-          const detailReqeust = {
-            placeId: results[i].place_id, 
-            fields: ['place_id', 'name', 'photo', 'geometry','formatted_address', 'opening_hours', 'website']
+    const nextAddress = 0;
+    if (this.props.restaurants.length !== 0) {
+      let restaurantLat;
+      let restaurantLng;
+      for (let restaurant in this.props.restaurants) {
+        restaurantLat = this.props.restaurants[restaurant].geolocation.latitude;
+        restaurantLng = this.props.restaurants[restaurant].geolocation.longitude;
+        let request = {
+          query: this.props.restaurants[restaurant].name,
+          fields: ["place_id"],
+          locationBias: {lat: restaurantLat, lng: restaurantLng},
+        };
+      
+        service.findPlaceFromQuery(request, (results, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            console.log("What is result", results[0]);
+            const detailReqeust = {
+              placeId: results[0].place_id,
+              fields: [
+                "place_id",
+                "name",
+                "photo",
+                "geometry",
+                "formatted_address",
+                "opening_hours",
+                "website",
+              ],
+            };
+            service.getDetails(detailReqeust, (place, status) => {
+              if (status == google.maps.places.PlacesServiceStatus.OK) {
+                console.log("What is place", place)
+                this.createMarker(place);
+              }else{
+                console.log("What is status,", status)
+              }
+            });
           }
-          service.getDetails(detailReqeust, (place, status) =>{
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-              this.createMarker(place);
-            }
-          });
-        }
+        });
       }
-    });
+    }else {
+      const request = {
+        // For testing location at UBC
+        //location: { lat: 49.2606, lng: -123.246 },
+        // Acutal location
+        location: { lat: curLat, lng: curLng },
+        radius: "500",
+        types: ["restaurant", "cafe"],
+      };
+      service.nearbySearch(request, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+          for (let i = 0; i < results.length; i++) {
+            const detailReqeust2 = {
+              placeId: results[i].place_id,
+              fields: [
+                "place_id",
+                "name",
+                "photo",
+                "geometry",
+                "formatted_address",
+                "opening_hours",
+                "website",
+              ],
+            };
+            service.getDetails(detailReqeust2, (place, status) => {
+              if (status == google.maps.places.PlacesServiceStatus.OK) {
+                this.createMarker(place);
+              }else if(status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT){
+
+              }
+            });
+          }
+        }
+      });
+    }
   };
 
   createMarker = (place) => {
-    const { mapInstance: map, curLat, curLng} = this.state;
+    const { mapInstance: map, curLat, curLng } = this.state;
     const marker = new google.maps.Marker({
       map,
       position: place.geometry.location,
       title: place.name,
     });
-    let contentString =  `<div><h1>${place.name}</h1><p>${place.formatted_address}</p></div>`;
-    if(place.hasOwnProperty("opening_hours")){
-      for (let day in place.opening_hours.weekday_text){
-        contentString = contentString + `<div><p>${place.opening_hours.weekday_text[day]}</p></div>`
+    let contentString = `<div><h1>${place.name}</h1><p>${place.formatted_address}</p></div>`;
+      if (place.hasOwnProperty("website")) {
+      contentString =
+        contentString +
+        `<div><a href=${place.website}>${place.website}</a></div>`;
+    }
+    if (place.hasOwnProperty("opening_hours")) {
+      for (let day in place.opening_hours.weekday_text) {
+        contentString =
+          contentString +
+          `<div><p>${place.opening_hours.weekday_text[day]}</p></div>`;
       }
     }
-    if(place.hasOwnProperty("website")){
-      contentString = contentString + `<div><a href=${place.website}>${place.website}</a></div>`;
-    }
-    const directionUrl = `https://www.google.com/maps/dir/?api=1&${curLat},${curLng}&destination=${place.geometry.location.lat()},${place.geometry.location.lng()}&destination_place_id=${place.place_id}&travelmode=walking`;
-    contentString = contentString + `<div><a href=${directionUrl}>view on google map</a></div>`;
+  
+    const directionUrl = `https://www.google.com/maps/dir/?api=1&${curLat},${curLng}&destination=${place.geometry.location.lat()},${place.geometry.location.lng()}&destination_place_id=${
+      place.place_id
+    }&travelmode=walking`;
+    contentString =
+      contentString +
+      `<div><a href=${directionUrl}>view on google map</a></div>`;
     let infowindow = new google.maps.InfoWindow({ content: contentString });
     marker.addListener("click", () => {
       infowindow.open({
@@ -97,7 +163,7 @@ class MyGoogleMap extends Component {
   };
 
   createRouteMarker = (lat, lng, placeName, address, place_id) => {
-    const { mapInstance: map, curLat, curLng} = this.state;
+    const { mapInstance: map, curLat, curLng } = this.state;
     const svgMarker = {
       path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
       fillColor: "green",
@@ -115,12 +181,29 @@ class MyGoogleMap extends Component {
     });
     const directionUrl = `https://www.google.com/maps/dir/?api=1&${curLat},${curLng}&destination=${lat},${lng}&destination_place_id=${place_id}&travelmode=walking`;
     let contentString;
-    if(!place_id){
-       // My location
-       contentString = "<div>" + "<h1>" + placeName + "</h1>" + "<p>" + address + "</p>" + "</div>";
-    }else{
+    if (!place_id) {
+      // My location
+      contentString =
+        "<div>" +
+        "<h1>" +
+        placeName +
+        "</h1>" +
+        "<p>" +
+        address +
+        "</p>" +
+        "</div>";
+    } else {
       // Destination
-       contentString = "<div>" + "<h1>" + placeName + "</h1>" + "<p>" + address + "</p>" + `<div><a href=${directionUrl}>view on google map</a></div>` + "</div>";
+      contentString =
+        "<div>" +
+        "<h1>" +
+        placeName +
+        "</h1>" +
+        "<p>" +
+        address +
+        "</p>" +
+        `<div><a href=${directionUrl}>view on google map</a></div>` +
+        "</div>";
     }
     let infowindow = new google.maps.InfoWindow({ content: contentString });
     locationMarker.addListener("click", () => {
@@ -133,7 +216,7 @@ class MyGoogleMap extends Component {
   };
 
   apiHasLoaded = (map, maps) => {
-    const { curLat, curLng} = this.state;
+    const { curLat, curLng } = this.state;
 
     this.setState(
       {
@@ -143,14 +226,20 @@ class MyGoogleMap extends Component {
       },
       () => {
         this._generateAddress();
-        this.createRouteMarker(curLat, curLng, "My location", this.state.curAddress, null);
+        this.createRouteMarker(
+          curLat,
+          curLng,
+          "My location",
+          this.state.curAddress,
+          null
+        );
         this.nearbySearch();
       }
     );
   };
 
   addPlace = (place) => {
-    console.log("What is place", place)
+    console.log("What is place", place);
     const place_address_filtered = place.address_components.filter(
       (el) =>
         el.short_name !== "Greater Vancouver A" &&
@@ -302,8 +391,7 @@ class MyGoogleMap extends Component {
             }}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
-          >
-          </GoogleMapReact>
+          ></GoogleMapReact>
         </div>
         <div className="info-wrapper">
           {/* <div className="map-details">
@@ -322,6 +410,7 @@ class MyGoogleMap extends Component {
           </div> */}
           <div className="map-details">
             Current Location: <span>{this.state.curAddress}</span>
+            {console.log("What is restaurants", this.props.restaurants)}
           </div>
         </div>
       </Wrapper>
@@ -329,4 +418,11 @@ class MyGoogleMap extends Component {
   }
 }
 
-export default MyGoogleMap;
+const mapStateToProps = (state) => {
+  console.log("What is state.restaurants", state.restaurants);
+  return {
+    restaurants: state.restaurants,
+  };
+};
+
+export default connect(mapStateToProps)(MyGoogleMap);
