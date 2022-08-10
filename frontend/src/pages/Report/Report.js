@@ -27,7 +27,6 @@ function Report(props) {
 
   return (
     <div>
-      <Header user={props.user} logout={props.logout}/>
       <Grid container
       justify="center"
       alignItems="center"

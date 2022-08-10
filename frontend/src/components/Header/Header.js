@@ -15,7 +15,7 @@ import { maxWidth } from "@mui/system";
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import logoImg from "../../assets/images/alpha-logo-white.svg";
 const headersData = [
   {
     label: "FOOD LOG",
@@ -62,7 +62,7 @@ export default function Header({ user, logout }) {
   const displayDesktop = () => {
     return (
       <Toolbar>
-        {calorieTracker}
+        <a href="/"><img src={logoImg} height="45px" alt="team alpha logo"></img></a>
         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
           {getMenuButtons()}
         </Box>
