@@ -17,8 +17,8 @@ const CONFIG = {
 export const typesenseAdapter = new TypesenseInstantsearchAdapter({
     server: CONFIG,
     additionalSearchParameters: {
-        query_by: "name, address",
-        query_by_weights: "6, 2",
+        query_by: "name, address, cuisine, filters",
+        query_by_weights: "6, 2, 3, 3",
         num_typos: 3,
         typo_tokens_threshold: 1
     }

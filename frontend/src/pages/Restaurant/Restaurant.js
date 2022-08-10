@@ -43,7 +43,7 @@ export default function Restaurant(props) {
 
   return (
     <>
-    
+    <Header user={props.user} logout={props.logout}/>
 <Container maxWidth="md">
     <Grid
           container
@@ -69,8 +69,6 @@ export default function Restaurant(props) {
               />
             </LocalizationProvider>
           </Grid>
-
-    <Header user={props.user} logout={props.logout}/>
 
     <FoodTable id={query.get("id")}/>
     </Grid>

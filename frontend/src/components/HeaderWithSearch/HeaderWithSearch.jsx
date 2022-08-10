@@ -57,7 +57,7 @@ export default function HeaderWithSearch(props) {
       <img src={logo} alt="Alpha Calorie Tracker Logo"></img>
 
       <InstantSearch indexName="restaurants" searchClient={searchClient} onSearchStateChange={searchState => displayManager(searchState)}>
-        <SearchBox></SearchBox>
+        <SearchBox translations={{placeholder: 'Search Restuarants by name, address or cuisine'}}></SearchBox>
         {showResults? <Content/>:""}
       </InstantSearch>
     </section>
