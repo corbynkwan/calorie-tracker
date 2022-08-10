@@ -15,7 +15,7 @@ export const getRestaurants = createAsyncThunk('restaurants/getRestaurants', asy
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
 
-      response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/nearby?lat=${latitude}&lon=${longitude}&maxDist=1000`, {
+      response = await fetch(`https://calorie-tracker-prod-wfc97.ondigitalocean.app/api/nearby/?lat=${latitude}&lon=${longitude}&maxDist=1000`, {
         method: 'GET',
   
         headers: {
