@@ -2,7 +2,7 @@ import "./HeaderWithSearch.css";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/alpha-logo.svg";
-import { InstantSearch, SearchBox, Hits, Stats } from 'react-instantsearch-dom';
+import { InstantSearch, SearchBox, Hits, Stats, RefinementList, Menu } from 'react-instantsearch-dom';
 import { searchClient } from "../../typesenseAdapter";
 import {useState} from 'react';
 import RestaurantCard from "../Restaurant/Restaurant";
@@ -22,6 +22,16 @@ const Content = () => {
     <div className="searchResults">
       <h2>Search Results</h2>
       <Stats></Stats>
+      <section className="search-sidebar">
+        <div className="searchFilters">
+          <h3>Diet</h3>
+          <RefinementList attribute="filters"></RefinementList>
+        </div>
+        <div className="searchFilters">
+          <h3>Cuisine</h3>
+          <RefinementList attribute="cuisine"></RefinementList>
+        </div>
+      </section>
       <Hits hitComponent={hit}></Hits>
     </div>
   )
